@@ -1,6 +1,6 @@
 ﻿using Domain.ValueObjects;
 
-namespace Domain.Messages
+namespace Domain
 {
     interface IMessage
     {

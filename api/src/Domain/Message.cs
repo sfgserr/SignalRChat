@@ -1,6 +1,6 @@
 ﻿using Domain.ValueObjects;
 
-namespace Domain.Messages
+namespace Domain
 {
     public class Message : IMessage
     {
@@ -14,9 +14,8 @@ namespace Domain.Messages
 
         public MessageId Id { get; }
         public string ExternalUserSenderId { get; }
+        public string ExternalUserReceiverId { get; }
         public string Text { get; }
         public DateTime SentTime { get; }
-        public RoomId RoomId { get; set; }
-        public Room? Room { get; set; }
     }
 }
