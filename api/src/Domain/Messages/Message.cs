@@ -16,5 +16,7 @@ namespace Domain.Messages
         public string ExternalUserSenderId { get; }
         public string Text { get; }
         public DateTime SentTime { get; }
+        public RoomId RoomId { get; set; }
+        public Room? Room { get; set; }
     }
 }
