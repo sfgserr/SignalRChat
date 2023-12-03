@@ -3,6 +3,11 @@ namespace Domain.ValueObjects
 {
     public readonly struct MessageId : IEquatable<MessageId>
     {
+        public MessageId(Guid id)
+        {
+            Id = id;
+        }
+
         public Guid Id { get; }
 
         public bool Equals(MessageId other) => Id == other.Id;

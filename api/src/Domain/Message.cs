@@ -4,12 +4,13 @@ namespace Domain
 {
     public class Message : IMessage
     {
-        public Message(MessageId id, string externalUserSenderId, string text, DateTime sentTime)
+        public Message(MessageId id, string externalUserSenderId, string text, DateTime sentTime, string externalUserReceiverId)
         {
             Id = id;
             ExternalUserSenderId = externalUserSenderId;
             Text = text;
             SentTime = sentTime;
+            ExternalUserReceiverId = externalUserReceiverId;
         }
 
         public MessageId Id { get; }

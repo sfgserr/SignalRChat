@@ -1,7 +1,7 @@
 ﻿
 namespace Domain
 {
-    interface IMessageRepository
+    public interface IMessageRepository
     {
         Task Add(Message message);
 
