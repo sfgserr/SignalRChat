@@ -1,14 +1,15 @@
-﻿
+﻿using Domain.ValueObjects;
+
 namespace Domain
 {
     public interface IMessageRepository
     {
         Task Add(Message message);
 
-        Task Update(Message message);
+        void Update(Message message);
 
-        Task GetMessages(string senderId, string receiverId);
+        Task<IList<Message>> GetMessages(string senderId, string receiverId);
 
-        Task Delete(Message message);
+        Task Delete(MessageId messageId);
     }
 }
