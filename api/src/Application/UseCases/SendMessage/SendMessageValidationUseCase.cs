@@ -16,7 +16,7 @@ namespace Application.UseCases.SendMessage
 
         public async Task Execute(string userSenderId, string userReceiverId, string text)
         {
-            if (string.IsNullOrEmpty(userSenderId))
+            if (string.IsNullOrWhiteSpace(userSenderId) || string.IsNullOrWhiteSpace(userReceiverId) || string.IsNullOrWhiteSpace(text))
             {
                 _outputPort.Invalid();
                 return;

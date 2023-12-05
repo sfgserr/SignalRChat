@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.SendMessage
 {
-    internal class SendMessagePresenter : IOutputPort
+    public class SendMessagePresenter : IOutputPort
     {
         public Message? Message { get; set; }
         public bool IsTextEmpty { get; set; }
