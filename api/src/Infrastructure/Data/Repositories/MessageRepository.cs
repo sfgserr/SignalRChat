@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -33,7 +32,7 @@ namespace Infrastructure.Data.Repositories
         {
             await _context
                   .Database
-                  .ExecuteSqlRawAsync("DELETE FROM Messages WHERE AccountId=@p0", messageId.Id);
+                  .ExecuteSqlRawAsync("DELETE FROM Messages WHERE Id=@p0", messageId.Id);
         }
     }
 }
