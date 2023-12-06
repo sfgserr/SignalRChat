@@ -16,7 +16,7 @@ namespace Domain
         public MessageId Id { get; }
         public string ExternalUserSenderId { get; }
         public string ExternalUserReceiverId { get; }
-        public string Text { get; }
+        public string Text { get; set; }
         public DateTime SentTime { get; }
     }
 }

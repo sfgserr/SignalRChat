@@ -6,9 +6,11 @@ namespace Domain
     {
         Task Add(Message message);
 
-        void Update(Message message);
+        Message Update(Message message);
 
-        Task<IList<Message>> GetMessages(string senderId, string receiverId);
+        Task<IList<Message>> GetMessages();
+
+        Task<Message> GetMessage(MessageId messageId);
 
         Task Delete(MessageId messageId);
     }

@@ -19,6 +19,18 @@ namespace Infrastructure.Data.Repositories
             await Task.CompletedTask;
         }
 
+        public async Task<Message> GetMessage(MessageId messageId)
+        {
+            Message message = _context.Messages.FirstOrDefault(m => m.Id == messageId);
+
+            return await Task.FromResult(message);
+        }
+
+        public async Task<IList<Message>> GetMessages()
+        {
+            return await Task.FromResult(_context.Messages);
+        }
+
         public async Task Delete(MessageId messageId)
         {
             Message message = _context.Messages.FirstOrDefault(m => m.Id == messageId);
@@ -36,7 +48,7 @@ namespace Infrastructure.Data.Repositories
             return await Task.FromResult(messages);
         }
 
-        public void Update(Message message)
+        public Message Update(Message message)
         {
             Message messageToUpdate = _context.Messages.FirstOrDefault(m => m.Id == message.Id);
 
@@ -44,6 +56,8 @@ namespace Infrastructure.Data.Repositories
                 _context.Messages.Remove(message);
 
             _context.Messages.Add(message);
+
+            return message;
         }
     }
 }

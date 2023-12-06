@@ -18,14 +18,21 @@ namespace Infrastructure.Data.Repositories
             await _context.Messages.AddAsync(message);
         }
 
-        public void Update(Message message)
+        public Message Update(Message message)
         {
             _context.Messages.Update(message);
+
+            return message;
         }
 
-        public async Task<IList<Message>> GetMessages(string senderId, string receiverId)
+        public async Task<IList<Message>> GetMessages()
         {
-            return await _context.Messages.Where(m => m.ExternalUserSenderId == senderId && m.ExternalUserReceiverId == senderId).ToListAsync();
+            return await _context.Messages.ToListAsync();
+        }
+
+        public async Task<Message> GetMessage(MessageId messageId)
+        {
+            return await _context.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
         }
 
         public async Task Delete(MessageId messageId)
