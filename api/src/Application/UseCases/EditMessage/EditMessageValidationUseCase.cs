@@ -16,7 +16,7 @@ namespace Application.UseCases.EditMessage
 
         public async Task Execute(Guid messageId, string text)
         {
-            if (messageId == Guid.Empty) 
+            if (messageId == Guid.Empty || text == string.Empty) 
             {
                 _outputPort.Invalid();
                 return;
