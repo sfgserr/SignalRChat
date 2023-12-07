@@ -35,6 +35,8 @@ namespace Application.UseCases.DeleteMessageUseCase
 
             await _messageRepository.Delete(messageId);
 
+            _outputPort.Ok(message);
+
             await _unitOfWork.Save();
         }
 
