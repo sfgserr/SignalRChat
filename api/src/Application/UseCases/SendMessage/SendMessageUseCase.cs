@@ -21,7 +21,7 @@ namespace Application.UseCases.SendMessage
 
         public async Task Execute(string userSenderId, string userReceiverId, string text)
         {
-            Message message = new Message(new MessageId(Guid.NewGuid()), userSenderId, text, DateTime.Now, userReceiverId);
+            Message message = new Message(new MessageId(Guid.NewGuid()), userSenderId, userReceiverId, text, DateTime.Now);
 
             await SendMessage(message);
 

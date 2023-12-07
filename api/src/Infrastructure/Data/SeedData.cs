@@ -26,8 +26,17 @@ namespace Infrastructure.Data
                        ExternalUserSenderId = DefaultUserSenderId,
                        ExternalUserReceiverId = DefaultUserReceiverId,
                        MessageId = DefaultMessageId,
-                       Text = "Message"
+                       Text = "Message",
+                       DateTime = DateTime.Now
                    });
+
+            builder.Entity<Message>()
+                   .HasKey(m => m.Id);
+
+            builder.Entity<Message>()
+                   .Property(m => m.Id)
+                   .HasConversion(id => id.Id,
+                                  id => new MessageId(id));
         }
     }
 }

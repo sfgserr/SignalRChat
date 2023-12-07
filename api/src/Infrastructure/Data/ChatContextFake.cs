@@ -8,8 +8,8 @@ namespace Infrastructure.Data
         {
             Messages = new List<Message>()
             { 
-                new Message(SeedData.DefaultMessageId, SeedData.DefaultUserSenderId, "Hello",
-                            DateTime.Now, SeedData.DefaultUserReceiverId) 
+                new Message(SeedData.DefaultMessageId, SeedData.DefaultUserSenderId, SeedData.DefaultUserReceiverId,
+                            "Hello", DateTime.Now) 
             };
         }
 
