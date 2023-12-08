@@ -8,7 +8,7 @@ namespace IntegrationTests.EntityFrameworkTests
         public StandardFixture()
         {
             const string connectionString =
-            "Server=localhost;User Id=sa;Password=<YourStrong!Passw0rd>;Database=Accounts;";
+            "Server=(localdb)\\mssqllocaldb;Database=usersdb;Trusted_Connection=True;";
 
             DbContextOptions<ChatContext> options = new DbContextOptionsBuilder<ChatContext>()
                 .UseSqlServer(connectionString)
