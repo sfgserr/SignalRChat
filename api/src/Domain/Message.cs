@@ -14,6 +14,11 @@ namespace Domain
             ExternalUserReceiverId = externalUserReceiverId;
         }
 
+        private Message()
+        {
+
+        }
+
         public MessageId Id { get; }
         public string ExternalUserSenderId { get; }
         public string ExternalUserReceiverId { get; }

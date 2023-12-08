@@ -21,14 +21,7 @@ namespace Infrastructure.Data
             }
 
             builder.Entity<Message>()
-                   .HasData(new
-                   {
-                       ExternalUserSenderId = DefaultUserSenderId,
-                       ExternalUserReceiverId = DefaultUserReceiverId,
-                       MessageId = DefaultMessageId,
-                       Text = "Message",
-                       DateTime = DateTime.Now
-                   });
+                   .HasData(new Message(DefaultMessageId, DefaultUserSenderId, DefaultUserReceiverId, "Hello", DateTime.Now));
 
             builder.Entity<Message>()
                    .HasKey(m => m.Id);
