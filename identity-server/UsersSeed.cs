@@ -1,7 +1,9 @@
-﻿using IdentityServer.Data;
+﻿using IdentityModel;
+using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace IdentityServer
 {
