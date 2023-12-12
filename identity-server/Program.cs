@@ -30,8 +30,10 @@ builder.Services.AddIdentityServer(options =>
     options.EmitStaticAudienceClaim = true;
 })
 .AddInMemoryCaching()
-.AddClientStore<InMemoryClientStore>()
-.AddResourceStore<InMemoryResourcesStore>()
+.AddInMemoryApiScopes(Config.ApiScopes)
+.AddInMemoryApiResources(Config.ApiResources)
+.AddInMemoryClients(Config.Clients)
+.AddInMemoryIdentityResources(Config.IdentityResources)
 .AddAspNetIdentity<ApplicationUser>()
 .AddDeveloperSigningCredential();
 

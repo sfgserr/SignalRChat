@@ -14,6 +14,13 @@ namespace WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAuthentication("Bearer")
+                            .AddIdentityServerAuthentication("Bearer", options =>
+                            {
+                                options.Authority = "https://localhost:7092";
+                                options.ApiName = "MessageApi";
+                            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +33,7 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.MapControllers();
 
             app.Run();
