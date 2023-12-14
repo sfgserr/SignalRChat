@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using System.Net;
 
 namespace Client.Controllers
@@ -34,9 +35,9 @@ namespace Client.Controllers
                 { "user_id", userId }
             };
 
-            string url = "https://localhost:7035";
+            string userAgent = Request.Headers[HeaderNames.UserAgent].ToString();
 
-            HttpContext.Response.Redirect(url);
+            HttpContext.Response.Redirect("/");
         }
     }
 }
