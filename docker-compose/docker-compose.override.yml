@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  nginx:
+    ports:
+      - "80:80"
+  webapi:
+   environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+   ports:
+     - "8080:80"
+  webclient:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:3000
+    ports:
+      - "8082:3000"

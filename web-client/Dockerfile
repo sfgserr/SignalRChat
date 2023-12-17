@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["web-client/Client/Client.csproj", "web-client/Client/"]
-RUN dotnet restore "web-client/Client/Client.csproj"
+COPY ["web-client/Client.csproj", "web-client/"]
+RUN dotnet restore "web-client/Client.csproj"
 COPY . .
-WORKDIR "/src/web-client/Client"
+WORKDIR "/src/web-client"
 RUN dotnet build "Client.csproj" -c Release -o /app/build
 
 FROM build AS publish
