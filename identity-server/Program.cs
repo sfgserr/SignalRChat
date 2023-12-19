@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 
 builder.Services.AddDbContext<ApplicationDbContext>(o => 
-    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+    o.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                    b => b.MigrationsAssembly(assembly)));
 
 builder.Services.AddControllersWithViews();

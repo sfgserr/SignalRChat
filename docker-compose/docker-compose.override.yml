@@ -1,9 +1,6 @@
 version: '3.4'
 
 services:
-  nginx:
-    ports:
-      - "80:80"
   webapi:
    environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -15,3 +12,15 @@ services:
       - ASPNETCORE_URLS=http://+:3000
     ports:
       - "8082:3000"
+  identity-server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:1000
+    ports:
+      - "8081:1000"
+  db:
+    environment:
+      SA_PASSWORD: "S3cur3P@ssW0rd!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"

@@ -1,11 +1,12 @@
 version: '3.4'
 
 services:
-  nginx:
-    container_name: "nginx"
-    image: nginx
+  identity-server:
+    container_name: "identity-server"
+    image: identity-server
     build:
-      context: "../nginx/"
+      context: ../
+      dockerfile: identity-server/Dockerfile
   webapi:
     container_name: "webapi"
     image: webapi
@@ -22,9 +23,3 @@ services:
       dockerfile: web-client/Dockerfile
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: sql_server2022
-    ports:
-      - 1433:1433
-    environment:
-      SA_PASSWORD: "password"
-      ACCEPT_EULA: "Y"
