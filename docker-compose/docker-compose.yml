@@ -1,6 +1,11 @@
 version: '3.4'
 
 services:
+  nginx:
+    container_name: "nginx"
+    image: nginx
+    build:
+      context: "../nginx/"
   identity-server:
     container_name: "identity-server"
     image: identity-server

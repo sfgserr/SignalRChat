@@ -40,7 +40,7 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
                     ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
                     AllowedScopes = { "MessageApi.read", "MessageApi.write", "openid", "profile" },
-                    RedirectUris = { "http://localhost:8082/signin-oidc" },
+                    RedirectUris = { "http://localhost/signin-oidc" },
                     AllowOfflineAccess = true,
                 }
             };

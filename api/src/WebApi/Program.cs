@@ -17,7 +17,7 @@ namespace WebApi
             builder.Services.AddAuthentication("Bearer")
                             .AddIdentityServerAuthentication("Bearer", options =>
                             {
-                                options.Authority = "https://localhost:7092";
+                                options.Authority = "https://localhost/auth";
                                 options.ApiName = "MessageApi";
                             });
 
@@ -25,12 +25,10 @@ namespace WebApi
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            {
+            {   
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseAuthorization();
             app.UseAuthentication();

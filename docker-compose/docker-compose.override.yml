@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  nginx:
+    ports:
+      - "80:80"
   webapi:
    environment:
       - ASPNETCORE_ENVIRONMENT=Development
