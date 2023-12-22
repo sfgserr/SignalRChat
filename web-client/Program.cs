@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Client
 {
@@ -14,6 +15,11 @@ namespace Client
             builder.Services.AddControllersWithViews();
             builder.Services.AddAuthorization();
 
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -53,6 +59,7 @@ namespace Client
             app.UseAuthentication();
             app.MapRazorPages();
             app.MapDefaultControllerRoute();
+            app.UseForwardedHeaders();
             app.Run();
         }
     }

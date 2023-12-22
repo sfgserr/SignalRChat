@@ -1,6 +1,7 @@
 using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,12 @@ builder.Services.AddMvc();
 builder.Services.AddAuthentication();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
 
 builder.Services.AddIdentityServer(options =>
 {
@@ -45,6 +52,7 @@ app.UseAuthentication();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+app.UseForwardedHeaders();
 
 await UsersSeed.Seed(app.Services);
 
