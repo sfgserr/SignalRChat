@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Client
@@ -32,6 +33,7 @@ namespace Client
                 {
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    options.MetadataAddress = builder.Configuration["InteractiveServiceSettings:MetadataAddress"];
                     options.Authority = builder.Configuration["InteractiveServiceSettings:AuthorityUrl"];
                     options.ClientId = builder.Configuration["InteractiveServiceSettings:ClientId"];
                     options.ClientSecret = builder.Configuration["InteractiveServiceSettings:ClientSecret"];
@@ -41,6 +43,23 @@ namespace Client
                     options.GetClaimsFromUserInfoEndpoint = true;
                 }
             );
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("_allowsAny",
+                    builder =>
+                    {
+                        // Not a permanent solution, but just trying to isolate the problem
+                        builder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                    });
+            });
+
+            builder.Services.AddDataProtection()
+                        .SetApplicationName("webclient")
+                        .PersistKeysToFileSystem(new DirectoryInfo(@"./"));
 
             var app = builder.Build();
 
@@ -60,6 +79,7 @@ namespace Client
             app.MapRazorPages();
             app.MapDefaultControllerRoute();
             app.UseForwardedHeaders();
+            app.UseCors("_allowsAny");
             app.Run();
         }
     }

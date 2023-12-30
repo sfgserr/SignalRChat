@@ -1,6 +1,7 @@
 using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,23 @@ builder.Services.AddIdentityServer(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("_allowsAny",
+        builder =>
+        {
+            // Not a permanent solution, but just trying to isolate the problem
+            builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
+
+builder.Services.AddDataProtection()
+            .SetApplicationName("identity-server")
+            .PersistKeysToFileSystem(new DirectoryInfo(@"./"));
+
 var app = builder.Build();
 
 app.UseIdentityServer();
@@ -53,9 +71,13 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseForwardedHeaders();
+app.UseCors("_allowsAny");
 
 await UsersSeed.Seed(app.Services);
 
-app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();

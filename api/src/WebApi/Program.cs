@@ -1,4 +1,7 @@
 
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
+
 namespace WebApi
 {
     public class Program
@@ -21,6 +24,29 @@ namespace WebApi
                                 options.ApiName = "MessageApi";
                             });
 
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("_allowsAny",
+                    builder =>
+                    {
+                        // Not a permanent solution, but just trying to isolate the problem
+                        builder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                    });
+            });
+
+            builder.Services.AddDataProtection()
+                        .SetApplicationName("webapi")
+                        .PersistKeysToFileSystem(new DirectoryInfo(@"./"));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,6 +59,8 @@ namespace WebApi
             app.UseAuthorization();
             app.UseAuthentication();
             app.MapControllers();
+            app.UseForwardedHeaders();
+            app.UseCors("_allowsAny");
 
             app.Run();
         }
