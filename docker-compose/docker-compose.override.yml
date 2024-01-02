@@ -4,21 +4,34 @@ services:
   nginx:
     ports:
       - "443:443"
+      - "80:80"
   webapi:
    environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URL=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Pass129598
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/localhost.pfx 
    ports:
      - "8080:443"
+     - "8081:80"
   webclient:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URL=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Pass129598
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/localhost.pfx 
     ports:
       - "8082:443"
+      - "8083:3000"
   identity-server:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URL=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Pass129598
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/localhost.pfx 
     ports:
-      - "1000:443"
+      - "8084:443"
+      - "8085:1000"
   db:
     environment:
       SA_PASSWORD: "S3cur3P@ssW0rd!"
