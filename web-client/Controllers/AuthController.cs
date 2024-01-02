@@ -37,7 +37,7 @@ namespace Client.Controllers
 
             string userAgent = Request.Headers[HeaderNames.UserAgent].ToString();
 
-            HttpContext.Response.Redirect("/");
+            HttpContext.Response.Redirect("/Home/Index");
         }
     }
 }
