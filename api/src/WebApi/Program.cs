@@ -61,6 +61,7 @@ namespace WebApi
             app.MapControllers();
             app.UseForwardedHeaders();
             app.UseCors("_allowsAny");
+            app.UseHttpsRedirection();
 
             app.Run();
         }

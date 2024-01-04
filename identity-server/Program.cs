@@ -72,6 +72,7 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseForwardedHeaders();
 app.UseCors("_allowsAny");
+app.UseHttpsRedirection();
 
 await UsersSeed.Seed(app.Services);
 
