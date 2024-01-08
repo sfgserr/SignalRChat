@@ -6,7 +6,7 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - ~/.certs/localhost.crt:/etc/ssl/certs/localhost.crt:ro
+      - ~/.certs/localhost.pem:/etc/ssl/certs/localhost.pem:ro
       - ~/.certs/localhost.key:/etc/ssl/certs/localhost.key:ro
   webapi:
    environment:
