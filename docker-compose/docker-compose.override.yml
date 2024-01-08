@@ -6,8 +6,7 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - ~/.certs/localhost.pem:/etc/ssl/certs/localhost.pem:ro
-      - ~/.certs/localhost.key:/etc/ssl/certs/localhost.key:ro
+      - ~/.certs:/etc/ssl/certs:ro
   webapi:
    environment:
       - ASPNETCORE_ENVIRONMENT=Development
