@@ -70,7 +70,7 @@ app.UseAuthentication();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-app.UseForwardedHeaders();
+app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
 app.UseCors("_allowsAny");
 app.UseHttpsRedirection();
 
