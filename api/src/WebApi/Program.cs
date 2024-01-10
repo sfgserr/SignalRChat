@@ -20,7 +20,7 @@ namespace WebApi
             builder.Services.AddAuthentication("Bearer")
                             .AddIdentityServerAuthentication("Bearer", options =>
                             {
-                                options.Authority = "https://172.21.112.1";
+                                options.Authority = "https://localhost";
                                 options.ApiName = "MessageApi";
                             });
 
