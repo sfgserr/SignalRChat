@@ -31,6 +31,13 @@ services:
       - "8085:1000"
     volumes:
       - ~/.certs:/https:ro
+  webclient:
+    build:
+     args:
+       ENV: docker
+    ports:
+      - "8082:443"
+      - "8083:3000"
   db:
     environment:
       SA_PASSWORD: "S3cur3P@ssW0rd!"

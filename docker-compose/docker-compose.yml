@@ -20,5 +20,11 @@ services:
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       - db
+  webclient:
+    container_name: "webclient"
+    image: webclient
+    build:
+      context: ../
+      dockerfile: web-client/Dockerfile
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
