@@ -1,10 +1,9 @@
+import React from 'react';
 
 export const PublicPage = () => {
     return (
         <div>
-            <p>
-                Hello
-            </p>
+            Public page
         </div>
     );
-}
+};

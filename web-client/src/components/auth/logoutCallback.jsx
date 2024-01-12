@@ -1,3 +1,5 @@
+/* /src/components/auth/logoutCallback.jsx */
+
 import React from "react";
 import { AuthConsumer } from "../../providers/authProvider";
 

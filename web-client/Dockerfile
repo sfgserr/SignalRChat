@@ -1,20 +1,21 @@
-FROM node:9-alpine
+# 1. For build React app
+FROM node:lts AS development
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY . /usr/src/app
+# Set working directory
+WORKDIR /app
 
-ARG ENV
-ENV ENV ${ENV}
+# 
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
-# --no-cache: download package index on-the-fly, no need to cleanup afterwards
-# --virtual: bundle packages, remove whole bundle at once, when done
-RUN apk --no-cache --virtual build-dependencies add \
-    python \
-    make \
-    g++ \
-    && npm install \
-    && apk del build-dependencies
+# Same as npm install
+RUN npm install
 
-EXPOSE 3000
-CMD npm run start-${ENV}
+COPY . /app/
+
+ENV CI=true
+ENV PORT=3000
+
+CMD [ "npm", "start" ]
+
+RUN npm run build
