@@ -1,5 +1,4 @@
-﻿
-using Application.Services;
+﻿using Application.Services;
 using Domain;
 
 namespace Application.UseCases.GetMessages
@@ -38,7 +37,7 @@ namespace Application.UseCases.GetMessages
 
         public void SetOutputPort(IOutputPort outputPort)
         {
-            throw new NotImplementedException();
+            _outputPort = outputPort;
         }
     }
 }
