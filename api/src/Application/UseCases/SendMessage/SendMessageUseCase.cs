@@ -9,18 +9,22 @@ namespace Application.UseCases.SendMessage
         private IOutputPort _outputPort;
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
         private readonly IMessageRepository _messageRepository;
 
-        public SendMessageUseCase(IUnitOfWork unitOfWork, IMessageRepository messageRepository)
+        public SendMessageUseCase(IUnitOfWork unitOfWork, IMessageRepository messageRepository, IUserService userService)
         {
             _unitOfWork = unitOfWork;
             _messageRepository = messageRepository;
+            _userService = userService;
 
             _outputPort = new SendMessagePresenter();
         }
 
-        public async Task Execute(string userSenderId, string userReceiverId, string text)
+        public async Task Execute(string userReceiverId, string text)
         {
+            string userSenderId = _userService.GetCurrentUserId();
+
             Message message = new Message(new MessageId(Guid.NewGuid()), userSenderId, userReceiverId, text, DateTime.Now);
 
             await SendMessage(message);

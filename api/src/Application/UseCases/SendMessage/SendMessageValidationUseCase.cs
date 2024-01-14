@@ -14,15 +14,15 @@ namespace Application.UseCases.SendMessage
             _outputPort = new SendMessagePresenter();
         }
 
-        public async Task Execute(string userSenderId, string userReceiverId, string text)
+        public async Task Execute(string userReceiverId, string text)
         {
-            if (string.IsNullOrWhiteSpace(userSenderId) || string.IsNullOrWhiteSpace(userReceiverId) || string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(userReceiverId) || string.IsNullOrWhiteSpace(text))
             {
                 _outputPort.Invalid();
                 return;
             }
 
-            await _useCase.Execute(userSenderId, userReceiverId, text);
+            await _useCase.Execute(userReceiverId, text);
         }
 
         public void SetOutputPort(IOutputPort outputPort)
