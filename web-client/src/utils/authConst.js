@@ -8,9 +8,9 @@ export const IDENTITY_CONFIG = {
   silent_redirect_uri: process.env.REACT_APP_SILENT_REDIRECT_URL,
   post_logout_redirect_uri: process.env.REACT_APP_LOGOFF_REDIRECT_URL,
   audience: process.env.REACT_APP_AUDIENCE,
-  response_type: "id_token token",
+  response_type: "code",
   automaticSilentRenew: false,
-  loadUserInfo: false,
+  loadUserInfo: true,
   scope: process.env.REACT_APP_SCOPE
 };
 

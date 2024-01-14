@@ -5,7 +5,7 @@ namespace IdentityServer
     public static class Config
     {
         public static IEnumerable<ApiScope> ApiScopes =>
-            new[] { new ApiScope("MessageApi.read"), new ApiScope("MessageApi.write") };
+            new[] { new ApiScope("messageapi.read"), new ApiScope("messageapi.full_access") };
 
         public static IEnumerable<IdentityResource> IdentityResources =>
             new[]
@@ -22,11 +22,10 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> ApiResources =>
             new[]
             {
-                new ApiResource("MessageApi")
+                new ApiResource
                 {
-                    Scopes = new List<string> { "MessageApi.read", "MessageApi.write" },
-                    ApiSecrets = new List<Secret> { new Secret("ScopeSecret".Sha256()) },
-                    UserClaims = new List<string> { "role" }
+                    Scopes = new List<string> { "messageapi.read", "messageapi.full_access" },
+                    Name = "api"
                 }
             };
 
@@ -38,10 +37,13 @@ namespace IdentityServer
                 {
                     ClientId = "chat.client",
                     AllowedGrantTypes = GrantTypes.Code,
-                    ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
-                    AllowedScopes = { "MessageApi.read", "MessageApi.write", "openid", "profile" },
+                    AllowedScopes = { "messageapi.read", "messageapi.full_access", "openid", "profile" },
                     RedirectUris = { "https://chat.local/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://chat.local" },
+                    AllowedCorsOrigins = { "https://chat.local" },
                     AllowOfflineAccess = true,
+                    RequireClientSecret = false,
+                    RequirePkce = true,
                 }
             };
     }
