@@ -44,3 +44,6 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: Pass129598  

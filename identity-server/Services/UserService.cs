@@ -1,5 +1,4 @@
-﻿using Grpc.Core;
-using IdentityServer.Data.Repositories;
+﻿using IdentityServer.Data.Repositories;
 using IdentityServer.Models;
 using IdentityServer.Protos;
 

@@ -12,6 +12,8 @@ services:
     build:
       context: ../
       dockerfile: identity-server/Dockerfile
+    depends_on:
+      - db
   webapi:
     container_name: "webapi"
     image: webapi
@@ -19,7 +21,7 @@ services:
       context: ../services/messages/
       dockerfile: src/WebApi/Dockerfile
     depends_on:
-      - db
+      - postgres
   webclient:
     container_name: "webclient"
     image: webclient
@@ -28,3 +30,6 @@ services:
       dockerfile: Dockerfile
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
+  postgres:
+    container_name: postgres
+    image: postgres
