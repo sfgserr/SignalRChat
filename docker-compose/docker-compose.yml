@@ -16,7 +16,7 @@ services:
     container_name: "webapi"
     image: webapi
     build:
-      context: ../api/
+      context: ../services/messages/
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       - db
