@@ -45,7 +45,7 @@ builder.Services.AddIdentityServer(options =>
 .AddDeveloperSigningCredential();
 
 builder.Services.AddAuthorization();
-
+builder.Services.AddGrpc();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("_allowsAny",
