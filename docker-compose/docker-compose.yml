@@ -10,7 +10,7 @@ services:
     container_name: "identity-server"
     image: identity-server
     build:
-      context: ../
+      context: ../services/
       dockerfile: identity-server/Dockerfile
     depends_on:
       - db

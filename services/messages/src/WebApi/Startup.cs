@@ -20,6 +20,7 @@ namespace WebApi
                     .AddAuthentication(_configuration)
                     .AddPostgresExtensions(_configuration);
 
+            services.AddHttpContextAccessor();
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
@@ -35,11 +36,12 @@ namespace WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseAuthorization()
-               .UseAuthentication()
-               .UseForwardedHeaders()
+            app.UseForwardedHeaders()
                .UseCors("_allowsAny")
                .UseHttpsRedirection()
+               .UseRouting()
+               .UseAuthentication()
+               .UseAuthorization()
                .UseEndpoints(e =>
                {
                    e.MapControllers();
