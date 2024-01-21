@@ -4,6 +4,7 @@
 
 using IdentityModel;
 using IdentityServer.Models;
+using IdentityServer.Quickstart.UI;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -55,6 +56,53 @@ namespace IdentityServerHost.Quickstart.UI
             _schemeProvider = schemeProvider;
             _events = events;
             _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser userGotByName = await _users.FindByNameAsync(viewModel.Username);
+
+                if (userGotByName != null)
+                {
+                    return Redirect("~/Account/Redirect");
+                }
+
+                ApplicationUser userGotByEmail = await _users.FindByEmailAsync(viewModel.Email);
+
+                if (userGotByEmail != null)
+                {
+                    return Redirect("~/Account/Redirect");
+                }
+
+                ApplicationUser user = new ApplicationUser()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = viewModel.Username,
+                    Email = viewModel.Email,
+                };
+
+                var result = await _users.CreateAsync(user, viewModel.Password);
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                if (result.Succeeded)
+                    return Redirect("~/");
+            }
+
+            return Redirect("~/Account/Register");
         }
 
         /// <summary>
@@ -182,7 +230,6 @@ namespace IdentityServerHost.Quickstart.UI
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
-
         
         /// <summary>
         /// Show logout page
