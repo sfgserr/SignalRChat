@@ -13,11 +13,17 @@ namespace IdentityServer.Services
             _repository = repository;
         }
 
-        public async Task<IList<UserModel>> GetUsers()
+        public async Task<UserResponse> GetUsers()
         {
             IList<ApplicationUser> users = await _repository.GetUsers();
 
-            return users.Select(u => new UserModel() { Name = u.Name, Id = u.Id }).ToList();
+            IList<UserModel> models = users.Select(u => new UserModel() { Name = u.Name, Id = u.Id }).ToList();
+
+            UserResponse response = new UserResponse();
+
+            response.Users.AddRange(models);
+
+            return response;
         }
     }
 }

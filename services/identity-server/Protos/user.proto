@@ -3,7 +3,11 @@ syntax = "proto3";
 option csharp_namespace = "IdentityServer.Protos";
 
 service UserProtoService {
-	rpc GetUsers(UserRequest) returns (stream UserModel);
+	rpc GetUsers(UserRequest) returns (UserResponse);
+}
+
+message UserResponse {
+	repeated UserModel users = 1;
 }
 
 message UserModel {

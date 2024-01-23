@@ -1,3 +1,5 @@
+using IdentityServer.Protos;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Search.API
 {
@@ -9,6 +11,10 @@ namespace Search.API
 
             // Add services to the container.
 
+            builder.Services.AddGrpcClient<UserProtoService.UserProtoServiceClient>(o =>
+            {
+                o.Address = new Uri(builder.Configuration["GrpcSettings:Url"]);
+            });
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

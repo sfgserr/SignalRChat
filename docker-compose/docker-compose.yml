@@ -14,6 +14,12 @@ services:
       dockerfile: identity-server/Dockerfile
     depends_on:
       - db
+  search:
+    container_name: "search"
+    image: search
+    build:
+      context: ../services/search/
+      dockerfile: src/Dockerfile
   webapi:
     container_name: "webapi"
     image: webapi
