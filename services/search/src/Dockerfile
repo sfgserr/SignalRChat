@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["services/search/Новая папка/Search.API/Search.API.csproj", "services/search/Новая папка/Search.API/"]
-RUN dotnet restore "services/search/Новая папка/Search.API/Search.API.csproj"
+COPY ["services/search/src/Search.API.csproj", "services/search/src/"]
+RUN dotnet restore "services/search/src/Search.API.csproj"
 COPY . .
-WORKDIR "/src/services/search/Новая папка/Search.API"
+WORKDIR "/src/services/search/src"
 RUN dotnet build "Search.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

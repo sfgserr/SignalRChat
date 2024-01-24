@@ -18,8 +18,8 @@ services:
     container_name: "search"
     image: search
     build:
-      context: ../services/search/
-      dockerfile: src/Dockerfile
+      context: ../
+      dockerfile: services/search/src/Dockerfile
   webapi:
     container_name: "webapi"
     image: webapi

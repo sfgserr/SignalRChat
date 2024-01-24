@@ -1,7 +1,6 @@
-﻿using IdentityServer.Protos;
-using IdentityServer.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Search.API.Services;
 
 namespace Search.API.Controllers
 {
@@ -17,7 +16,7 @@ namespace Search.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet("FindUsers")]
+        [HttpGet("FindUsersByName")]
         public async Task<IActionResult> FindUsers(string name)
         {
             var response = await _userService.GetUsers();
