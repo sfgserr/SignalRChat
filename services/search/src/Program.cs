@@ -16,6 +16,12 @@ namespace Search.API
                 o.Address = new Uri(builder.Configuration["GrpcSettings:Url"]);
             });
             builder.Services.AddControllers();
+            builder.Services.AddAuthentication("Bearer")
+                    .AddIdentityServerAuthentication("Bearer", options =>
+                    {
+                        options.Authority = builder.Configuration["Authentication:AuthorityUrl"];
+                        options.ApiName = builder.Configuration["Authentication:ApiName"];
+                    });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
