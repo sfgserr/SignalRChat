@@ -7,8 +7,8 @@ import { LogoutCallback } from "../components/auth/logoutCallback";
 import { PrivateRoute } from "./privateRoute";
 import { Register } from "../components/auth/register";
 import { SilentRenew } from "../components/auth/silentRenew";
-import { PublicPage } from "../components/publicPage";
-import { PrivatePage } from "../components/privatePage";
+import { PublicPage } from "../pages/publicPage";
+import { PrivatePage } from "../pages/privatePage";
 
 export const Routes = (
     <Switch>

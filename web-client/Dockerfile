@@ -8,8 +8,10 @@ WORKDIR /app
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 
-# Same as npm install
-RUN npm install
+RUN npm install --force
+RUN export NODE_OPTIONS=--openssl-legacy-provider
+RUN npm install -g n
+RUN n 13.7.0
 
 COPY . /app/
 

@@ -41,11 +41,11 @@ namespace WebApi.UseCases.EditMessage
         }
 
         [HttpPut("Edit")]
-        public async Task<IActionResult> EditMessage(Guid messageId, string text)
+        public async Task<IActionResult> EditMessage(Guid id, string text)
         {
             _useCase.SetOutputPort(this);
 
-            await _useCase.Execute(messageId, text);
+            await _useCase.Execute(id, text);
 
             return _viewModel;
         } 

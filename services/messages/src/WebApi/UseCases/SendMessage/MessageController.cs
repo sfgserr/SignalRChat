@@ -35,12 +35,12 @@ namespace WebApi.UseCases.SendMessage
             _viewModel = BadRequest();
         }
 
-        [HttpPost("SendMessage")]
-        public async Task<IActionResult> SendMessage(string receiverId, string text)
+        [HttpPost("Send")]
+        public async Task<IActionResult> SendMessage(string id, string text)
         {
             _useCase.SetOutputPort(this);
 
-            await _useCase.Execute(receiverId, text);
+            await _useCase.Execute(id, text);
 
             return _viewModel;
         }

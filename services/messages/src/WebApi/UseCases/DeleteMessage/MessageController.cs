@@ -41,11 +41,11 @@ namespace WebApi.UseCases.DeleteMessage
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> DeleteMessage(Guid messageId)
+        public async Task<IActionResult> DeleteMessage(Guid id)
         {
             _useCase.SetOutputPort(this);
 
-            await _useCase.Execute(messageId);
+            await _useCase.Execute(id);
 
             return _viewModel;
         }
