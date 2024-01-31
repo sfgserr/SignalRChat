@@ -24,11 +24,12 @@ builder.Services.AddAuthentication();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
+var fordwardedHeaderOptions = new ForwardedHeadersOptions
 {
-    options.ForwardedHeaders =
-    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+};
+fordwardedHeaderOptions.KnownNetworks.Clear();
+fordwardedHeaderOptions.KnownProxies.Clear();
 
 builder.Services.AddIdentityServer(options =>
 {
@@ -74,7 +75,7 @@ app.UseAuthentication();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
+app.UseForwardedHeaders(fordwardedHeaderOptions);
 app.UseCors("_allowsAny");
 app.UseHttpsRedirection();
 app.MapGrpcService<UserService>();

@@ -13,6 +13,7 @@ namespace WebApi.Extensions
                     {
                         options.Authority = configuration["Authentication:AuthorityUrl"];
                         options.ApiName = configuration["Authentication:ApiName"];
+                        options.RequireHttpsMetadata = false;
                     });
 
             return services;

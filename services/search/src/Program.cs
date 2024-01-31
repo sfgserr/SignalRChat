@@ -1,5 +1,6 @@
 using IdentityServer.Protos;
 using Microsoft.Extensions.DependencyInjection;
+using Search.API.Services;
 
 namespace Search.API
 {
@@ -15,12 +16,15 @@ namespace Search.API
             {
                 o.Address = new Uri(builder.Configuration["GrpcSettings:Url"]);
             });
+
+            builder.Services.AddScoped<UserService>();
             builder.Services.AddControllers();
             builder.Services.AddAuthentication("Bearer")
                     .AddIdentityServerAuthentication("Bearer", options =>
                     {
                         options.Authority = builder.Configuration["Authentication:AuthorityUrl"];
                         options.ApiName = builder.Configuration["Authentication:ApiName"];
+                        options.RequireHttpsMetadata = false;
                     });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

@@ -6,7 +6,6 @@ namespace Search.API.Controllers
 {
     [ApiController]
     [Route("api/Search")]
-    [Authorize]
     public class UserController : Controller
     {
         private readonly UserService _userService;

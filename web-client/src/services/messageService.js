@@ -12,7 +12,7 @@ const editMessage = (id, text) => {
 
 const sendMessage = (id, text) => {
   return api
-    .post(`/api/Message/Send?id=${id}&text=${text}`, data);
+    .post(`/api/Message/Send?id=${id}&text=${text}`);
 };
 
 const deleteMessage = (id) => {
