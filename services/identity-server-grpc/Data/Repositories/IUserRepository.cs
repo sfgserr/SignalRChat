@@ -1,6 +1,6 @@
-﻿using IdentityServer.Models;
+﻿using IdentityServer.Grpc.Models;
 
-namespace IdentityServer.Data.Repositories
+namespace IdentityServer.Grpc.Data.Repositories
 {
     public interface IUserRepository
     {

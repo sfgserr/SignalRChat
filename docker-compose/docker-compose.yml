@@ -6,6 +6,13 @@ services:
     image: nginx
     build:
       context: "../nginx/"
+  identity-server-grpc:
+    image: identity-server-grpc
+    build:
+      context: ../
+      dockerfile: services/identity-server-grpc/Dockerfile
+    depends_on:
+      - db                                                                                
   identity-server:
     container_name: "identity-server"
     image: identity-server
@@ -20,6 +27,8 @@ services:
     build:
       context: ../
       dockerfile: services/search/src/Dockerfile
+    depends_on:
+      - identity-server
   webapi:
     container_name: "webapi"
     image: webapi

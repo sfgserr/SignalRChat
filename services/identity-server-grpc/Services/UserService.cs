@@ -1,8 +1,8 @@
-﻿using IdentityServer.Data.Repositories;
-using IdentityServer.Models;
-using IdentityServer.Protos;
+﻿using IdentityServer.Grpc.Data.Repositories;
+using IdentityServer.Grpc.Models;
+using IdentityServer.Grpc.Protos;
 
-namespace IdentityServer.Services
+namespace IdentityServer.Grpc.Services
 {
     public class UserService : UserProtoService.UserProtoServiceBase 
     {

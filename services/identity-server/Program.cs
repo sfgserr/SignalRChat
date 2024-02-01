@@ -1,8 +1,6 @@
 using IdentityServer;
 using IdentityServer.Data;
-using IdentityServer.Data.Repositories;
 using IdentityServer.Models;
-using IdentityServer.Services;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -15,8 +13,6 @@ var assembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddDbContext<ApplicationDbContext>(o => 
     o.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                    b => b.MigrationsAssembly(assembly)));
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
@@ -78,7 +74,6 @@ app.UseAuthorization();
 app.UseForwardedHeaders(fordwardedHeaderOptions);
 app.UseCors("_allowsAny");
 app.UseHttpsRedirection();
-app.MapGrpcService<UserService>();
 
 await UsersSeed.Seed(app.Services);
 

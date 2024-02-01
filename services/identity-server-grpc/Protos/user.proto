@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "IdentityServer.Protos";
+option csharp_namespace = "IdentityServer.Grpc.Protos";
 
 service UserProtoService {
 	rpc GetUsers(UserRequest) returns (UserResponse);

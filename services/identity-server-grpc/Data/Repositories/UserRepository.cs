@@ -1,7 +1,7 @@
-﻿using IdentityServer.Models;
+﻿using IdentityServer.Grpc.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityServer.Data.Repositories
+namespace IdentityServer.Grpc.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {

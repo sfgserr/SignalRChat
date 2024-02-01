@@ -11,10 +11,6 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Protobuf Include="Protos\user.proto" GrpcServices="Server" />
-  </ItemGroup>
     
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.2" />

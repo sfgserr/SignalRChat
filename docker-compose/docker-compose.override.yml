@@ -19,6 +19,12 @@ services:
      - "8081:80"
    volumes:
      - ~/.aspnet/https:/https:ro
+  identity-server-grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:1000
+    ports:
+      - "8088:8088"
   identity-server:
     environment:
       - ASPNETCORE_HTTPS_PORT=443
@@ -38,6 +44,7 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:8087
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx
+      - "GrpcSettings:Url=http://identity-server-grpc:8088"
     ports:
       - "8086:443"
       - "8087:8087"

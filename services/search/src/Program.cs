@@ -1,4 +1,4 @@
-using IdentityServer.Protos;
+using IdentityServer.Grpc.Protos;
 using Microsoft.Extensions.DependencyInjection;
 using Search.API.Services;
 
