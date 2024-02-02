@@ -1,10 +1,11 @@
-using IdentityServer.Grpc.Data;
-using IdentityServer.Grpc.Data.Repositories;
-using IdentityServer.Grpc.Services;
+using User.Grpc.Data;
+using User.Grpc.Data.Repositories;
+using User.Grpc.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using User.Grpc.Protos;
 
-namespace IdentityServer.Grpc
+namespace User.Grpc
 {
     public class Program
     {
@@ -20,25 +21,20 @@ namespace IdentityServer.Grpc
                                b => b.MigrationsAssembly(assembly)));
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<UserService>();
             builder.Services.AddRazorPages();
             builder.Services.AddGrpc();
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.MapGrpcService<UserService>();
             app.UseAuthorization();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<UserService>();
+            });
             app.MapRazorPages();
 
             app.Run();

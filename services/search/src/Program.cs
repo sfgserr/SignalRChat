@@ -1,4 +1,4 @@
-using IdentityServer.Grpc.Protos;
+using User.Grpc.Protos;
 using Microsoft.Extensions.DependencyInjection;
 using Search.API.Services;
 
@@ -15,6 +15,14 @@ namespace Search.API
             builder.Services.AddGrpcClient<UserProtoService.UserProtoServiceClient>(o =>
             {
                 o.Address = new Uri(builder.Configuration["GrpcSettings:Url"]);
+            })//Not for production
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+                return handler;
             });
 
             builder.Services.AddScoped<UserService>();

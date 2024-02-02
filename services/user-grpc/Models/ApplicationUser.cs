@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace IdentityServer.Grpc.Models
+namespace User.Grpc.Models
 {
     public class ApplicationUser : IdentityUser
     {

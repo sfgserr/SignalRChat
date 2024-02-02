@@ -1,8 +1,9 @@
-﻿using IdentityServer.Grpc.Data.Repositories;
-using IdentityServer.Grpc.Models;
-using IdentityServer.Grpc.Protos;
+﻿using Grpc.Core;
+using User.Grpc.Data.Repositories;
+using User.Grpc.Models;
+using User.Grpc.Protos;
 
-namespace IdentityServer.Grpc.Services
+namespace User.Grpc.Services
 {
     public class UserService : UserProtoService.UserProtoServiceBase 
     {
@@ -13,11 +14,11 @@ namespace IdentityServer.Grpc.Services
             _repository = repository;
         }
 
-        public async Task<UserResponse> GetUsers()
+        public async override Task<UserResponse> GetUsers(UserRequest userRequest, ServerCallContext context)
         {
             IList<ApplicationUser> users = await _repository.GetUsers();
 
-            IList<UserModel> models = users.Select(u => new UserModel() { Name = u.Name, Id = u.Id }).ToList();
+            IList<UserModel> models = users.Select(u => new UserModel() { Name = u.UserName, Id = u.Id }).ToList();
 
             UserResponse response = new UserResponse();
 

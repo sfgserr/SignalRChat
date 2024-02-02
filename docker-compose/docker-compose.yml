@@ -6,11 +6,11 @@ services:
     image: nginx
     build:
       context: "../nginx/"
-  identity-server-grpc:
-    image: identity-server-grpc
+  user-grpc:
+    image: user-grpc
     build:
       context: ../
-      dockerfile: services/identity-server-grpc/Dockerfile
+      dockerfile: services/user-grpc/Dockerfile
     depends_on:
       - db                                                                                
   identity-server:

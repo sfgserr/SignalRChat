@@ -1,4 +1,4 @@
-﻿using IdentityServer.Grpc.Protos;
+﻿using User.Grpc.Protos;
 
 namespace Search.API.Services
 {

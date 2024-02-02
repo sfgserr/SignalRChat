@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\identity-server-grpc\Protos\user.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\user-grpc\Protos\user.proto" GrpcServices="Client"/>
   </ItemGroup>
-
 </Project>

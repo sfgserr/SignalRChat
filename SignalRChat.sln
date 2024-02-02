@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Search.API", "services\sear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "services\identity-server\IdentityServer.csproj", "{193EBAE5-938A-46F5-B8C7-013EAB218473}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Grpc", "services\identity-server-grpc\IdentityServer.Grpc.csproj", "{680CF942-3C1A-40BC-8C93-F64838248AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.Grpc", "services\user-grpc\User.Grpc.csproj", "{5E64323D-EA4B-48F7-A312-870DE2A5107E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,14 +83,14 @@ Global
 		{193EBAE5-938A-46F5-B8C7-013EAB218473}.Release|Any CPU.Build.0 = Release|Any CPU
 		{193EBAE5-938A-46F5-B8C7-013EAB218473}.Release|x86.ActiveCfg = Release|x86
 		{193EBAE5-938A-46F5-B8C7-013EAB218473}.Release|x86.Build.0 = Release|x86
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Debug|x86.Build.0 = Debug|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Release|x86.ActiveCfg = Release|Any CPU
-		{680CF942-3C1A-40BC-8C93-F64838248AD4}.Release|x86.Build.0 = Release|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E64323D-EA4B-48F7-A312-870DE2A5107E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

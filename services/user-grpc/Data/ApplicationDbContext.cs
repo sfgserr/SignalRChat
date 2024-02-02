@@ -1,8 +1,8 @@
-﻿using IdentityServer.Grpc.Models;
+﻿using User.Grpc.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityServer.Grpc.Data
+namespace User.Grpc.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
