@@ -8,8 +8,15 @@ export const PrivatePage = () => {
     const [data, setData] = useState([]);
 
     const handleSearch = (query) => {
-        const json = searchService.findUsers(query);
-        setData(json);
+        searchService
+        .findUsers(query)
+        .then((response) => {
+          setData(response.data);
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
 
     return (

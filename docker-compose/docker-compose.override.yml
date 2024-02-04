@@ -56,9 +56,14 @@ services:
     volumes:
       - ~/.aspnet/https:/https:ro
   webclient:
-    build:
-     args:
-       ENV: docker
+    environment:
+      - ASPNETCORE_HTTPS_PORT=443
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:8082
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
     ports:
       - "8082:443"
       - "8083:3000"
