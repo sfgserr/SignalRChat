@@ -26,9 +26,9 @@ namespace User.Grpc
             builder.Services.AddGrpc();
             var app = builder.Build();
 
-            app.UseHttpsRedirection();
+            app.UseHsts();
             app.UseStaticFiles();
-
+                
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

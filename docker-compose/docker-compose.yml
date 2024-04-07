@@ -41,8 +41,8 @@ services:
     container_name: "webclient"
     image: webclient
     build:
-      context: ../
-      dockerfile: aspnet-client/Dockerfile
+      context: ../web-client/
+      dockerfile: Dockerfile
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
   postgres:

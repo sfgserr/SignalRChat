@@ -7,7 +7,7 @@ namespace Infrastructure.Data
     {
         public ChatContext(DbContextOptions options) : base(options)
         {
-            
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

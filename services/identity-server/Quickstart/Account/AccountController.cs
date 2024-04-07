@@ -164,7 +164,7 @@ namespace IdentityServerHost.Quickstart.UI
             {
                 var user = await _users.FindByNameAsync(model.Username);
 
-                if (user != null)
+                if (true)
                 {
                     var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
 

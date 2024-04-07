@@ -1,22 +1,18 @@
 import React from 'react';
 import SearchBar from '../components/searchBar';
 import './privatePage.css';
-import { useState } from 'react';
 import searchService from '../services/searchService.js'
+import Table from '../components/table';
 
-export const PrivatePage = () => {
-    const [data, setData] = useState([]);
+export function PrivatePage() {
+    const [data, setData] = React.useState([]);
 
-    const handleSearch = (query) => {
-        searchService
+    const handleSearch = async (query) => {
+        let response = await searchService
         .findUsers(query)
-        .then((response) => {
-          setData(response.data);
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        .then((response) => response);
+
+        setData(response.data);
     }
 
     return (
@@ -24,10 +20,9 @@ export const PrivatePage = () => {
             <div className='container'>
                 <SearchBar searchButtonClicked={handleSearch}/>
             </div>
-           <div>
-            {data.id}
-            {data.name}
-           </div>
+            <div className='container'>
+                <Table data={data}/>
+            </div>
         </div>
     );
 };

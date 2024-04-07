@@ -1,4 +1,5 @@
-﻿using WebApi.Extensions;
+﻿using Microsoft.IdentityModel.Logging;
+using WebApi.Extensions;
 
 namespace WebApi
 {
@@ -13,6 +14,8 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddUseCases()
                     .AddProxy()
                     .AddCustomCors()
@@ -36,7 +39,7 @@ namespace WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseForwardedHeaders()
+            app.UseForwardedHeaders(new ForwardedHeadersOptions() { ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.All})
                .UseCors("_allowsAny")
                .UseHttpsRedirection()
                .UseRouting()

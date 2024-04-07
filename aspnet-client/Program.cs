@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
+using System.Net;
 
 namespace AspnetClient
 {
@@ -11,6 +13,12 @@ namespace AspnetClient
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var handler = new HttpClientHandler();
+            //Not production code
+            handler.ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            IdentityModelEventSource.ShowPII = true;
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddRazorPages();
@@ -19,21 +27,17 @@ namespace AspnetClient
                 o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddCertificate(o =>
-            {
-                o.AllowedCertificateTypes = Microsoft.AspNetCore.Authentication.Certificate.CertificateTypes.All;
-            })
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, o =>
             {
-                o.Authority = "https://localhost";
+                o.Authority = "https://localhost:7290";
                 o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 o.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 o.ClientId = "chat.client";
                 o.SaveTokens = true;
                 o.GetClaimsFromUserInfoEndpoint = true;
                 o.ResponseType = "code";
-                o.MetadataAddress = "https://localhost/.well-known/openid-configuration";
+                o.BackchannelHttpHandler = handler;
             });
 
             var app = builder.Build();
@@ -55,6 +59,7 @@ namespace AspnetClient
             app.UseAuthentication();
             app.MapRazorPages();
             app.MapControllers();
+            
 
             app.Run();
         }

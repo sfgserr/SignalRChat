@@ -1,6 +1,9 @@
 using User.Grpc.Protos;
-using Microsoft.Extensions.DependencyInjection;
 using Search.API.Services;
+using Microsoft.IdentityModel.Logging;
+using System.Net;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Search.API
 {
@@ -10,30 +13,30 @@ namespace Search.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
+            IdentityModelEventSource.ShowPII = true;
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+                Proxy = new WebProxy("http://chatauth.local")
+            };
+            builder.Services.AddAuthorization();
             builder.Services.AddGrpcClient<UserProtoService.UserProtoServiceClient>(o =>
             {
                 o.Address = new Uri(builder.Configuration["GrpcSettings:Url"]);
-            })//Not for production
-            .ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                var handler = new HttpClientHandler();
-                handler.ServerCertificateCustomValidationCallback =
-                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
-                return handler;
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
 
             builder.Services.AddScoped<UserService>();
             builder.Services.AddControllers();
             builder.Services.AddAuthentication("Bearer")
-                    .AddIdentityServerAuthentication("Bearer", options =>
-                    {
-                        options.Authority = builder.Configuration["Authentication:AuthorityUrl"];
-                        options.ApiName = builder.Configuration["Authentication:ApiName"];
-                        options.RequireHttpsMetadata = false;
-                    });
+            .AddIdentityServerAuthentication("Bearer", options =>
+            {
+                options.Authority = builder.Configuration["Authentication:AuthorityUrl"];
+                options.ApiName = builder.Configuration["Authentication:ApiName"];
+                options.RequireHttpsMetadata = false;
+                options.JwtBackChannelHandler = handler;
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -48,12 +51,13 @@ namespace Search.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-
-
-            app.MapControllers();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             app.Run();
         }
     }

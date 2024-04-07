@@ -7,6 +7,12 @@ namespace WebApi.Extensions
     {
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
             services.AddScoped<IUserService, UserService>();
             services.AddAuthentication("Bearer")
                     .AddIdentityServerAuthentication("Bearer", options =>
@@ -14,6 +20,7 @@ namespace WebApi.Extensions
                         options.Authority = configuration["Authentication:AuthorityUrl"];
                         options.ApiName = configuration["Authentication:ApiName"];
                         options.RequireHttpsMetadata = false;
+                        options.JwtBackChannelHandler = handler;
                     });
 
             return services;

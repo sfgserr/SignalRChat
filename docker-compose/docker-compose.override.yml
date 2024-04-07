@@ -12,24 +12,25 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORT=443
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - Authentication__AuthorityUrl=https://chatauth.local
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx 
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx 
    ports:
-     - "8080:443"
-     - "8081:80"
+     - "8082:443"
+     - "8083:80"
    volumes:
      - ~/.aspnet/https:/https:ro
   user-grpc:
     environment:
       - ASPNETCORE_HTTPS_PORT=443
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8087;https://+:443
+      - ASPNETCORE_URLS=http://+:8088;https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx
     volumes:
       - ~/.aspnet/https:/https:ro
     ports:
-      - "8088:8087"
+      - "8088:8088"
       - "8089:443"
   identity-server:
     environment:
@@ -37,7 +38,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:1000
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx 
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx 
     ports:
       - "8084:443"
       - "8085:1000"
@@ -46,10 +47,11 @@ services:
   search:
     environment:
       - ASPNETCORE_HTTPS_PORT=443
+      - Authentication__AuthorityUrl=https://chatauth.local
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:8087
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx
     ports:
       - "8086:443"
       - "8087:8087"
@@ -57,16 +59,12 @@ services:
       - ~/.aspnet/https:/https:ro
   webclient:
     environment:
-      - ASPNETCORE_HTTPS_PORT=443
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:8082
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localdev.pfx
-    volumes:
-      - ~/.aspnet/https:/https:ro
+      - REACT_APP_AUDIENCE=https://chatauth.local
+      - REACT_APP_ISSUER=https://chatauth.local
+      - REACT_APP_AUTH_URL=https://chatauth.local
+      - REACT_APP_AUTHORITY=https://chatauth.local
     ports:
-      - "8082:443"
-      - "8083:3000"
+      - "3000:3000"
   db:
     environment:
       SA_PASSWORD: "S3cur3P@ssW0rd!"

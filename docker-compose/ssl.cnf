@@ -215,12 +215,13 @@ basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
-subjectAltName = DNS:chat.local, DNS:localhost
+subjectAltName = DNS:chat.local, DNS:chatauth.local, DNS:172.21.112.1
 
 [ alternate_names ]
 
-DNS.1       = localhost
-DNS.2       = chat.local
+DNS.1       = chat.local
+DNS.2       = chatauth.local
+DNS.3       = 172.21.112.1
 
 # Extensions for a typical CA
 
