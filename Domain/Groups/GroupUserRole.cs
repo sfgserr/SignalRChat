@@ -18,7 +18,9 @@ namespace Domain.Groups
         public static GroupUserRole Admin { get; } = new GroupUserRole("Admin", [
             new("CreateMessage"),
             new("ReadMessage"),
-            new("EditMessage")]);
+            new("EditMessage"),
+            new("AddMember"),
+            new("RemoveMember")]);
 
         public string Value { get; }
 

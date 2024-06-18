@@ -38,9 +38,9 @@ namespace Domain.Messages
 
         public UserId SenderId { get; }
 
-        public GroupId ToGroupId { get; }
-
         public Group? ToGroup { get; set; }
+
+        public GroupId ToGroupId { get; }
 
         public string Body { get; private set; }
 

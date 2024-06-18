@@ -18,7 +18,6 @@ namespace Domain.Groups
         private Group(GroupId id, UserId adminId, string name)
         {
             Id = id;
-            AdminId = adminId;
             Name = name;
 
             _users = [GroupUser.Create(adminId, id, GroupUserRole.Admin)];
@@ -27,8 +26,6 @@ namespace Domain.Groups
         }
 
         public GroupId Id { get; }
-
-        public UserId AdminId { get; }
 
         public string Name { get; private set; }
 
@@ -39,9 +36,10 @@ namespace Domain.Groups
             return new Group(new GroupId(Guid.NewGuid()), adminId, name);
         }
 
-        public void AddUser(UserId userId)
+        public void AddUser(UserId userId, UserId settingUserId)
         {
             CheckRule(new UserCanOnlyBeAddedOnceRule(userId, _users));
+            CheckRule(new OnlyAdminCanAddUserToGroupRule(_users, settingUserId));
 
             _users.Add(GroupUser.Create(userId, Id, GroupUserRole.Member));
 
