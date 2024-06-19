@@ -19,8 +19,9 @@ namespace Domain.Groups
             new("CreateMessage"),
             new("ReadMessage"),
             new("EditMessage"),
-            new("AddMember"),
-            new("RemoveMember")]);
+            new("AddUser"),
+            new("RemoveUser"),
+            new("ChangeName")]);
 
         public string Value { get; }
 

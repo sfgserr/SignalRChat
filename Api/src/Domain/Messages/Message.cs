@@ -2,24 +2,28 @@
 using Domain.SeedWork;
 using Domain.Groups;
 using Domain.Users;
+using Domain.Messages.Rules;
 
 namespace Domain.Messages
 {
-    public class Message : Entity
+    public class Message : Entity, IAggregateRoot
     {
         private Message(
             MessageId id,
             UserId senderId,
-            GroupId toGroupId,
+            Group toGroup,
             string body,
             MessageType type,
             DateTime creationTime,
             bool isEditted,
             bool isRead)
         {
+            CheckRule(new OnlyGroupMemberCanSendMessage(toGroup, senderId));
+            CheckRule(new TextMustBeProvidedRule(body));
+
             Id = id;
             SenderId = senderId;
-            ToGroupId = toGroupId;
+            ToGroupId = toGroup.Id;
             Body = body;
             Type = type;
             CreationTime = creationTime;
@@ -38,8 +42,6 @@ namespace Domain.Messages
 
         public UserId SenderId { get; }
 
-        public Group? ToGroup { get; set; }
-
         public GroupId ToGroupId { get; }
 
         public string Body { get; private set; }
@@ -53,15 +55,15 @@ namespace Domain.Messages
         public bool IsRead { get; private set; }
 
         internal static Message CreateMessage(
-            UserId senderGuid,
-            GroupId toGroupId,
+            UserId senderId,
+            Group toGroup,
             string body, 
             MessageType type)
         {
             return new Message(
                 new MessageId(Guid.NewGuid()), 
-                senderGuid, 
-                toGroupId, 
+                senderId, 
+                toGroup, 
                 body, 
                 type, 
                 DateTime.Now, 
@@ -69,8 +71,10 @@ namespace Domain.Messages
                 false);
         }
 
-        public void Edit(string body)
+        public void Edit(UserId edittingUserId, string body)
         {
+            CheckRule(new MessageCanBeEdittedOnlyBySenderRule(this, edittingUserId));
+
             Body = body;
             IsEditted = true;
         }
