@@ -3,7 +3,7 @@ using Application.Cqrs.Queries;
 
 namespace Application.Contracts
 {
-    public interface IModule
+    public interface IChatModule
     {
         Task ExecuteCommandAsync(ICommand command);
 

@@ -1,9 +1,9 @@
 ﻿using Application.Cqrs.Commands;
 using Application.Exceptions;
 
-namespace Application.Groups.Commands
+namespace Application.Groups.Commands.CreateGroup
 {
-    public sealed class CreateGroupValidationCommandHandler(ICommandHandler<CreateGroupCommand> commandHandler) : 
+    internal sealed class CreateGroupValidationCommandHandler(ICommandHandler<CreateGroupCommand> commandHandler) :
         ICommandHandler<CreateGroupCommand>
     {
         private readonly ICommandHandler<CreateGroupCommand> _commandHandler = commandHandler;

@@ -3,9 +3,9 @@ using Application.Cqrs.Commands;
 using Domain.Groups;
 using Domain.Users;
 
-namespace Application.Groups.Commands
+namespace Application.Groups.Commands.CreateGroup
 {
-    public sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IUnitOfWork unitOfWork) : 
+    internal sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IUnitOfWork unitOfWork) :
         ICommandHandler<CreateGroupCommand>
     {
         private readonly IGroupRepository _groupRepository = groupRepository;
