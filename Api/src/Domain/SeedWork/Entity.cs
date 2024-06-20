@@ -1,4 +1,5 @@
-﻿
+﻿using Domain.Exceptions;
+
 namespace Domain.SeedWork
 {
     public abstract class Entity
