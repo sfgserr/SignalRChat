@@ -1,6 +1,6 @@
 ﻿using Domain.Groups;
 
-namespace Application.Groups.Queries.GetUserGroups
+namespace Application.Groups.Queries
 {
     public class GroupDto(Group group)
     {
