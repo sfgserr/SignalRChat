@@ -2,7 +2,7 @@
 
 namespace Application.Groups.Commands.AddUser
 {
-    internal sealed class AddUserValidator : AbstractValidator<AddUserCommand>
+    internal class AddUserValidator : AbstractValidator<AddUserCommand>
     {
         public AddUserValidator() 
         {

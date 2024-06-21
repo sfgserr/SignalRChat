@@ -5,8 +5,8 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.CreateGroup
 {
-    internal sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IUserContext userContext, 
-        IUnitOfWork unitOfWork) : ICommandHandler<CreateGroupCommand>
+    public sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IUserContext userContext, 
+        IUnitOfWork unitOfWork) : ICreateGroupCommandHandler
     {
         private readonly IGroupRepository _groupRepository = groupRepository;
         private readonly IUserContext _userContext = userContext;
@@ -14,7 +14,7 @@ namespace Application.Groups.Commands.CreateGroup
 
         public async Task Handle(CreateGroupCommand command)
         {
-            await _groupRepository.Add(Group.Create(_userContext.Id, command.Name));
+            await _groupRepository.Add(Group.Create(_userContext.Id, command.Name, command.IconUri));
 
             await _unitOfWork.SaveChangesAsync();
         }

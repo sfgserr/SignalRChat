@@ -2,7 +2,7 @@
 
 namespace Application.Groups.Commands.RemoveUser
 {
-    internal sealed class RemoveUserValidator : AbstractValidator<RemoveUserCommand>
+    internal class RemoveUserValidator : AbstractValidator<RemoveUserCommand>
     {
         public RemoveUserValidator()
         {

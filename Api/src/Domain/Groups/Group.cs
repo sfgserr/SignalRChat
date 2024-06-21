@@ -16,10 +16,12 @@ namespace Domain.Groups
             
         }
 
-        private Group(GroupId id, UserId adminId, string name)
+        private Group(GroupId id, UserId adminId, string name, string iconUri)
         {
             Id = id;
             Name = name;
+            IconUri = iconUri;
+            CreationDate = DateTime.Now;
 
             _users = [GroupUser.Create(adminId, id, GroupUserRole.Admin)];
 
@@ -30,11 +32,15 @@ namespace Domain.Groups
 
         public string Name { get; private set; }
 
+        public string IconUri { get; private set; }
+
+        public DateTime CreationDate { get; }
+
         public IReadOnlyCollection<GroupUser> Users  => _users.AsReadOnly();
 
-        public static Group Create(UserId adminId, string name)
+        public static Group Create(UserId adminId, string name, string iconUri)
         {
-            return new Group(new GroupId(Guid.NewGuid()), adminId, name);
+            return new Group(new GroupId(Guid.NewGuid()), adminId, name, iconUri);
         }
 
         public void AddUser(UserId userId, UserId addingUserId)
@@ -68,6 +74,14 @@ namespace Domain.Groups
             CheckRule(new NameMustBeProvidedRule(name));
 
             Name = name;
+        }
+
+        public void ChangeIconUri(string iconUri, UserId changingUserId)
+        {
+            CheckRule(new OnlyAdminCanChangeGroupRule(_users, changingUserId));
+            CheckRule(new IconUriMustBeProvidedRule(iconUri));
+
+            IconUri = iconUri;
         }
     }
 }
