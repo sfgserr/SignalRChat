@@ -5,20 +5,18 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.AddUser
 {
-    internal sealed class AddUserCommandHandler(IUserService userService, IGroupRepository groupRepository, 
+    internal sealed class AddUserCommandHandler(IUserContext userContext, IGroupRepository groupRepository, 
         IUnitOfWork unitOfWork) :ICommandHandler<AddUserCommand>
     {
-        private readonly IUserService _userService = userService;
+        private readonly IUserContext _userContext = userContext;
         private readonly IGroupRepository _groupRepository = groupRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(AddUserCommand command)
         {
-            Guid userId = _userService.GetUserId();
-
             Group group = await _groupRepository.Get(new GroupId(command.GroupId));
 
-            group.AddUser(new UserId(command.UserId), new UserId(userId));
+            group.AddUser(new UserId(command.UserId), _userContext.Id);
 
             await _unitOfWork.SaveChangesAsync();
         }
