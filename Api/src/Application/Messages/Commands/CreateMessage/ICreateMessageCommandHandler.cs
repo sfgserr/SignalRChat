@@ -4,6 +4,5 @@ namespace Application.Messages.Commands.CreateMessage
 {
     public interface ICreateMessageCommandHandler : ICommandHandler<CreateMessageCommand>
     {
-
     }
 }
