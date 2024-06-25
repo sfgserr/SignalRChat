@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace Application.Users.Commands.Authenticate
 {
-    public class AuthenticateCommandHandler(IUserRepository userRepository) : IAuthenticateCommandHandler
+    public sealed class AuthenticateCommandHandler(IUserRepository userRepository) : IAuthenticateCommandHandler
     {
         private readonly IUserRepository _userRepository = userRepository;
 
