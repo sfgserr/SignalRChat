@@ -4,14 +4,14 @@ using Domain.Users;
 
 namespace Domain.Messages.Events
 {
-    public class MessageCreatedDomainEvent(List<UserId> users, GroupId groupId, MessageType type, DateTime created) : 
+    public class MessageCreatedDomainEvent(List<UserId> users, UserId senderId, GroupId groupId, DateTime created) : 
         DomainEventBase
     {
         public List<UserId> Users { get; } = users;
 
-        public GroupId GroupId { get; } = groupId;
+        public UserId SenderId { get; } = senderId;
 
-        public MessageType Type { get; } = type;
+        public GroupId GroupId { get; } = groupId;
 
         public DateTime Created { get; } = created;
     }

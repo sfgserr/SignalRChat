@@ -15,7 +15,7 @@ namespace Domain.Users
             Password = password;
             IconUri = iconUri;
 
-            AddDomainEvent(new UserCreatedDomainEvent(userId));
+            AddDomainEvent(new UserCreatedDomainEvent(login));
         }
 
         private User()

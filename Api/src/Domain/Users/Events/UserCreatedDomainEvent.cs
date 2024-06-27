@@ -2,8 +2,8 @@
 
 namespace Domain.Users.Events
 {
-    public class UserCreatedDomainEvent(UserId userId) : DomainEventBase
+    public class UserCreatedDomainEvent(string login) : DomainEventBase
     {
-        public UserId UserId { get; } = userId;
+        public string Login { get; } = login;
     }
 }

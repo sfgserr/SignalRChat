@@ -31,8 +31,9 @@ namespace Domain.Messages
             IsRead = isRead;
 
             AddDomainEvent(new MessageCreatedDomainEvent(
-                toGroup.Users.Select(u => u.UserId).ToList(), 
-                type, 
+                toGroup.Users.Select(u => u.UserId).ToList(),
+                senderId,
+                toGroup.Id,
                 creationTime));
         }
 
