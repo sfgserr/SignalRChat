@@ -30,7 +30,10 @@ namespace Domain.Messages
             IsEditted = isEditted;
             IsRead = isRead;
 
-            AddDomainEvent(new MessageCreatedDomainEvent(senderId, type, creationTime));
+            AddDomainEvent(new MessageCreatedDomainEvent(
+                toGroup.Users.Select(u => u.UserId).ToList(), 
+                type, 
+                creationTime));
         }
 
         private Message()

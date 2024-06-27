@@ -1,12 +1,15 @@
-﻿
+﻿using Domain.Groups;
 using Domain.SeedWork;
 using Domain.Users;
 
 namespace Domain.Messages.Events
 {
-    public class MessageCreatedDomainEvent(UserId senderId, MessageType type, DateTime created) : DomainEventBase
+    public class MessageCreatedDomainEvent(List<UserId> users, GroupId groupId, MessageType type, DateTime created) : 
+        DomainEventBase
     {
-        public UserId SenderId { get; } = senderId;
+        public List<UserId> Users { get; } = users;
+
+        public GroupId GroupId { get; } = groupId;
 
         public MessageType Type { get; } = type;
 
