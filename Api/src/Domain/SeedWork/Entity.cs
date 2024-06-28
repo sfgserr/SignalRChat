@@ -13,9 +13,9 @@ namespace Domain.SeedWork
             _domainEvents.Add(eventItem);
         }
 
-        public void RemoveDomainEvent(IDomainEvent eventItem)
+        public void ClearDomainEvents()
         {
-            _domainEvents.Remove(eventItem);
+            _domainEvents.Clear();
         }
 
         protected void CheckRule(IBusinessRule rule)

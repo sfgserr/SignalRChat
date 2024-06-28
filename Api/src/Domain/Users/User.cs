@@ -10,7 +10,7 @@ namespace Domain.Users
         {
             CheckRule(new UserLoginMustBeUniqueRule(_usersCounter, login));
 
-            UserId = userId;
+            Id = userId;
             Login = login;
             Password = password;
             IconUri = iconUri;
@@ -28,7 +28,7 @@ namespace Domain.Users
             return new User(new UserId(Guid.NewGuid()), login, password, iconUri, userCounter);
         }
 
-        public UserId UserId { get; }
+        public UserId Id { get; }
 
         public string Login { get; }
 

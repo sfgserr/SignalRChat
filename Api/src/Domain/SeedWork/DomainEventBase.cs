@@ -5,9 +5,9 @@ namespace Domain.SeedWork
     {
         public DomainEventBase()
         {
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid();
         }
 
-        public string Id { get; }
+        public Guid Id { get; }
     }
 }
