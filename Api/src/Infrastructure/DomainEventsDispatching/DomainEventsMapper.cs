@@ -1,16 +1,34 @@
 ﻿using Application.Contracts;
 using Domain.SeedWork;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Infrastructure.DomainEventsDispatching
 {
-    internal class DomainEventsMapper(Dictionary<Type, object> domainEventsMappings)
+    internal class DomainEventsMapper
     {
-        private readonly Dictionary<Type, object> _domainEventsMappings = domainEventsMappings;
+        private readonly IServiceProvider _serviceProvider;
 
-        public async Task Handle<T>(string type, string message) where T : IDomainEvent
+        internal DomainEventsMapper(IServiceProvider serviceProvider)
         {
-            
+            _serviceProvider = serviceProvider;
+        }
+
+        public async Task Handle(string type, string message)
+        {
+            var eventType = Type.GetType(type)!;
+            var @event = (IDomainEvent)JsonConvert.DeserializeObject(message, eventType)!;
+
+            var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(eventType);
+
+            var handler = _serviceProvider.GetRequiredService(handlerType);
+
+            if (handler != null)
+            {
+                var handleMethod = handlerType.GetMethod("Handle");
+
+                await (Task)handleMethod!.Invoke(handler, [@event])!;
+            }
         }
     }
 }
