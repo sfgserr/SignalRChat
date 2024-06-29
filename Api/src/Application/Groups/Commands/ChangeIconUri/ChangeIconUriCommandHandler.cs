@@ -1,10 +1,11 @@
-﻿using Domain.Groups;
+﻿using Application.Cqrs.Commands;
+using Domain.Groups;
 using Domain.Users;
 
 namespace Application.Groups.Commands.ChangeIconUri
 {
     public sealed class ChangeIconUriCommandHandler(IGroupRepository groupRepository, IUserContext userContext) :
-        IChangeIconUriCommandHandler
+        ICommandHandler<ChangeIconUriCommand>
     {
         private readonly IGroupRepository _groupRepository = groupRepository;
         private readonly IUserContext _userContext = userContext;

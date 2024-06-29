@@ -5,36 +5,36 @@ namespace Infrastructure.Data.Domain.Users
 {
     internal class UserRepository : IUserRepository
     {
-        private readonly AppContext _appContext;
+        private readonly ApplicationContext _applicationContext;
 
-        internal UserRepository(AppContext appContext)
+        internal UserRepository(ApplicationContext applicationContext)
         {
-            _appContext = appContext;
+            _applicationContext = applicationContext;
         }
 
         public async Task Add(User entity)
         {
-            await _appContext.Users.AddAsync(entity);
+            await _applicationContext.Users.AddAsync(entity);
         }
 
         public async Task<User> Get(UserId userId)
         {
-            return await _appContext.Users.FindAsync(userId);
+            return await _applicationContext.Users.FindAsync(userId);
         }
 
         public async Task<User> Get(string login)
         {
-            return await _appContext.Users.FirstOrDefaultAsync(x => x.Login == login);
+            return await _applicationContext.Users.FirstOrDefaultAsync(x => x.Login == login);
         }
 
         public async Task<List<User>> GetAll()
         {
-            return await _appContext.Users.ToListAsync();
+            return await _applicationContext.Users.ToListAsync();
         }
 
         public void Update(User entity)
         {
-            _appContext.Users.Update(entity);
+            _applicationContext.Users.Update(entity);
         }
     }
 }

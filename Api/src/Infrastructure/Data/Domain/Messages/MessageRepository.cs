@@ -6,36 +6,36 @@ namespace Infrastructure.Data.Domain.Messages
 {
     public class MessageRepository : IMessageRepository
     {
-        private readonly AppContext _appContext;
+        private readonly ApplicationContext _applicationContext;
 
-        public MessageRepository(AppContext appContext)
+        public MessageRepository(ApplicationContext applicationContext)
         {
-            _appContext = appContext;
+            _applicationContext = applicationContext;
         }
 
         public async Task Add(Message entity)
         {
-            await _appContext.Messages.AddAsync(entity);
+            await _applicationContext.Messages.AddAsync(entity);
         }
 
         public async Task<Message> Get(MessageId messageId)
         {
-            return await _appContext.Messages.FindAsync(messageId);
+            return await _applicationContext.Messages.FindAsync(messageId);
         }
 
         public async Task<IList<Message>> Get(GroupId groupId)
         {
-            return await _appContext.Messages.Where(m => m.ToGroupId == groupId).ToListAsync();
+            return await _applicationContext.Messages.Where(m => m.ToGroupId == groupId).ToListAsync();
         }
 
         public async Task<List<Message>> GetAll()
         {
-            return await _appContext.Messages.ToListAsync();
+            return await _applicationContext.Messages.ToListAsync();
         }
 
         public void Update(Message entity)
         {
-            _appContext.Messages.Update(entity);
+            _applicationContext.Messages.Update(entity);
         }
     }
 }

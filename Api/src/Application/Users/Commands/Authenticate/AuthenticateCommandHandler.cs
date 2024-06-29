@@ -1,9 +1,11 @@
-﻿using Domain.Users;
+﻿using Application.Cqrs.Commands;
+using Domain.Users;
 using System.Security.Claims;
 
 namespace Application.Users.Commands.Authenticate
 {
-    public sealed class AuthenticateCommandHandler(IUserRepository userRepository) : IAuthenticateCommandHandler
+    public sealed class AuthenticateCommandHandler(IUserRepository userRepository) : 
+        ICommandHandlerWithResult<AuthenticateCommand, AuthenticationResult>
     {
         private readonly IUserRepository _userRepository = userRepository;
 

@@ -4,9 +4,9 @@ namespace Infrastructure.Data.Domain.Users
 {
     internal class UserCounter : IUserCounter
     {
-        private readonly AppContext _appContext;
+        private readonly ApplicationContext _appContext;
 
-        internal UserCounter(AppContext appContext)
+        internal UserCounter(ApplicationContext appContext)
         {
             _appContext = appContext;
         }

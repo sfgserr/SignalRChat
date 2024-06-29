@@ -1,10 +1,11 @@
-﻿using Domain.Groups;
+﻿using Application.Cqrs.Commands;
+using Domain.Groups;
 using Domain.Users;
 
 namespace Application.Groups.Commands.AddUser
 {
     public sealed class AddUserCommandHandler(IUserContext userContext, IGroupRepository groupRepository) : 
-        IAddUserCommandHandler
+        ICommandHandler<AddUserCommand>
     {
         private readonly IUserContext _userContext = userContext;
         private readonly IGroupRepository _groupRepository = groupRepository;

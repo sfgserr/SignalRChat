@@ -5,31 +5,31 @@ namespace Infrastructure.Data.Domain.Groups
 {
     internal class GroupRepository : IGroupRepository
     {
-        private readonly AppContext _appContext;
+        private readonly ApplicationContext _applicationContext;
 
-        internal GroupRepository(AppContext appContext)
+        internal GroupRepository(ApplicationContext applicationContext)
         {
-            _appContext = appContext;
+            _applicationContext = applicationContext;
         }
 
         public async Task Add(Group entity)
         {
-            await _appContext.Groups.AddAsync(entity);
+            await _applicationContext.Groups.AddAsync(entity);
         }
 
         public async Task<Group> Get(GroupId groupId)
         {
-            return await _appContext.Groups.FindAsync(groupId);
+            return await _applicationContext.Groups.FindAsync(groupId);
         }
 
         public async Task<List<Group>> GetAll()
         {
-            return await _appContext.Groups.ToListAsync();
+            return await _applicationContext.Groups.ToListAsync();
         }
 
         public void Update(Group entity)
         {
-            _appContext.Groups.Update(entity);
+            _applicationContext.Groups.Update(entity);
         }
     }
 }

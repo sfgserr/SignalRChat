@@ -8,6 +8,6 @@ namespace Infrastructure.Data
 
         Task<IDbContextTransaction> BeginTransactionAsync();
 
-        Task CommitAsync(IDbContextTransaction transaction);
+        Task SaveChangesAsync(IDbContextTransaction transaction);
     }
 }

@@ -1,10 +1,11 @@
-﻿using Domain.Groups;
+﻿using Application.Cqrs.Commands;
+using Domain.Groups;
 using Domain.Users;
 
 namespace Application.Groups.Commands.RemoveUser
 {
     public sealed class RemoveUserCommandHandler(IGroupRepository groupRepository, IUserContext userContext) :
-        IRemoveUserCommandHandler
+        ICommandHandler<RemoveUserCommand>
     {
         private readonly IGroupRepository _groupRepository = groupRepository;
         private readonly IUserContext _userContext = userContext;

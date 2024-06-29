@@ -1,9 +1,11 @@
-﻿using Domain.Groups;
+﻿using Application.Cqrs.Queries;
+using Domain.Groups;
 using Domain.Messages;
 
 namespace Application.Messages.Queries.GetMessages
 {
-    public sealed class GetMessagesQueryHandler(IMessageRepository messageRepository) : IGetMessagesQueryHandler
+    public sealed class GetMessagesQueryHandler(IMessageRepository messageRepository) : 
+        IQueryHandler<GetMessagesQuery, IList<MessageDto>>
     {
         private readonly IMessageRepository _messageRepository = messageRepository;
 

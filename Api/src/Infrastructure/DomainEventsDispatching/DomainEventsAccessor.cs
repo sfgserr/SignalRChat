@@ -1,10 +1,11 @@
 ﻿using Domain.SeedWork;
+using Infrastructure.Data;
 
-namespace Infrastructure.Data.DomainEventsDispatching
+namespace Infrastructure.DomainEventsDispatching
 {
-    public class DomainEventsAccessor(AppContext appContext)
+    internal class DomainEventsAccessor(ApplicationContext appContext)
     {
-        private readonly AppContext _appContext = appContext;
+        private readonly ApplicationContext _appContext = appContext;
 
         public List<IDomainEvent> GetAllDomainEvents()
         {

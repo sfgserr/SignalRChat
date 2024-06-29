@@ -1,9 +1,10 @@
-﻿using Domain.Users;
+﻿using Application.Cqrs.Commands;
+using Domain.Users;
 
 namespace Application.Users.Commands.Register
 {
-    public sealed class RegisterCommandHandler(IUserRepository userRepository, IUserCounter userCounter) : 
-        IRegisterCommandHandler
+    public sealed class RegisterCommandHandler(IUserRepository userRepository, IUserCounter userCounter) :
+        ICommandHandler<RegisterCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserCounter _userCounter = userCounter;

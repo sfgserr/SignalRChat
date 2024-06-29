@@ -2,9 +2,9 @@
 using Infrastructure.Outbox;
 using Newtonsoft.Json;
 
-namespace Infrastructure.Data.DomainEventsDispatching
+namespace Infrastructure.DomainEventsDispatching
 {
-    public class DomainEventsDispatcher(DomainEventsAccessor domainEventsAccessor, IOutbox outbox)
+    internal class DomainEventsDispatcher(DomainEventsAccessor domainEventsAccessor, IOutbox outbox)
     {
         private readonly DomainEventsAccessor _domainEventsAccessor = domainEventsAccessor;
         private readonly IOutbox _outbox = outbox;

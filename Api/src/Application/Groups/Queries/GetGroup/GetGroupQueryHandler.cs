@@ -1,8 +1,9 @@
-﻿using Domain.Groups;
+﻿using Application.Cqrs.Queries;
+using Domain.Groups;
 
 namespace Application.Groups.Queries.GetGroup
 {
-    public sealed class GetGroupQueryHandler(IGroupRepository groupRepository) : IGetGroupQueryHandler
+    public sealed class GetGroupQueryHandler(IGroupRepository groupRepository) : IQueryHandler<GetGroupQuery, GroupDto>
     {
         private readonly IGroupRepository _groupRepository = groupRepository;
 

@@ -1,4 +1,4 @@
-﻿using Application.Contracts;
+﻿using Application.Cqrs.Commands;
 using Domain.Groups;
 using Domain.Messages;
 using Domain.Users;
@@ -6,7 +6,7 @@ using Domain.Users;
 namespace Application.Messages.Commands.CreateMessage
 {
     public sealed class CreateMessageCommandHandler(IMessageRepository messageRepository, 
-        IGroupRepository groupRepository, IUserContext userContext) : ICreateMessageCommandHandler
+        IGroupRepository groupRepository, IUserContext userContext) : ICommandHandler<CreateMessageCommand>
     {
         private readonly IMessageRepository _messageRepository = messageRepository;
         private readonly IGroupRepository _groupRepository = groupRepository;

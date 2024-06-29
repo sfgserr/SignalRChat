@@ -1,7 +1,7 @@
 ﻿
 namespace Infrastructure.Outbox
 {
-    public interface IOutbox
+    internal interface IOutbox
     {
         void Add(OutboxMessage message);
     }
