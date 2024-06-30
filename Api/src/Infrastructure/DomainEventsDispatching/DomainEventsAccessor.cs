@@ -3,9 +3,14 @@ using Infrastructure.Data;
 
 namespace Infrastructure.DomainEventsDispatching
 {
-    internal class DomainEventsAccessor(ApplicationContext appContext)
+    internal class DomainEventsAccessor
     {
-        private readonly ApplicationContext _appContext = appContext;
+        private readonly ApplicationContext _appContext;
+
+        internal DomainEventsAccessor(ApplicationContext appContext)
+        {
+            _appContext = appContext;
+        }
 
         public List<IDomainEvent> GetAllDomainEvents()
         {

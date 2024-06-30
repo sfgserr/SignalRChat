@@ -1,20 +1,25 @@
 ﻿using Infrastructure.Data;
 using Infrastructure.DomainEventsDispatching;
+using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 using Infrastructure.Outbox;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Processing.Outbox
 {
     internal class ProcessOutboxCommandHandler : IProcessOutboxCommandHandler
     {
         private readonly ApplicationContext _applicationContext;
-        private readonly DomainEventsMapper _domainEventsMapper;
+        private readonly IMediator _mediator;
+        private readonly DomainEventsMapper _mapper;
 
-        internal ProcessOutboxCommandHandler(ApplicationContext applicationContext, 
-            DomainEventsMapper domainEventsMapper)
+        internal ProcessOutboxCommandHandler(ApplicationContext applicationContext, IMediator mediator, 
+            DomainEventsMapper mapper)
         {
             _applicationContext = applicationContext;
-            _domainEventsMapper = domainEventsMapper;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         public async Task Handle(ProcessOutboxCommand command)
@@ -23,7 +28,10 @@ namespace Infrastructure.Processing.Outbox
 
             foreach (OutboxMessage message in messages)
             {
-                await _domainEventsMapper.Handle(message.Type, message.Message);
+                var notification = JsonConvert.DeserializeObject(message.Message, _mapper.GetType(message.Type)) as 
+                    IDomainNotificaiton;
+
+                await _mediator.Send(notification!);
 
                 message.Proccessed = DateTime.Now;
 

@@ -4,11 +4,16 @@ using FluentValidation;
 
 namespace Infrastructure.Processing
 {
-    internal class ValidationCommandHandlerDecorator<T>(List<IValidator<T>> validators, ICommandHandler<T> decorated) : 
-        ICommandHandler<T> where T : ICommand
+    internal class ValidationCommandHandlerDecorator<T> : ICommandHandler<T> where T : ICommand
     {
-        private readonly List<IValidator<T>> _validators = validators;
-        private readonly ICommandHandler<T> _decorated = decorated;
+        private readonly List<IValidator<T>> _validators;
+        private readonly ICommandHandler<T> _decorated;
+
+        internal ValidationCommandHandlerDecorator(List<IValidator<T>> validators, ICommandHandler<T> decorated)
+        {
+            _validators = validators;
+            _decorated = decorated;
+        }
 
         public async Task Handle(T command)
         {

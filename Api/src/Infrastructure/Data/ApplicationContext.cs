@@ -12,12 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Data
 {
-    internal class ApplicationContext(DbContextOptions options, DomainEventsDispatcher domainEventsDispatcher) : 
-        DbContext(options), IUnitOfWork
+    internal class ApplicationContext : DbContext, IUnitOfWork
     {
-        private readonly DomainEventsDispatcher _domainEventsDispatcher = domainEventsDispatcher;
+        private readonly DomainEventsDispatcher _domainEventsDispatcher;
 
         private IDbContextTransaction? _currentTransaction;
+
+        internal ApplicationContext(DbContextOptions options, DomainEventsDispatcher domainEventsDispatcher) : 
+            base(options)
+        {
+            _domainEventsDispatcher = domainEventsDispatcher;
+        }
 
         public DbSet<User> Users { get; set; }
 
