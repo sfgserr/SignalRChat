@@ -2,13 +2,11 @@
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Notifications
 {
-    internal class NewUserAddedToGroupDomainNotification : DomainNotificationBase
+    internal class NewUserAddedToGroupDomainNotification : DomainNotificationBase<NewUserAddedToGroupDomainEvent>
     {
-        internal NewUserAddedToGroupDomainNotification(NewUserAddedToGroupDomainEvent domainEvent) : base(domainEvent.Id)
+        internal NewUserAddedToGroupDomainNotification(NewUserAddedToGroupDomainEvent domainEvent) : base(domainEvent)
         {
-            DomainEvent = domainEvent;
-        }
 
-        public NewUserAddedToGroupDomainEvent DomainEvent { get; }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using Application.Cqrs.Commands;
+using Infrastructure.Data;
 using Infrastructure.DomainEventsDispatching;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 using Infrastructure.Outbox;
@@ -8,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.Processing.Outbox
 {
-    internal class ProcessOutboxCommandHandler : IProcessOutboxCommandHandler
+    internal class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand>
     {
         private readonly ApplicationContext _applicationContext;
         private readonly IMediator _mediator;

@@ -33,7 +33,7 @@ namespace Infrastructure.DomainEventsDispatching
 
                 OutboxMessage message = new(
                     domainEvent.Id,
-                    domainEvent.GetType().Name,
+                    notificationType.Name,
                     json,
                     DateTime.Now);
 

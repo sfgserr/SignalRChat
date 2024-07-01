@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Processing.Outbox
 {
-    internal class ProcessOutboxCommand : ICommand
+    internal class ProcessOutboxCommand : ICommand, IRecurringCommand
     {
             
     }

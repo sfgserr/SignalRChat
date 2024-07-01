@@ -17,6 +17,12 @@ namespace Infrastructure.Processing
 
         public async Task Handle(T command)
         {
+            if (command is IRecurringCommand)
+            {
+                await _decorated.Handle(command);
+                return;
+            }
+
             string commandName = command.GetType().Name;
 
             try
