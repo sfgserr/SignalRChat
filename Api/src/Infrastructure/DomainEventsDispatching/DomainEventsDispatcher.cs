@@ -1,5 +1,4 @@
 ﻿using Domain.SeedWork;
-using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 using Infrastructure.Outbox;
 using Newtonsoft.Json;
 
@@ -8,14 +7,11 @@ namespace Infrastructure.DomainEventsDispatching
     internal class DomainEventsDispatcher
     {
         private readonly DomainEventsAccessor _domainEventsAccessor;
-        private readonly DomainEventsMapper _mapper;
         private readonly IOutbox _outbox;
 
-        internal DomainEventsDispatcher(DomainEventsAccessor domainEventsAccessor, DomainEventsMapper mapper, 
-            IOutbox outbox)
+        internal DomainEventsDispatcher(DomainEventsAccessor domainEventsAccessor, IOutbox outbox)
         {
             _domainEventsAccessor = domainEventsAccessor;
-            _mapper = mapper;
             _outbox = outbox;
         }
 
