@@ -115,6 +115,18 @@ namespace Infrastructure.Configuration.Processing
             builder.RegisterGenericDecorator(
                 typeof(LoggingCommandHandlerDecorator<>),
                 typeof(ICommandHandler<>));
+
+            builder.RegisterGenericDecorator(
+                typeof(UnitOfWorkCommandHandlerWithResultDecorator<,>),
+                typeof(ICommandHandlerWithResult<,>));
+
+            builder.RegisterGenericDecorator(
+                typeof(ValidationCommandHandlerWithResultDecorator<,>),
+                typeof(ICommandHandlerWithResult<,>));
+
+            builder.RegisterGenericDecorator(
+                typeof(LoggingCommandHandlerWithResultDecorator<,>),
+                typeof(ICommandHandlerWithResult<,>));
         }
     }
 }
