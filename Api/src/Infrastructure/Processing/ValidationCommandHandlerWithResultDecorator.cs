@@ -7,22 +7,19 @@ namespace Infrastructure.Processing
     internal class ValidationCommandHandlerWithResultDecorator<T, TResult> :
         ICommandHandlerWithResult<T, TResult> where T : ICommandWithResult<TResult>
     {
-        private readonly List<IValidator<T>> _validators;
+        private readonly IValidator<T> _validator;
         private readonly ICommandHandlerWithResult<T, TResult> _decorated;
 
-        public ValidationCommandHandlerWithResultDecorator(List<IValidator<T>> validators, 
+        public ValidationCommandHandlerWithResultDecorator(IValidator<T> validator, 
             ICommandHandlerWithResult<T, TResult> decorated)
         {
-            _validators = validators;
+            _validator = validator;
             _decorated = decorated;
         }
 
         public async Task<TResult> Handle(T command)
         {
-            var errors = _validators.Select(v => v.Validate(command))
-                .SelectMany(r => r.Errors)
-                .Where(e => e != null)
-                .ToList();
+            var errors = _validator.Validate(command).Errors;
 
             if (errors.Any())
             {

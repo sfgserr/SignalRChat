@@ -29,7 +29,7 @@ using Infrastructure.Processing;
 
 namespace Infrastructure.Configuration.Processing
 {
-    internal class ProcessingModule : Module
+    internal class ProcessingModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -129,9 +129,17 @@ namespace Infrastructure.Configuration.Processing
                 typeof(LoggingCommandHandlerWithResultDecorator<,>),
                 typeof(ICommandHandlerWithResult<,>));
 
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                .AsClosedTypesOf(typeof(IValidator<>))
-                .AsImplementedInterfaces();
+            var validatorTypes = new Dictionary<Type, Type>()
+            {
+                { typeof(AuthenticateCommandValidator), typeof(AuthenticateCommand) }
+            };
+
+            foreach(var validatorType in validatorTypes)
+            {
+                builder.RegisterType(validatorType.Key)
+                    .As(typeof(IValidator<>).MakeGenericType(validatorType.Value))
+                    .InstancePerDependency();
+            }
         }
     }
 }

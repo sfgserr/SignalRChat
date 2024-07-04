@@ -2,9 +2,14 @@
 
 namespace Domain.Groups
 {
-    public class GroupUserPermission(string code) : ValueObject
+    public class GroupUserPermission : ValueObject
     {
-        public string Code { get; } = code;
+        public GroupUserPermission(string code)
+        {
+            Code = code;
+        }
+
+        public string Code { get; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

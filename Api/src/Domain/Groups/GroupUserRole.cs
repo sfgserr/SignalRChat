@@ -10,6 +10,11 @@ namespace Domain.Groups
             Permissions = permissions;
         }
 
+        private GroupUserRole()
+        {
+
+        }
+
         public static GroupUserRole Member { get; } = new GroupUserRole("Member", [
             new("CreateMessage"),
             new("ReadMessage"),
