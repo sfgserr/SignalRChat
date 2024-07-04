@@ -24,6 +24,7 @@ using Domain.Groups;
 using Domain.Groups.Events;
 using Domain.Messages.Events;
 using Domain.Users.Events;
+using FluentValidation;
 using Infrastructure.Processing;
 
 namespace Infrastructure.Configuration.Processing
@@ -127,6 +128,10 @@ namespace Infrastructure.Configuration.Processing
             builder.RegisterGenericDecorator(
                 typeof(LoggingCommandHandlerWithResultDecorator<,>),
                 typeof(ICommandHandlerWithResult<,>));
+
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .AsClosedTypesOf(typeof(IValidator<>))
+                .AsImplementedInterfaces();
         }
     }
 }

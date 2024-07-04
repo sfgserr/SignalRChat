@@ -12,16 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Data
 {
-    internal class ApplicationContext : DbContext, IUnitOfWork
+    internal class ApplicationContext : DbContext
     {
-        private readonly DomainEventsDispatcher _domainEventsDispatcher;
-
-        private IDbContextTransaction? _currentTransaction;
-
-        internal ApplicationContext(DbContextOptions options, DomainEventsDispatcher domainEventsDispatcher) : 
+        internal ApplicationContext(DbContextOptions options) : 
             base(options)
         {
-            _domainEventsDispatcher = domainEventsDispatcher;
         }
 
         public DbSet<User> Users { get; set; }
@@ -32,8 +27,6 @@ namespace Infrastructure.Data
 
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
-        public bool HasActiveTransaction => _currentTransaction != null;
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,46 +35,6 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new MessageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OutboxEntityTypeConfiguration());
-        }
-
-        public async Task<IDbContextTransaction> BeginTransactionAsync()
-        {
-            if (_currentTransaction != null) return null;
-
-            _currentTransaction = await Database.BeginTransactionAsync();
-
-            return _currentTransaction;
-        }
-
-        public async Task SaveChangesAsync(IDbContextTransaction transaction)
-        {
-            _domainEventsDispatcher.DispatchDomainEvents();
-
-            await CommitAsync(transaction);
-        }
-
-        private async Task CommitAsync(IDbContextTransaction transaction)
-        {
-            if (transaction == null) throw new ArgumentException("Transaction is null");
-            if (transaction != _currentTransaction) throw new InvalidOperationException("Transaction is not current");
-
-            try
-            {
-                await base.SaveChangesAsync();
-                await transaction.CommitAsync();
-            }
-            catch
-            {
-                transaction.Rollback();
-            }
-            finally
-            {
-                if (_currentTransaction != null)
-                {
-                    _currentTransaction.Dispose();
-                    _currentTransaction = null;
-                }
-            }
         }
     }
 }

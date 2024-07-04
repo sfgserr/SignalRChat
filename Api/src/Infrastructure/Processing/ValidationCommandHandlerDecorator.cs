@@ -6,10 +6,10 @@ namespace Infrastructure.Processing
 {
     internal class ValidationCommandHandlerDecorator<T> : ICommandHandler<T> where T : ICommand
     {
-        private readonly List<IValidator<T>> _validators;
+        private readonly IList<IValidator<T>> _validators;
         private readonly ICommandHandler<T> _decorated;
 
-        internal ValidationCommandHandlerDecorator(List<IValidator<T>> validators, ICommandHandler<T> decorated)
+        public ValidationCommandHandlerDecorator(IList<IValidator<T>> validators, ICommandHandler<T> decorated)
         {
             _validators = validators;
             _decorated = decorated;

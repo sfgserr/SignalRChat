@@ -10,7 +10,7 @@ namespace Infrastructure.Processing
         private readonly List<IValidator<T>> _validators;
         private readonly ICommandHandlerWithResult<T, TResult> _decorated;
 
-        internal ValidationCommandHandlerWithResultDecorator(List<IValidator<T>> validators, 
+        public ValidationCommandHandlerWithResultDecorator(List<IValidator<T>> validators, 
             ICommandHandlerWithResult<T, TResult> decorated)
         {
             _validators = validators;

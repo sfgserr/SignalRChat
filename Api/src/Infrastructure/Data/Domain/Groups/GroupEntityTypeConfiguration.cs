@@ -26,7 +26,8 @@ namespace Infrastructure.Data.Domain.Groups
 
                     y.OwnsMany<GroupUserPermission>("Permissions", z =>
                     {
-                        y.Property<string>("Code").HasColumnName("Code");
+                        z.Property<string>("Code").HasColumnName("Code");
+                        z.WithOwner().HasForeignKey("GroupUserRoleId");
                     });
                 });
             });

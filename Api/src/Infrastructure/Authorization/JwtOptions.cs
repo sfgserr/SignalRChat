@@ -1,9 +1,9 @@
 ﻿
 namespace Infrastructure.Authorization
 {
-    internal class JwtOptions
+    public class JwtOptions
     {
-        internal JwtOptions(string issuerUrl, string audienceUrl, string secretKey)
+        public JwtOptions(string issuerUrl, string audienceUrl, string secretKey)
         {
             IssuerUrl = issuerUrl;
             AudienceUrl = audienceUrl;

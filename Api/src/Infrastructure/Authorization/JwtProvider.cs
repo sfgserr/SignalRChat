@@ -5,14 +5,9 @@ using System.Text;
 
 namespace Infrastructure.Authorization
 {
-    internal class JwtProvider
+    public class JwtProvider(JwtOptions jwtOptions)
     {
-        private readonly JwtOptions _jwtOptions;
-
-        internal JwtProvider(JwtOptions jwtOptions)
-        {
-            _jwtOptions = jwtOptions;
-        }
+        private readonly JwtOptions _jwtOptions = jwtOptions;
 
         public string GenerateToken(List<Claim> claims)
         {

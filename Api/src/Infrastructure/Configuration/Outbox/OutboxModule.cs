@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Infrastructure.Data;
 using Infrastructure.Outbox;
 
 namespace Infrastructure.Configuration.Outbox
@@ -7,9 +8,9 @@ namespace Infrastructure.Configuration.Outbox
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<OutboxAccessor>()
-                .As<IOutbox>()
-                .InstancePerLifetimeScope();
+            builder.Register(c => new OutboxAccessor(c.Resolve<ApplicationContext>()))
+            .As<IOutbox>()
+            .InstancePerLifetimeScope();
         }
     }
 }

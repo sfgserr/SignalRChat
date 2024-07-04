@@ -16,7 +16,8 @@ namespace Infrastructure.Configuration.Authentication
 
             builder.RegisterType<UserService>()
                 .As<IUserService>()
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new AllConstructorFinder());
         }
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Domain.Messages
 {
-    public class MessageRepository : IMessageRepository
+    internal class MessageRepository : IMessageRepository
     {
         private readonly ApplicationContext _applicationContext;
 
-        public MessageRepository(ApplicationContext applicationContext)
+        internal MessageRepository(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
         }

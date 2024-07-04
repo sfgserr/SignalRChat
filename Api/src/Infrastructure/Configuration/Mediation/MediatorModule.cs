@@ -18,7 +18,8 @@ namespace Infrastructure.Configuration.Mediation
             builder.RegisterAssemblyTypes(ThisAssembly)
                 .AsClosedTypesOf(typeof(INotificationHandler<>))
                 .AsImplementedInterfaces()
-                .InstancePerDependency();
+                .InstancePerDependency()
+                .FindConstructorsWith(new AllConstructorFinder());
         }
     }
 }

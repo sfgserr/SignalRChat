@@ -10,7 +10,7 @@ namespace Infrastructure.Processing
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICommandHandlerWithResult<T, TResult> _decorated;
 
-        internal UnitOfWorkCommandHandlerWithResultDecorator(IUnitOfWork unitOfWork, 
+        public UnitOfWorkCommandHandlerWithResultDecorator(IUnitOfWork unitOfWork, 
             ICommandHandlerWithResult<T, TResult> decorated)
         {
             _unitOfWork = unitOfWork;

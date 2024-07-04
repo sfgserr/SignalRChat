@@ -2,10 +2,13 @@
 using Infrastructure.Configuration.Authentication;
 using Infrastructure.Configuration.Data;
 using Infrastructure.Configuration.DomainEventsDispatching;
+using Infrastructure.Configuration.Logging;
 using Infrastructure.Configuration.Mediation;
 using Infrastructure.Configuration.Outbox;
 using Infrastructure.Configuration.Processing;
+using Infrastructure.Configuration.Quartz;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
+using Serilog;
 
 namespace Infrastructure.Configuration
 {
@@ -13,7 +16,14 @@ namespace Infrastructure.Configuration
     {
         private static IContainer _container;
 
-        public static void Initialize(string connectionString)
+        public static void Initialize(string connectionString, ILogger logger)
+        {
+            QuartzStartup.Initialize();
+
+            ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"));
+        }
+
+        private static void ConfigureCompositionRoot(string connectionString, ILogger logger)
         {
             var containerBuilder = new ContainerBuilder();
 
@@ -29,11 +39,13 @@ namespace Infrastructure.Configuration
             };
             containerBuilder.RegisterModule(new DomainEventsDispatchingModule(mappings));
 
+            containerBuilder.RegisterModule(new LoggingModule(logger));
+            containerBuilder.RegisterModule(new ProcessingModule());
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
-            containerBuilder.RegisterModule(new ProcessingModule());
 
             _container = containerBuilder.Build();
+            AppCompositionRoot.SetContainer(_container);
         }
     }
 }

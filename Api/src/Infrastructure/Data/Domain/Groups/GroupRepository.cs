@@ -1,4 +1,5 @@
 ﻿using Domain.Groups;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Domain.Groups
@@ -25,6 +26,13 @@ namespace Infrastructure.Data.Domain.Groups
         public async Task<List<Group>> GetAll()
         {
             return await _applicationContext.Groups.ToListAsync();
+        }
+
+        public async Task<List<GroupUserPermission>> GetUserPermissions(UserId userId)
+        {
+            return await _applicationContext.Database
+                .SqlQueryRaw<GroupUserPermission>("SELECT FROM GroupUserPermissions WHERE GroupUserRoleId = @p0", userId.Id)
+                .ToListAsync();
         }
 
         public void Update(Group entity)

@@ -21,19 +21,22 @@ namespace Infrastructure.Configuration.Data
                 DbContextOptionsBuilder optionsBuilder = new();
                 optionsBuilder.UseSqlServer(_connectionString);
 
-                return new ApplicationContext(optionsBuilder.Options, c.Resolve<DomainEventsDispatcher>());
+                return new ApplicationContext(optionsBuilder.Options);
             })
             .AsSelf()
             .As<DbContext>()
-            .As<IUnitOfWork>()
             .InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>();
 
             var infrastructureAssembly = typeof(ApplicationContext).Assembly;
 
             builder.RegisterAssemblyTypes(infrastructureAssembly)
                 .Where(type => type.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new AllConstructorFinder());
         }
     }
 }

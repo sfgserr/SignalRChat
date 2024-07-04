@@ -9,7 +9,7 @@ namespace Infrastructure.Processing
         private readonly ILogger _logger;
         private readonly ICommandHandler<T> _decorated;
 
-        internal LoggingCommandHandlerDecorator(ILogger logger, ICommandHandler<T> decorated)
+        public LoggingCommandHandlerDecorator(ILogger logger, ICommandHandler<T> decorated)
         {
             _logger = logger;
             _decorated = decorated;

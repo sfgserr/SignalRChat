@@ -15,10 +15,12 @@ namespace Infrastructure.Configuration.DomainEventsDispatching
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DomainEventsDispatcher>()
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new AllConstructorFinder());
 
             builder.RegisterType<DomainEventsAccessor>()
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new AllConstructorFinder());
 
             builder.Register(c => new DomainEventsMapper(_mappings))
                 .As<DomainEventsMapper>()

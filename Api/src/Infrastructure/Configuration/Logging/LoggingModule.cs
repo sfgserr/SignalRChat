@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Serilog;
 
-namespace Infrastructure.Configuration.LoggingModule
+namespace Infrastructure.Configuration.Logging
 {
     internal class LoggingModule : Module
     {
