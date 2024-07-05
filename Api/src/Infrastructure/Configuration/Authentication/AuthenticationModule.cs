@@ -2,22 +2,24 @@
 using Application.Users;
 using Autofac;
 using Domain.Users;
-using Infrastructure.Authentication;
 
 namespace Infrastructure.Configuration.Authentication
 {
     internal class AuthenticationModule : Module
     {
+        private readonly IUserService _userService;
+
+        public AuthenticationModule(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserContext>()
                 .As<IUserContext>()
+                .WithParameter("userService", _userService)
                 .InstancePerLifetimeScope();
-
-            builder.RegisterType<UserService>()
-                .As<IUserService>()
-                .InstancePerLifetimeScope()
-                .FindConstructorsWith(new AllConstructorFinder());
         }
     }
 }

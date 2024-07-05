@@ -2,13 +2,8 @@
 
 namespace Domain.Messages
 {
-    public class MessageId(Guid id) : ValueObject
+    public class MessageId(Guid id) : TypedIdValueBase(id)
     {
-        public Guid Id { get; } = id;
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Id;
-        }
     }
 }

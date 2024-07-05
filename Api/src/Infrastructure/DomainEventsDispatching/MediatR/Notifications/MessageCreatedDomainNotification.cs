@@ -4,7 +4,7 @@ namespace Infrastructure.DomainEventsDispatching.MediatR.Notifications
 {
     internal class MessageCreatedDomainNotification : DomainNotificationBase<MessageCreatedDomainEvent>
     {
-        internal MessageCreatedDomainNotification(MessageCreatedDomainEvent domainEvent) : base(domainEvent)
+        public MessageCreatedDomainNotification(MessageCreatedDomainEvent domainEvent) : base(domainEvent)
         {
 
         }

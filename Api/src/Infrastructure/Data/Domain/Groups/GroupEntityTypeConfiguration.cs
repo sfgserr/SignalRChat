@@ -13,7 +13,9 @@ namespace Infrastructure.Data.Domain.Groups
 
             builder.OwnsMany<GroupUser>("Users", x =>
             {
-                x.WithOwner().HasForeignKey("UserId");
+                x.ToTable("GroupUsers");
+
+                x.WithOwner().HasForeignKey("GroupId");
                 x.Property<UserId>("UserId");
                 x.Property<GroupId>("GroupId");
                 x.Property<DateTime>("JoinedDate").HasColumnName("JoinedDate");
@@ -22,12 +24,15 @@ namespace Infrastructure.Data.Domain.Groups
 
                 x.OwnsOne<GroupUserRole>("Role", y =>
                 {
+                    y.ToTable("GroupUserRoles");
+
                     y.Property<string>("Value").HasColumnName("Value");
 
                     y.OwnsMany<GroupUserPermission>("Permissions", z =>
                     {
+                        z.ToTable("GroupUserPermissions");
+
                         z.Property<string>("Code").HasColumnName("Code");
-                        z.WithOwner().HasForeignKey("GroupUserRoleId");
                     });
                 });
             });

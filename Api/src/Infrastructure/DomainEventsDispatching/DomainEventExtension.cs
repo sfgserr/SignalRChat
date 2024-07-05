@@ -10,6 +10,14 @@ namespace Infrastructure.DomainEventsDispatching
 
             string notificationName = eventName.Replace("DomainEvent", "DomainNotification");
 
+            var assembly = typeof(DomainEventsAccessor).Assembly;
+
+            foreach (var type in assembly.GetTypes())
+            {
+                if (type.Name == notificationName)
+                    return type;
+            }
+
             return Type.GetType(notificationName)!;
         }
     }

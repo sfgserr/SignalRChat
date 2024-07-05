@@ -12,6 +12,14 @@ using Serilog;
 using Microsoft.AspNetCore.Builder;
 using Autofac.Extensions.DependencyInjection;
 using Infrastructure.Configuration;
+using Autofac;
+using Application.Contracts;
+using WebApi.Configuration.Authentication;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Infrastructure.Data.ValueConversion;
+using WebApi.Chat;
 
 namespace WebApi
 {
@@ -55,14 +63,27 @@ namespace WebApi
             services.AddControllers();
             services.AddSwaggerGen();
 
+            services.AddDbContext<ApplicationContext>(options =>
+            {
+                options.UseSqlServer(Configuration["SqlServerSettings:ConnectionString"]);
+                options.ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
+            });
+
             services.AddProblemDetails(x =>
             {
                 x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
                 x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationProblemDetails(ex));
             });
 
-            services.AddScoped<JwtProvider>(x => new(new(issuer, audience, secretKey)));
-            services.AddScoped<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
+            services.AddSingleton<JwtProvider>(x => new(new(issuer, audience, secretKey)));
+            services.AddSingleton<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, HasPermissionAuthorizationPolicyProvider>();
+            services.AddSingleton<IUserService, UserService>();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AppAutofacModule());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -72,7 +93,10 @@ namespace WebApi
             app.UseCors(builder =>
                 builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-            AppStartup.Initialize(Configuration["SqlServerSettings:ConnectionString"]!, _logger);
+            AppStartup.Initialize(
+                Configuration["SqlServerSettings:ConnectionString"]!, 
+                _logger, 
+                container.Resolve<IUserService>());
 
             if (env.IsDevelopment())
             {

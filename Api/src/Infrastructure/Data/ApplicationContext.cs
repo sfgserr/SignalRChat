@@ -5,16 +5,14 @@ using Infrastructure.Data.Domain.Groups;
 using Infrastructure.Data.Domain.Messages;
 using Infrastructure.Data.Domain.Outbox;
 using Infrastructure.Data.Domain.Users;
-using Infrastructure.DomainEventsDispatching;
 using Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Data
 {
-    internal class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        internal ApplicationContext(DbContextOptions options) : 
+        public ApplicationContext(DbContextOptions options) : 
             base(options)
         {
         }

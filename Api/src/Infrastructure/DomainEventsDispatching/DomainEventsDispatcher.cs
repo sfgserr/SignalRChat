@@ -25,7 +25,7 @@ namespace Infrastructure.DomainEventsDispatching
             {
                 Type notificationType = domainEvent.GetNotificationType();
 
-                string json = JsonConvert.SerializeObject(Activator.CreateInstance(notificationType, [domainEvent]));
+                string json = JsonConvert.SerializeObject(Activator.CreateInstance(notificationType, domainEvent));
 
                 OutboxMessage message = new(
                     domainEvent.Id,

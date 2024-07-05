@@ -9,6 +9,8 @@ namespace Infrastructure.Data.Domain.Users
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(u => u.Id);
+
+            builder.Property<string>("Login").HasColumnName("Login");
         }
     }
 }

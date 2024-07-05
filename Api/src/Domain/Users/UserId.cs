@@ -2,13 +2,8 @@
 
 namespace Domain.Users
 {
-    public class UserId(Guid id) : ValueObject
+    public class UserId(Guid id) : TypedIdValueBase(id)
     {
-        public Guid Id { get; } = id;
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Id;
-        }
     }
 }

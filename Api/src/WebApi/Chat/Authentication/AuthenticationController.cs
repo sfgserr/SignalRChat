@@ -1,5 +1,7 @@
-﻿using Application.Cqrs.Commands;
+﻿using Application.Contracts;
+using Application.Cqrs.Commands;
 using Application.Users.Commands.Authenticate;
+using Application.Users.Commands.Register;
 using Autofac;
 using Infrastructure.Authorization;
 using Infrastructure.Configuration;
@@ -12,27 +14,35 @@ namespace WebApi.Chat.Authentication
     public class AuthenticationController : Controller
     {
         private readonly JwtProvider _jwtProvider;
+        private readonly IAppModule _appModule;
 
-        public AuthenticationController(JwtProvider jwtProvider)
+        public AuthenticationController(JwtProvider jwtProvider, IAppModule appModule)
         {
             _jwtProvider = jwtProvider;
+            _appModule = appModule;
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(string login, string password)
         {
-            using var scope = AppCompositionRoot.BeginLifetimeScope();
-
-            var handler = scope.Resolve<ICommandHandlerWithResult<AuthenticateCommand, AuthenticationResult>>();
-
-            var result = await handler.Handle(new(login, password));
+            AuthenticationResult result = await _appModule.ExecuteCommand<AuthenticateCommand, AuthenticationResult>(
+                new AuthenticateCommand(login, password));
 
             if (result.IsAuthenticated)
-            {
                 return Ok(_jwtProvider.GenerateToken(result.User!.Claims));
-            }
 
             return Unauthorized(result.Error);
+        }
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            await _appModule.ExecuteCommand(new RegisterCommand(
+                request.Login,
+                request.Password,
+                request.IconUri));
+
+            return Ok();
         }
     }
 }

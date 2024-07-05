@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Application.Contracts;
+using Autofac;
 using Infrastructure.Configuration.Authentication;
 using Infrastructure.Configuration.Data;
 using Infrastructure.Configuration.DomainEventsDispatching;
@@ -16,18 +17,18 @@ namespace Infrastructure.Configuration
     {
         private static IContainer _container;
 
-        public static void Initialize(string connectionString, ILogger logger)
+        public static void Initialize(string connectionString, ILogger logger, IUserService userService)
         {
             QuartzStartup.Initialize();
 
-            ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"));
+            ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"), userService);
         }
 
-        private static void ConfigureCompositionRoot(string connectionString, ILogger logger)
+        private static void ConfigureCompositionRoot(string connectionString, ILogger logger, IUserService userService)
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterModule(new AuthenticationModule());
+            containerBuilder.RegisterModule(new AuthenticationModule(userService));
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
 
             var mappings = new Dictionary<string, Type>

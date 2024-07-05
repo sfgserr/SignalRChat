@@ -1,7 +1,11 @@
 ﻿using Autofac;
+using Domain.Users;
 using Infrastructure.Data;
+using Infrastructure.Data.Domain.Users;
+using Infrastructure.Data.ValueConversion;
 using Infrastructure.DomainEventsDispatching;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Configuration.Data
 {
@@ -21,6 +25,8 @@ namespace Infrastructure.Configuration.Data
                 DbContextOptionsBuilder optionsBuilder = new();
                 optionsBuilder.UseSqlServer(_connectionString);
 
+                optionsBuilder.ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
+
                 return new ApplicationContext(optionsBuilder.Options);
             })
             .AsSelf()
@@ -28,7 +34,13 @@ namespace Infrastructure.Configuration.Data
             .InstancePerLifetimeScope();
 
             builder.RegisterType<UnitOfWork>()
-                .As<IUnitOfWork>();
+                .As<IUnitOfWork>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<UserCounter>()
+                .As<IUserCounter>()
+                .FindConstructorsWith(new AllConstructorFinder())
+                .InstancePerLifetimeScope();
 
             var infrastructureAssembly = typeof(ApplicationContext).Assembly;
 

@@ -1,15 +1,9 @@
-﻿
-using Domain.SeedWork;
+﻿using Domain.SeedWork;
 
 namespace Domain.Groups
 {
-    public class GroupId(Guid id) : ValueObject
+    public class GroupId(Guid id) : TypedIdValueBase(id)
     {
-        public Guid Id { get; } = id;
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Id;
-        }
     }
 }

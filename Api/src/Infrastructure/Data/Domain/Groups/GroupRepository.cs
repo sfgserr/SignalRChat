@@ -31,7 +31,7 @@ namespace Infrastructure.Data.Domain.Groups
         public async Task<List<GroupUserPermission>> GetUserPermissions(UserId userId)
         {
             return await _applicationContext.Database
-                .SqlQueryRaw<GroupUserPermission>("SELECT FROM GroupUserPermissions WHERE GroupUserRoleId = @p0", userId.Id)
+                .SqlQueryRaw<GroupUserPermission>("SELECT GroupUserPermissions FROM GroupUsers WHERE UserId = @p0", userId.Id)
                 .ToListAsync();
         }
 

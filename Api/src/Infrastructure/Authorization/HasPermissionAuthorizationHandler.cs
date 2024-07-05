@@ -9,21 +9,20 @@ namespace Infrastructure.Authorization
     public class HasPermissionAuthorizationHandler(
         IUserService userService,
         IQueryHandler<GetUserPermissionsQuery,List<GroupUserPermission>> handler) : 
-        AttributeAuthorizationHandler<HasPermissionRequirement, HasPermissionAttribute>
+        AuthorizationHandler<HasPermissionRequirement>
     {
         private readonly IUserService _userService = userService;
         private readonly IQueryHandler<GetUserPermissionsQuery, List<GroupUserPermission>> _handler = handler;
 
         protected override async Task HandleRequirementAsync(
-            AuthorizationHandlerContext context, 
-            HasPermissionAttribute attribute, 
+            AuthorizationHandlerContext context,
             HasPermissionRequirement requirement)
         {
             Guid id = _userService.GetUserId();
 
             var permissions = await _handler.Handle(new(id));
 
-            if (Authorize(permissions, attribute.Code))
+            if (Authorize(permissions, requirement.PermissionCode))
             {
                 context.Succeed(requirement);
                 return;
