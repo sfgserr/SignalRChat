@@ -110,6 +110,7 @@ namespace WebApi
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseProblemDetails();
             app.UseEndpoints(e => e.MapControllers());
         }
 

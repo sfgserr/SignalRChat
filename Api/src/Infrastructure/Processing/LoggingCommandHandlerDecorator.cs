@@ -36,6 +36,7 @@ namespace Infrastructure.Processing
             catch(Exception ex)
             {
                 _logger.Error($"Command {commandName} failed with error {ex.Message}");
+                throw;
             }
         }
     }
