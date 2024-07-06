@@ -9,7 +9,6 @@ using Infrastructure.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using ILogger = Serilog.ILogger;
 using Serilog;
-using Microsoft.AspNetCore.Builder;
 using Autofac.Extensions.DependencyInjection;
 using Infrastructure.Configuration;
 using Autofac;

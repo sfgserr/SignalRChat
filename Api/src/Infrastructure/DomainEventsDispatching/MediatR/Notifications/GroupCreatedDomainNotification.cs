@@ -4,7 +4,7 @@ namespace Infrastructure.DomainEventsDispatching.MediatR.Notifications
 {
     internal class GroupCreatedDomainNotification : DomainNotificationBase<GroupCreatedDomainEvent>
     {
-        internal GroupCreatedDomainNotification(GroupCreatedDomainEvent domainEvent) : base(domainEvent)
+        public GroupCreatedDomainNotification(GroupCreatedDomainEvent domainEvent) : base(domainEvent)
         {
         }
     }

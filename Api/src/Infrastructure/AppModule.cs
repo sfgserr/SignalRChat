@@ -1,6 +1,8 @@
 ﻿using Application.Contracts;
 using Application.Cqrs.Commands;
 using Application.Cqrs.Queries;
+using Autofac;
+using Infrastructure.Configuration;
 using Infrastructure.Processing;
 
 namespace Infrastructure
@@ -19,7 +21,16 @@ namespace Infrastructure
 
         public async Task<TResult> Query<TQuery, TResult>(TQuery query) where TQuery : IQuery<TResult>
         {
-            return await CommandsExecutor.QueryAsync<TQuery, TResult>(query);
+            using var scope = AppCompositionRoot.BeginLifetimeScope();
+
+            Type? handlerType = typeof(IQueryHandler<,>).MakeGenericType(typeof(TQuery), typeof(TResult));
+
+            var handler = scope.Resolve(handlerType) as IQueryHandler<TQuery, TResult>;
+
+            if (handler is not null)
+                return await handler.Handle(query);
+
+            throw new ArgumentException($"Can't resolve handler {query.GetType().Name}");
         }
     }
 }

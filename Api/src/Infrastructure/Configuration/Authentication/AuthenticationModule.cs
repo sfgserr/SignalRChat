@@ -9,7 +9,7 @@ namespace Infrastructure.Configuration.Authentication
     {
         private readonly IUserService _userService;
 
-        public AuthenticationModule(IUserService userService)
+        internal AuthenticationModule(IUserService userService)
         {
             _userService = userService;
         }

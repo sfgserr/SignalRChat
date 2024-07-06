@@ -3,6 +3,7 @@ using Autofac;
 using Infrastructure.Configuration.Authentication;
 using Infrastructure.Configuration.Data;
 using Infrastructure.Configuration.DomainEventsDispatching;
+using Infrastructure.Configuration.Email;
 using Infrastructure.Configuration.Logging;
 using Infrastructure.Configuration.Mediation;
 using Infrastructure.Configuration.Outbox;
@@ -44,6 +45,7 @@ namespace Infrastructure.Configuration
             containerBuilder.RegisterModule(new ProcessingModule());
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
+            containerBuilder.RegisterModule(new EmailModule());
 
             _container = containerBuilder.Build();
             AppCompositionRoot.SetContainer(_container);
