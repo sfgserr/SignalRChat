@@ -11,16 +11,10 @@ namespace WebApi.Chat.Authentication
 {
     [ApiController]
     [Route("api/auth")]
-    public class AuthenticationController : Controller
+    public class AuthenticationController(JwtProvider jwtProvider, IAppModule appModule) : Controller
     {
-        private readonly JwtProvider _jwtProvider;
-        private readonly IAppModule _appModule;
-
-        public AuthenticationController(JwtProvider jwtProvider, IAppModule appModule)
-        {
-            _jwtProvider = jwtProvider;
-            _appModule = appModule;
-        }
+        private readonly JwtProvider _jwtProvider = jwtProvider;
+        private readonly IAppModule _appModule = appModule;
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(string login, string password)

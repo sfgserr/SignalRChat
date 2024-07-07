@@ -19,6 +19,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Infrastructure.Data.ValueConversion;
 using WebApi.Chat;
+using Microsoft.AspNetCore.Authentication;
+using WebApi.Configuration.Authorization;
 
 namespace WebApi
 {
@@ -77,6 +79,7 @@ namespace WebApi
             services.AddSingleton<JwtProvider>(x => new(new(issuer, audience, secretKey)));
             services.AddSingleton<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, HasPermissionAuthorizationPolicyProvider>();
+            services.AddScoped<IClaimsTransformation, CustomClaimsTransformation>();
             services.AddSingleton<IUserService, UserService>();
         }
 
@@ -96,6 +99,9 @@ namespace WebApi
                 Configuration["SqlServerSettings:ConnectionString"]!, 
                 _logger, 
                 container.Resolve<IUserService>());
+
+            var context = container.Resolve<ApplicationContext>();
+            context.Database.Migrate();
 
             if (env.IsDevelopment())
             {

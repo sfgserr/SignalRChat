@@ -3,11 +3,11 @@ namespace Domain.SeedWork
 {
     public abstract class TypedIdValueBase(Guid id) : ValueObject
     {
-        public Guid Id { get; } = id;
+        public Guid Value { get; } = id;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Id;
+            yield return Value;
         }
     }
 }

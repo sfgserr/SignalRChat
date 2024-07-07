@@ -11,7 +11,13 @@ namespace Application.Users.Commands.Register
 
         public async Task Handle(RegisterCommand command)
         {
-            User user = User.Create(command.Login, command.Password, command.IconUri, _userCounter);
+            string password = PasswordManager.HashPassword(command.Password);
+
+            User user = User.Create(
+                command.Login, 
+                password, 
+                command.IconUri, 
+                _userCounter);
 
             await _userRepository.Add(user);
         }

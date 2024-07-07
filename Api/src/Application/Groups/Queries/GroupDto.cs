@@ -4,7 +4,7 @@ namespace Application.Groups.Queries
 {
     public class GroupDto(Group group)
     {
-        public Guid Id { get; } = group.Id.Id;
+        public Guid Id { get; } = group.Id.Value;
 
         public string Name { get; } = group.Name;
 

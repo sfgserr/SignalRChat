@@ -7,7 +7,7 @@ namespace Infrastructure.Data.ValueConversion
         ValueConverter<TTypedIdValueBase, Guid> where TTypedIdValueBase : TypedIdValueBase
     {
         public TypedIdValueConverter(ConverterMappingHints hints = null) : 
-            base(id => id.Id, value => Create(value), hints)
+            base(id => id.Value, value => Create(value), hints)
         {
 
         }

@@ -2,7 +2,7 @@
 
 namespace Application.Groups.Commands.CreateGroup
 {
-    internal class CreateGroupValidator : AbstractValidator<CreateGroupCommand>
+    public class CreateGroupValidator : AbstractValidator<CreateGroupCommand>
     {
         public CreateGroupValidator()
         {

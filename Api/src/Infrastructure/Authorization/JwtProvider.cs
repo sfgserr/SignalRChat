@@ -11,6 +11,8 @@ namespace Infrastructure.Authorization
 
         public string GenerateToken(List<Claim> claims)
         {
+            claims.Add(new("Permission", "CreateGroup"));
+
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
                 SecurityAlgorithms.HmacSha256);

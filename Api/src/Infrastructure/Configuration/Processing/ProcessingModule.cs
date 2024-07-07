@@ -132,7 +132,8 @@ namespace Infrastructure.Configuration.Processing
             var validatorTypes = new Dictionary<Type, Type>()
             {
                 { typeof(AuthenticateCommandValidator), typeof(AuthenticateCommand) },
-                { typeof(RegisterCommandValidator), typeof(RegisterCommand) }
+                { typeof(RegisterCommandValidator), typeof(RegisterCommand) },
+                { typeof(CreateGroupValidator), typeof(CreateGroupCommand) }
             };
 
             foreach(var validatorType in validatorTypes)

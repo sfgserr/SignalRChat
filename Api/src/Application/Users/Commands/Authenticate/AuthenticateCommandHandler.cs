@@ -25,6 +25,7 @@ namespace Application.Users.Commands.Authenticate
 
             return new AuthenticationResult(new UserDto(
             [
+                new Claim("id", user.Id.Value.ToString()),
                 new Claim("login", user.Login), 
                 new Claim("password", user.Password)
             ]));

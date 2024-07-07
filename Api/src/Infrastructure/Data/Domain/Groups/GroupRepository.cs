@@ -30,9 +30,13 @@ namespace Infrastructure.Data.Domain.Groups
 
         public async Task<List<GroupUserPermission>> GetUserPermissions(UserId userId)
         {
-            return await _applicationContext.Database
-                .SqlQueryRaw<GroupUserPermission>("SELECT GroupUserPermissions FROM GroupUsers WHERE UserId = @p0", userId.Id)
-                .ToListAsync();
+            Group? group = await _applicationContext.Set<Group>()
+                .FirstOrDefaultAsync(u => u.Users.Any(u => u.UserId == userId));
+
+            if (group is not null)
+                return group.Users.Where(u => u.UserId == userId).First().Role.Permissions;
+
+            return [];
         }
 
         public void Update(Group entity)

@@ -28,11 +28,15 @@ namespace Infrastructure.Data.Domain.Groups
 
                     y.Property<string>("Value").HasColumnName("Value");
 
+                    y.HasKey("Value");
+
                     y.OwnsMany<GroupUserPermission>("Permissions", z =>
                     {
                         z.ToTable("GroupUserPermissions");
 
                         z.Property<string>("Code").HasColumnName("Code");
+
+                        z.HasKey("Code");
                     });
                 });
             });

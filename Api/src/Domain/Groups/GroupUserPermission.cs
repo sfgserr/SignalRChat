@@ -9,6 +9,11 @@ namespace Domain.Groups
             Code = code;
         }
 
+        private GroupUserPermission()
+        {
+
+        }
+
         public string Code { get; }
 
         protected override IEnumerable<object> GetEqualityComponents()
