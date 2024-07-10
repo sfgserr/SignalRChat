@@ -1,5 +1,4 @@
 ﻿using Domain.Groups;
-using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,37 +8,15 @@ namespace Infrastructure.Data.Domain.Groups
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {
+            builder.ToTable("Groups");
+
             builder.HasKey(x => x.Id);
 
-            builder.OwnsMany<GroupUser>("Users", x =>
-            {
-                x.ToTable("GroupUsers");
+            builder.Property<DateTime>("CreationDate").HasColumnName("CreationDate");
 
-                x.WithOwner().HasForeignKey("GroupId");
-                x.Property<UserId>("UserId");
-                x.Property<GroupId>("GroupId");
-                x.Property<DateTime>("JoinedDate").HasColumnName("JoinedDate");
-
-                x.HasKey("UserId", "GroupId");
-
-                x.OwnsOne<GroupUserRole>("Role", y =>
-                {
-                    y.ToTable("GroupUserRoles");
-
-                    y.Property<string>("Value").HasColumnName("Value");
-
-                    y.HasKey("Value");
-
-                    y.OwnsMany<GroupUserPermission>("Permissions", z =>
-                    {
-                        z.ToTable("GroupUserPermissions");
-
-                        z.Property<string>("Code").HasColumnName("Code");
-
-                        z.HasKey("Code");
-                    });
-                });
-            });
+            builder.HasMany(x => x.Users)
+                .WithOne()
+                .HasForeignKey(x => x.GroupId);
         }
     }
 }

@@ -19,6 +19,9 @@ namespace Infrastructure.Processing
 
         public async Task<TResult> Handle(T command)
         {
+            if (_unitOfWork.HasActiveTransaction)
+                return await _decorated.Handle(command);
+
             IDbContextTransaction transaction = await _unitOfWork.BeginTransactionAsync();
 
             TResult result = await _decorated.Handle(command);

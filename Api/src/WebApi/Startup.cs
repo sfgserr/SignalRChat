@@ -101,7 +101,7 @@ namespace WebApi
                 container.Resolve<IUserService>());
 
             var context = container.Resolve<ApplicationContext>();
-            context.Database.Migrate();
+            //context.Database.Migrate();
 
             if (env.IsDevelopment())
             {

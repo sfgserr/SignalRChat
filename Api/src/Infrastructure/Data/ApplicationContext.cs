@@ -30,6 +30,10 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GroupEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupUserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupUserPermissionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupUserRoleEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupUserRolePermissionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MessageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OutboxEntityTypeConfiguration());

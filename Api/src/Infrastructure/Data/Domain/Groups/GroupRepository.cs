@@ -30,11 +30,11 @@ namespace Infrastructure.Data.Domain.Groups
 
         public async Task<List<GroupUserPermission>> GetUserPermissions(UserId userId)
         {
-            Group? group = await _applicationContext.Set<Group>()
-                .FirstOrDefaultAsync(u => u.Users.Any(u => u.UserId == userId));
+            GroupUser? groupUser = await _applicationContext.Set<GroupUser>()
+                .FirstOrDefaultAsync(u => u.UserId == userId);
 
-            if (group is not null)
-                return group.Users.Where(u => u.UserId == userId).First().Role.Permissions;
+            if (groupUser is not null)
+                return groupUser.Role.Permissions;
 
             return [];
         }

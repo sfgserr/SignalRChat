@@ -2,12 +2,11 @@
 
 namespace Domain.Groups
 {
-    public class GroupUserRole : ValueObject
+    public class GroupUserRole : Entity
     {
-        private GroupUserRole(string value, List<GroupUserPermission> permissions)
+        private GroupUserRole(string value)
         {
             Value = value;
-            Permissions = permissions;
         }
 
         private GroupUserRole()
@@ -15,26 +14,16 @@ namespace Domain.Groups
 
         }
 
-        public static GroupUserRole Member { get; } = new GroupUserRole("Member", [
-            new("CreateMessage"),
-            new("ReadMessage"),
-            new("EditMessage")]);
+        public static GroupUserRole Admin { get; } = new GroupUserRole("Admin");
 
-        public static GroupUserRole Admin { get; } = new GroupUserRole("Admin", [
-            new("CreateMessage"),
-            new("ReadMessage"),
-            new("EditMessage"),
-            new("AddUser"),
-            new("RemoveUser"),
-            new("ChangeName")]);
+        public static GroupUserRole Member { get; } = new GroupUserRole("Member");
+
+        public int Id { get; }
+
+        public List<GroupUser> Users { get; }
 
         public string Value { get; }
 
-        public List<GroupUserPermission> Permissions { get; }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+        public List<GroupUserPermission> Permissions { get; } = [];
     }
 }
