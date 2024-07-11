@@ -2,9 +2,9 @@
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Notifications
 {
-    internal abstract class DomainNotificationBase<T> : IDomainNotificaiton where T : IDomainEvent
+    internal class DomainNotificationBase<T> : IDomainNotificaiton where T : IDomainEvent
     {
-        protected DomainNotificationBase(T domainEvent) 
+        public DomainNotificationBase(T domainEvent) 
         {
             Id = domainEvent.Id;
             DomainEvent = domainEvent;

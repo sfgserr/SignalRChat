@@ -16,7 +16,7 @@ namespace WebApi.Configuration.Authorization
 
             if (id is not null)
             {
-                var permissions = await _appModule.Query<GetUserPermissionsQuery, List<GroupUserPermission>>(
+                var permissions = await _appModule.Query<GetUserPermissionsQuery, List<PermissionDto>>(
                     new GetUserPermissionsQuery(Guid.Parse(id)));
 
                 var claimsIdentity = new ClaimsIdentity();

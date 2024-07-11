@@ -1,5 +1,7 @@
-﻿using Autofac;
+﻿using Application.Cqrs.Commands;
+using Autofac;
 using Autofac.Features.Variance;
+using FluentValidation;
 using MediatR;
 using System.Reflection;
 
@@ -11,15 +13,30 @@ namespace Infrastructure.Configuration.Mediation
         {
             builder.RegisterSource(new ContravariantRegistrationSource());
 
+            builder.RegisterType<ServiceProviderWrapper>()
+                .As<IServiceProvider>()
+                .InstancePerDependency()
+                .IfNotRegistered(typeof(IServiceProvider))
+                .FindConstructorsWith(new AllConstructorFinder());
+
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                .AsClosedTypesOf(typeof(INotificationHandler<>))
-                .AsImplementedInterfaces()
-                .InstancePerDependency()
-                .FindConstructorsWith(new AllConstructorFinder());
+            var types = new[]
+            {
+                typeof(INotificationHandler<>),
+                typeof(IValidator<>)
+            };
+
+            foreach (var type in types)
+            {
+                builder.RegisterAssemblyTypes(Assemblies.Application, ThisAssembly)
+                    .AsClosedTypesOf(type)
+                    .AsImplementedInterfaces()
+                    .InstancePerDependency()
+                    .FindConstructorsWith(new AllConstructorFinder());
+            }
         }
     }
 }

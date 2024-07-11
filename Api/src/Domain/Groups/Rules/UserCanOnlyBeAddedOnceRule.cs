@@ -8,7 +8,7 @@ namespace Domain.Groups.Rules
         private readonly UserId _userId = userId;
         private readonly List<GroupUser> _users = users;
 
-        public bool IsBroken => _users.SingleOrDefault(u => u.UserId == _userId) is null;
+        public bool IsBroken => _users.Any(u => u.UserId == _userId);
 
         public string Message => "User already added to group";
     }

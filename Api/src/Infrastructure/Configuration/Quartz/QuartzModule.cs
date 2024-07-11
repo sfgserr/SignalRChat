@@ -8,7 +8,9 @@ namespace Infrastructure.Configuration.Quartz
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly)
-                .Where(x => typeof(IJob).IsAssignableFrom(x)).InstancePerDependency();
+                .Where(x => typeof(IJob).IsAssignableFrom(x))
+                .InstancePerDependency()
+                .FindConstructorsWith(new AllConstructorFinder());
         }
     }
 }

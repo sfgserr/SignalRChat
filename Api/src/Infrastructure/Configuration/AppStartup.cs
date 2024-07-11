@@ -20,9 +20,9 @@ namespace Infrastructure.Configuration
 
         public static void Initialize(string connectionString, ILogger logger, IUserService userService)
         {
-            QuartzStartup.Initialize();
-
             ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"), userService);
+
+            QuartzStartup.Initialize();
         }
 
         private static void ConfigureCompositionRoot(string connectionString, ILogger logger, IUserService userService)
@@ -46,8 +46,10 @@ namespace Infrastructure.Configuration
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new EmailModule());
+            containerBuilder.RegisterModule(new QuartzModule());
 
             _container = containerBuilder.Build();
+
             AppCompositionRoot.SetContainer(_container);
         }
     }

@@ -6,7 +6,7 @@ namespace Infrastructure.Processing
 {
     internal static class CommandsExecutor
     {
-        public async static Task ExecuteCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
+        internal async static Task ExecuteCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
             using var scope = AppCompositionRoot.BeginLifetimeScope();
 
@@ -23,7 +23,7 @@ namespace Infrastructure.Processing
             throw new ArgumentException($"Can't resolve handler for {command.GetType().Name}");
         }
 
-        public async static Task<TResult> ExecuteCommandAsync<TCommand, TResult>(TCommand command) 
+        internal async static Task<TResult> ExecuteCommandAsync<TCommand, TResult>(TCommand command) 
             where TCommand : ICommandWithResult<TResult>
         {
             using var scope = AppCompositionRoot.BeginLifetimeScope();

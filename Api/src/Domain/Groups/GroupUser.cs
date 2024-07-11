@@ -5,11 +5,11 @@ namespace Domain.Groups
 {
     public class GroupUser : Entity
     {
-        private GroupUser(UserId userId, GroupId groupId, GroupUserRole role, DateTime joinedDate)
+        private GroupUser(UserId userId, GroupId groupId, string roleValue, DateTime joinedDate)
         {
             UserId = userId;
             GroupId = groupId;
-            Role = role;
+            RoleValue = roleValue;
             JoinedDate = joinedDate;
         }
 
@@ -24,9 +24,9 @@ namespace Domain.Groups
 
         public DateTime JoinedDate { get; }
 
-        public GroupUserRole Role { get; }
+        public string RoleValue { get; }
 
-        internal static GroupUser Create(UserId userId, GroupId groupId, GroupUserRole role)
+        internal static GroupUser Create(UserId userId, GroupId groupId, string role)
         {
             return new GroupUser(userId, groupId, role, DateTime.Now);
         }

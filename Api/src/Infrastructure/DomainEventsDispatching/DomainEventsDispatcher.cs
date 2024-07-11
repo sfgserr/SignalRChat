@@ -1,5 +1,6 @@
 ﻿using Domain.SeedWork;
 using Infrastructure.Outbox;
+using Infrastructure.Serialization;
 using Newtonsoft.Json;
 
 namespace Infrastructure.DomainEventsDispatching
@@ -25,7 +26,9 @@ namespace Infrastructure.DomainEventsDispatching
             {
                 Type notificationType = domainEvent.GetNotificationType();
 
-                string json = JsonConvert.SerializeObject(Activator.CreateInstance(notificationType, domainEvent));
+                string json = JsonConvert.SerializeObject(
+                    Activator.CreateInstance(notificationType, domainEvent), 
+                    new JsonSerializerSettings() { ContractResolver = new AllPropertiesContractResolver() });
 
                 OutboxMessage message = new(
                     domainEvent.Id,

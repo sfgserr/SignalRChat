@@ -9,7 +9,7 @@ namespace Domain.Groups.Rules
         private readonly UserId _changingUserId = changingUserId;
 
         public bool IsBroken => 
-            _users.SingleOrDefault(u => u.UserId == _changingUserId && u.Role == GroupUserRole.Admin) == null;
+            !_users.Any(u => u.UserId.Equals(_changingUserId) && u.RoleValue == GroupUserRole.Admin.Value);
 
         public string Message => "Only admin can change group";
     }

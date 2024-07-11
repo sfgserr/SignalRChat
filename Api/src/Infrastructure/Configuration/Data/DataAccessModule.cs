@@ -42,9 +42,7 @@ namespace Infrastructure.Configuration.Data
                 .FindConstructorsWith(new AllConstructorFinder())
                 .InstancePerLifetimeScope();
 
-            var infrastructureAssembly = typeof(ApplicationContext).Assembly;
-
-            builder.RegisterAssemblyTypes(infrastructureAssembly)
+            builder.RegisterAssemblyTypes(ThisAssembly)
                 .Where(type => type.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope()

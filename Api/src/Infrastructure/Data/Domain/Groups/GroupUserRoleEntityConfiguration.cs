@@ -14,9 +14,6 @@ namespace Infrastructure.Data.Domain.Groups
 
             builder.Property(x => x.Value).HasColumnName("Value");
 
-            builder.HasMany(x => x.Users)
-                .WithOne(x => x.Role);
-
             builder.HasMany(x => x.Permissions)
                 .WithMany()
                 .UsingEntity<GroupUserRolePermission>();

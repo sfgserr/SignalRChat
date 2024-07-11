@@ -4,8 +4,9 @@ namespace Domain.Groups
 {
     public class GroupUserRole : Entity
     {
-        private GroupUserRole(string value)
+        private GroupUserRole(int id, string value)
         {
+            Id = id;
             Value = value;
         }
 
@@ -14,13 +15,11 @@ namespace Domain.Groups
 
         }
 
-        public static GroupUserRole Admin { get; } = new GroupUserRole("Admin");
+        public static GroupUserRole Admin { get; } = new GroupUserRole(1, "Admin");
 
-        public static GroupUserRole Member { get; } = new GroupUserRole("Member");
+        public static GroupUserRole Member { get; } = new GroupUserRole(2, "Member");
 
         public int Id { get; }
-
-        public List<GroupUser> Users { get; }
 
         public string Value { get; }
 

@@ -20,7 +20,9 @@ namespace Infrastructure.Data.Domain.Groups
 
         public async Task<Group> Get(GroupId groupId)
         {
-            return await _applicationContext.Groups.FindAsync(groupId);
+            return await _applicationContext.Groups
+                .Include(g => g.Users)
+                .FirstOrDefaultAsync(g => g.Id == groupId);
         }
 
         public async Task<List<Group>> GetAll()
@@ -28,15 +30,19 @@ namespace Infrastructure.Data.Domain.Groups
             return await _applicationContext.Groups.ToListAsync();
         }
 
-        public async Task<List<GroupUserPermission>> GetUserPermissions(UserId userId)
+        public async Task<List<TDto>> GetUserPermissions<TDto>(UserId userId)
         {
-            GroupUser? groupUser = await _applicationContext.Set<GroupUser>()
-                .FirstOrDefaultAsync(u => u.UserId == userId);
+            const string sql = $"""
+                                SELECT gurp.Code
+                                FROM GroupUsers gu
+                                JOIN GroupUserRoles gur ON gu.RoleValue = gur.Value
+                                JOIN GroupUserRolePermissions gurp ON gur.Id = gurp.GroupUserRoleId
+                                WHERE gu.UserId = @p0
+                                """;
 
-            if (groupUser is not null)
-                return groupUser.Role.Permissions;
+            var permissions = _applicationContext.Database.SqlQueryRaw<TDto>(sql, userId.Value);
 
-            return [];
+            return permissions.Any() ? [..permissions] : [];
         }
 
         public void Update(Group entity)

@@ -56,16 +56,16 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("JoinedDate");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("RoleValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("RoleValue");
 
                     b.HasKey("UserId", "GroupId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("GroupUser");
+                    b.ToTable("GroupUsers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Groups.GroupUserPermission", b =>
@@ -259,14 +259,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Groups.GroupUserRole", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Domain.Groups.GroupUserRolePermission", b =>
@@ -285,11 +277,6 @@ namespace Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Domain.Groups.Group", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Domain.Groups.GroupUserRole", b =>
                 {
                     b.Navigation("Users");
                 });

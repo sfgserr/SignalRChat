@@ -23,7 +23,7 @@ namespace Domain.Groups
             IconUri = iconUri;
             CreationDate = DateTime.Now;
 
-            _users = [GroupUser.Create(adminId, id, GroupUserRole.Admin)];
+            _users = [GroupUser.Create(adminId, id, "Admin")];
 
             AddDomainEvent(new GroupCreatedDomainEvent(id, adminId));
         }
@@ -48,7 +48,7 @@ namespace Domain.Groups
             CheckRule(new UserCanOnlyBeAddedOnceRule(userId, _users));
             CheckRule(new OnlyAdminCanChangeGroupRule(_users, addingUserId));
 
-            _users.Add(GroupUser.Create(userId, Id, GroupUserRole.Member));
+            _users.Add(GroupUser.Create(userId, Id, "Member"));
 
             AddDomainEvent(new NewUserAddedToGroupDomainEvent(Id, userId));
         }

@@ -47,6 +47,7 @@ namespace Infrastructure.Data
             catch
             {
                 transaction.Rollback();
+                throw;
             }
             finally
             {

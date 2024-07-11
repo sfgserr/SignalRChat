@@ -7,7 +7,7 @@ namespace Application.Groups.Commands.CreateGroup
         public CreateGroupValidator()
         {
             RuleFor(c => c.Name).NotNull()
-                .MaximumLength(4)
+                .MinimumLength(4)
                 .MaximumLength(16)
                 .WithMessage("Length should be in range of 4 to 16");
 

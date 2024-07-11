@@ -95,25 +95,19 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupUser",
+                name: "GroupUsers",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    RoleValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupUser", x => new { x.UserId, x.GroupId });
+                    table.PrimaryKey("PK_GroupUsers", x => new { x.UserId, x.GroupId });
                     table.ForeignKey(
-                        name: "FK_GroupUser_GroupUserRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "GroupUserRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GroupUser_Groups_GroupId",
+                        name: "FK_GroupUsers_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
@@ -180,29 +174,24 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupUser_GroupId",
-                table: "GroupUser",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GroupUser_RoleId",
-                table: "GroupUser",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GroupUserRolePermissions_GroupUserRoleId",
                 table: "GroupUserRolePermissions",
                 column: "GroupUserRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupUsers_GroupId",
+                table: "GroupUsers",
+                column: "GroupId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GroupUser");
+                name: "GroupUserRolePermissions");
 
             migrationBuilder.DropTable(
-                name: "GroupUserRolePermissions");
+                name: "GroupUsers");
 
             migrationBuilder.DropTable(
                 name: "Messages");
@@ -214,13 +203,13 @@ namespace Infrastructure.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Groups");
-
-            migrationBuilder.DropTable(
                 name: "GroupUserPermissions");
 
             migrationBuilder.DropTable(
                 name: "GroupUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
         }
     }
 }

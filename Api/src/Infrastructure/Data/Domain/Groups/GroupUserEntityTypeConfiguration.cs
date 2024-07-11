@@ -8,12 +8,13 @@ namespace Infrastructure.Data.Domain.Groups
     {
         public void Configure(EntityTypeBuilder<GroupUser> builder)
         {
+            builder.ToTable("GroupUsers");
+
             builder.HasKey(g => new { g.UserId, g.GroupId });
 
             builder.Property(g => g.JoinedDate).HasColumnName("JoinedDate");
 
-            builder.HasOne(g => g.Role)
-                .WithMany(r => r.Users);
+            builder.Property(g => g.RoleValue).HasColumnName("RoleValue");
         }
     }
 }
