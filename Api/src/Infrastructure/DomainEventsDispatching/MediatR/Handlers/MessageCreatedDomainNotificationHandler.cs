@@ -1,5 +1,6 @@
 ﻿using Application.Contracts;
 using Domain.Messages.Events;
+using Domain.Users;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
@@ -7,16 +8,22 @@ namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
     internal class MessageCreatedDomainNotificationHandler : 
         IDomainNotificationHandler<MessageCreatedDomainNotification>
     {
-        private readonly IDomainEventHandler<MessageCreatedDomainEvent> _handler;
+        private readonly IEmailService _emailService;
+        private readonly IUserRepository _userRepository;
 
-        internal MessageCreatedDomainNotificationHandler(IDomainEventHandler<MessageCreatedDomainEvent> handler)
+        internal MessageCreatedDomainNotificationHandler(IEmailService emailService, IUserRepository userRepository)
         {
-            _handler = handler;
+            _emailService = emailService;
+            _userRepository = userRepository;
         }
 
         public async Task Handle(MessageCreatedDomainNotification notification, CancellationToken token)
         {
-            await _handler.Handle(notification.DomainEvent);
+            MessageCreatedDomainEvent @event = notification.DomainEvent;
+
+            User user = await _userRepository.Get(@event.SenderId);
+
+            await _emailService.Send(user.Login, $"Successfully send message to Group:{@event.GroupId}");
         }
     }
 }

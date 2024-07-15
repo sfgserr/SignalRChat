@@ -2,7 +2,7 @@
 
 namespace Domain.Users
 {
-    public class UserId(Guid id) : TypedIdValueBase(id)
+    public class UserId(Guid value) : TypedIdValueBase(value)
     {
 
     }

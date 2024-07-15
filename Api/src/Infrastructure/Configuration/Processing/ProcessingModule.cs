@@ -10,11 +10,6 @@ namespace Infrastructure.Configuration.Processing
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(Assemblies.Application)
-                .AsClosedTypesOf(typeof(IDomainEventHandler<>))
-                .InstancePerDependency()
-                .FindConstructorsWith(new AllConstructorFinder());
-
             builder.RegisterAssemblyTypes(Assemblies.Application, ThisAssembly)
                 .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .InstancePerDependency()

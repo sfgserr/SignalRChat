@@ -1,9 +1,9 @@
 ﻿
 namespace Domain.SeedWork
 {
-    public abstract class TypedIdValueBase(Guid id) : ValueObject
+    public abstract class TypedIdValueBase(Guid value) : ValueObject
     {
-        public Guid Value { get; } = id;
+        public Guid Value { get; } = value;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

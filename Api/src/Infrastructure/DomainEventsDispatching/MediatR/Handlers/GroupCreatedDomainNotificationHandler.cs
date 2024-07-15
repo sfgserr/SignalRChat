@@ -1,20 +1,25 @@
-﻿using Application.Groups.DomainEventHandlers;
+﻿using Application.Contracts;
+using Domain.Users;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
 {
     internal class GroupCreatedDomainNotificationHandler : IDomainNotificationHandler<GroupCreatedDomainNotification>
     {
-        private readonly GroupCreatedDomainEventHandler _handler;
+        private readonly IEmailService _emailService;
+        private readonly IUserRepository _userRepository;
 
-        internal GroupCreatedDomainNotificationHandler(GroupCreatedDomainEventHandler handler)
+        internal GroupCreatedDomainNotificationHandler(IEmailService emailService, IUserRepository userRepository)
         {
-            _handler = handler;
+            _emailService = emailService;
+            _userRepository = userRepository;
         }
 
         public async Task Handle(GroupCreatedDomainNotification notification, CancellationToken token)
         {
-            await _handler.Handle(notification.DomainEvent);
+            User user = await _userRepository.Get(notification.DomainEvent.AdminId);
+
+            await _emailService.Send(user.Login, "You created group");
         }
     }
 }

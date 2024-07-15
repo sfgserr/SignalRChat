@@ -2,7 +2,7 @@
 
 namespace Domain.Messages
 {
-    public class MessageId(Guid id) : TypedIdValueBase(id)
+    public class MessageId(Guid value) : TypedIdValueBase(value)
     {
 
     }

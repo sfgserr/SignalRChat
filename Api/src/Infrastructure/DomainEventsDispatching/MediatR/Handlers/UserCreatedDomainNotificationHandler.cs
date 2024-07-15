@@ -1,20 +1,23 @@
-﻿using Application.Users.DomainEventHandlers;
+﻿using Application.Contracts;
+using Domain.Users.Events;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
 {
     internal class UserCreatedDomainNotificationHandler : IDomainNotificationHandler<UserCreatedDomainNotification>
     {
-        private readonly UserCreatedDomainEventHandler _handler;
+        private readonly IEmailService _emailService;
 
-        internal UserCreatedDomainNotificationHandler(UserCreatedDomainEventHandler handler)
+        internal UserCreatedDomainNotificationHandler(IEmailService emailService)
         {
-            _handler = handler;
+            _emailService = emailService;
         }
 
         public async Task Handle(UserCreatedDomainNotification notification, CancellationToken cancellationToken)
         {
-            await _handler.Handle(notification.DomainEvent);
+            UserCreatedDomainEvent @event = notification.DomainEvent;
+
+            await _emailService.Send(@event.Login, "You have created account");
         }
     }
 }
