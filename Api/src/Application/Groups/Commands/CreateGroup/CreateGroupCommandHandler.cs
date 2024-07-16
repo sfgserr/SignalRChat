@@ -4,11 +4,16 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.CreateGroup
 {
-    public sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IUserContext userContext) :
-        ICommandHandler<CreateGroupCommand>
+    internal class CreateGroupCommandHandler : ICommandHandler<CreateGroupCommand>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
-        private readonly IUserContext _userContext = userContext;
+        private readonly IGroupRepository _groupRepository;
+        private readonly IUserContext _userContext;
+
+        internal CreateGroupCommandHandler(IGroupRepository groupRepository, IUserContext userContext)
+        {
+            _groupRepository = groupRepository;
+            _userContext = userContext;
+        }
 
         public async Task Handle(CreateGroupCommand command)
         {

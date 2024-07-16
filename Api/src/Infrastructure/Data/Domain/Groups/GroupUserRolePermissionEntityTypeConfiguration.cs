@@ -16,6 +16,9 @@ namespace Infrastructure.Data.Domain.Groups
                 Create(1, "AddUser"),
                 Create(1, "RemoveUser"),
                 Create(1, "ChangeName"),
+                Create(1, "CreateMessage"),
+                Create(1, "EditMessage"),
+                Create(1, "ReadMessage"),
                 Create(2, "CreateMessage"),
                 Create(2, "EditMessage"),
                 Create(2, "ReadMessage")]);

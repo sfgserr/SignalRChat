@@ -7,6 +7,6 @@ namespace Domain.Groups
     {
         Task<Group> Get(GroupId groupId);
 
-        Task<List<TDto>> GetUserPermissions<TDto>(UserId userId);
+        List<TDto> GetUserPermissions<TDto>(UserId userId);
     }
 }

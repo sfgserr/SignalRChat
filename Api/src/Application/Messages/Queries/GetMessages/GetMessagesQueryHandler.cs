@@ -4,10 +4,14 @@ using Domain.Messages;
 
 namespace Application.Messages.Queries.GetMessages
 {
-    public sealed class GetMessagesQueryHandler(IMessageRepository messageRepository) : 
-        IQueryHandler<GetMessagesQuery, IList<MessageDto>>
+    internal class GetMessagesQueryHandler : IQueryHandler<GetMessagesQuery, IList<MessageDto>>
     {
-        private readonly IMessageRepository _messageRepository = messageRepository;
+        private readonly IMessageRepository _messageRepository;
+
+        internal GetMessagesQueryHandler(IMessageRepository messageRepository)
+        {
+            _messageRepository = messageRepository;
+        }
 
         public async Task<IList<MessageDto>> Handle(GetMessagesQuery query)
         {

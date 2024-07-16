@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.Register
 {
-    public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+    internal class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
         public RegisterCommandValidator() 
         {

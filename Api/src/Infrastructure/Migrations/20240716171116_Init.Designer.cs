@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240711125430_Init")]
+    [Migration("20240716171116_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -170,6 +170,21 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Code = "CreateMessage",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "EditMessage",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "ReadMessage",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "CreateMessage",
                             GroupUserRoleId = 2
                         },
                         new
@@ -193,11 +208,27 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
                     b.Property<bool>("IsEditted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("SenderId");
+
+                    b.Property<Guid>("ToGroupId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ToGroupId");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int")
+                        .HasColumnName("Type");
 
                     b.HasKey("Id");
 
@@ -225,6 +256,33 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Infrastructure.InternalCommands.InternalCommand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Data");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InternalCommands", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Outbox.OutboxMessage", b =>

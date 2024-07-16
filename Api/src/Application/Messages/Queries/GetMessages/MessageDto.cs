@@ -1,5 +1,4 @@
-﻿
-using Domain.Groups;
+﻿using Domain.Groups;
 using Domain.Messages;
 using Domain.Users;
 

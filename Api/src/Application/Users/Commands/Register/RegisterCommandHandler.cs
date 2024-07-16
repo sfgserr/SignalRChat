@@ -3,11 +3,16 @@ using Domain.Users;
 
 namespace Application.Users.Commands.Register
 {
-    public sealed class RegisterCommandHandler(IUserRepository userRepository, IUserCounter userCounter) :
-        ICommandHandler<RegisterCommand>
+    internal class RegisterCommandHandler : ICommandHandler<RegisterCommand>
     {
-        private readonly IUserRepository _userRepository = userRepository;
-        private readonly IUserCounter _userCounter = userCounter;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserCounter _userCounter;
+
+        internal RegisterCommandHandler(IUserRepository userRepository, IUserCounter userCounter)
+        {
+            _userRepository = userRepository;
+            _userCounter = userCounter;
+        }
 
         public async Task Handle(RegisterCommand command)
         {

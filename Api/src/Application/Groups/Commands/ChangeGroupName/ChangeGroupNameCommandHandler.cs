@@ -4,11 +4,16 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.ChangeGroupName
 {
-    public sealed class ChangeGroupNameCommandHandler(IGroupRepository repository, IUserContext userContext) :
-        ICommandHandler<ChangeGroupNameCommand>
+    internal class ChangeGroupNameCommandHandler : ICommandHandler<ChangeGroupNameCommand>
     {
-        private readonly IGroupRepository _repository = repository;
-        private readonly IUserContext _userContext = userContext;
+        private readonly IGroupRepository _repository;
+        private readonly IUserContext _userContext;
+
+        internal ChangeGroupNameCommandHandler(IGroupRepository repository, IUserContext userContext)
+        {
+            _repository = repository;
+            _userContext = userContext;
+        }
 
         public async Task Handle(ChangeGroupNameCommand command)
         {

@@ -4,10 +4,14 @@ using System.Security.Claims;
 
 namespace Application.Users.Commands.Authenticate
 {
-    public sealed class AuthenticateCommandHandler(IUserRepository userRepository) : 
-        ICommandHandlerWithResult<AuthenticateCommand, AuthenticationResult>
+    internal class AuthenticateCommandHandler : ICommandHandlerWithResult<AuthenticateCommand, AuthenticationResult>
     {
-        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IUserRepository _userRepository;
+
+        internal AuthenticateCommandHandler(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
         public async Task<AuthenticationResult> Handle(AuthenticateCommand command)
         {

@@ -3,7 +3,6 @@ using Infrastructure.Data;
 using Infrastructure.DomainEventsDispatching;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 using Infrastructure.Outbox;
-using Infrastructure.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -26,7 +25,8 @@ namespace Infrastructure.Processing.Outbox
 
         public async Task Handle(ProcessOutboxCommand command)
         {
-            List<OutboxMessage> messages = await _applicationContext.OutboxMessages.ToListAsync();
+            List<OutboxMessage> messages = await _applicationContext.OutboxMessages.Where(m => m.Proccessed == null)
+                .ToListAsync();
 
             foreach (OutboxMessage message in messages)
             {

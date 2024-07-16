@@ -4,11 +4,16 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.ChangeIconUri
 {
-    public sealed class ChangeIconUriCommandHandler(IGroupRepository groupRepository, IUserContext userContext) :
-        ICommandHandler<ChangeIconUriCommand>
+    internal class ChangeIconUriCommandHandler : ICommandHandler<ChangeIconUriCommand>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
-        private readonly IUserContext _userContext = userContext;
+        private readonly IGroupRepository _groupRepository;
+        private readonly IUserContext _userContext;
+
+        internal ChangeIconUriCommandHandler(IGroupRepository groupRepository, IUserContext userContext)
+        {
+            _groupRepository = groupRepository;
+            _userContext = userContext;
+        }
 
         public async Task Handle(ChangeIconUriCommand command)
         {

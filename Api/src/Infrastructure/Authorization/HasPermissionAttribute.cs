@@ -2,8 +2,18 @@
 
 namespace Infrastructure.Authorization
 {
-    public class HasPermissionAttribute(string code) : AuthorizeAttribute(policy: code)
+    public class HasPermissionAttribute : AuthorizeAttribute
     {
-        public string Code { get; } = code;
+        public HasPermissionAttribute(string code) : base(policy: code)
+        {
+            Code = code;
+        }
+
+        public HasPermissionAttribute() : base(policy: "NoPermission")
+        {
+            Code = "NoPermission";
+        }
+
+        public string Code { get; }
     }
 }

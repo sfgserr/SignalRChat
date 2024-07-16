@@ -21,6 +21,8 @@ using Infrastructure.Data.ValueConversion;
 using WebApi.Chat;
 using Microsoft.AspNetCore.Authentication;
 using WebApi.Configuration.Authorization;
+using WebApi.Configuration.Messaging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi
 {
@@ -57,6 +59,7 @@ namespace WebApi
                     };
                 });
 
+            services.AddSignalR();
             services.AddAuthorization();
 
             services.AddHttpContextAccessor();
@@ -76,6 +79,7 @@ namespace WebApi
                 x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationProblemDetails(ex));
             });
 
+            services.AddScoped<ISender, MessageSender>();
             services.AddSingleton<JwtProvider>(x => new(new(issuer, audience, secretKey)));
             services.AddSingleton<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, HasPermissionAuthorizationPolicyProvider>();
@@ -98,7 +102,8 @@ namespace WebApi
             AppStartup.Initialize(
                 Configuration["SqlServerSettings:ConnectionString"]!, 
                 _logger, 
-                container.Resolve<IUserService>());
+                container.Resolve<IUserService>(),
+                container.Resolve<ISender>());
 
             var context = container.Resolve<ApplicationContext>();
             context.Database.Migrate();
@@ -117,7 +122,11 @@ namespace WebApi
             app.UseAuthorization();
 
             app.UseProblemDetails();
-            app.UseEndpoints(e => e.MapControllers());
+            app.UseEndpoints(e => 
+            {
+                e.MapControllers();
+                e.MapHub<ChatHub>("/chat");
+            });
         }
 
         private void ConfigureLogger()

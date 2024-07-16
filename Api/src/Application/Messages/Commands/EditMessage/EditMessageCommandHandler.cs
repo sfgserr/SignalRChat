@@ -4,11 +4,16 @@ using Domain.Users;
 
 namespace Application.Messages.Commands.EditMessage
 {
-    public class EditMessageCommandHandler(IMessageRepository messageRepository, IUserContext userContext) :
-        ICommandHandler<EditMessageCommand>
+    internal class EditMessageCommandHandler : ICommandHandler<EditMessageCommand>
     {
-        private readonly IMessageRepository _messageRepository = messageRepository;
-        private readonly IUserContext _userContext = userContext;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IUserContext _userContext;
+
+        internal EditMessageCommandHandler(IMessageRepository messageRepository, IUserContext userContext)
+        {
+            _messageRepository = messageRepository;
+            _userContext = userContext;
+        }
 
         public async Task Handle(EditMessageCommand command)
         {

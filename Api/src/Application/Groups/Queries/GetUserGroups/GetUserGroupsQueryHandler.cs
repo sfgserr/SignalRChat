@@ -4,10 +4,14 @@ using Domain.Users;
 
 namespace Application.Groups.Queries.GetUserGroups
 {
-    public sealed class GetUserGroupsQueryHandler(IGroupRepository groupRepository) : 
-        IQueryHandler<GetUserGroupsQuery, IList<GroupDto>>
+    internal class GetUserGroupsQueryHandler : IQueryHandler<GetUserGroupsQuery, IList<GroupDto>>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
+        private readonly IGroupRepository _groupRepository;
+
+        internal GetUserGroupsQueryHandler(IGroupRepository groupRepository)
+        {
+            _groupRepository = groupRepository;
+        }
 
         public async Task<IList<GroupDto>> Handle(GetUserGroupsQuery query)
         {

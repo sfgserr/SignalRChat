@@ -11,10 +11,6 @@ namespace Application.Messages.Commands.CreateMessage
 
             RuleFor(c => c.Body).NotEmpty()
                 .WithMessage("Body is empty");
-
-            RuleFor(c => c.Type).LessThanOrEqualTo(2)
-                .GreaterThanOrEqualTo(1)
-                .WithMessage("Invalid type");
         }
     }
 }

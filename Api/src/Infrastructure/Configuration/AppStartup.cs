@@ -18,14 +18,22 @@ namespace Infrastructure.Configuration
     {
         private static IContainer _container;
 
-        public static void Initialize(string connectionString, ILogger logger, IUserService userService)
+        public static void Initialize(
+            string connectionString, 
+            ILogger logger, 
+            IUserService userService, 
+            ISender sender)
         {
-            ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"), userService);
+            ConfigureCompositionRoot(connectionString, logger.ForContext("Context", "App"), userService, sender);
 
             QuartzStartup.Initialize();
         }
 
-        private static void ConfigureCompositionRoot(string connectionString, ILogger logger, IUserService userService)
+        private static void ConfigureCompositionRoot(
+            string connectionString, 
+            ILogger logger, 
+            IUserService userService,
+            ISender sender)
         {
             var containerBuilder = new ContainerBuilder();
 
@@ -42,7 +50,7 @@ namespace Infrastructure.Configuration
             containerBuilder.RegisterModule(new DomainEventsDispatchingModule(mappings));
 
             containerBuilder.RegisterModule(new LoggingModule(logger));
-            containerBuilder.RegisterModule(new ProcessingModule());
+            containerBuilder.RegisterModule(new ProcessingModule(sender));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new EmailModule());

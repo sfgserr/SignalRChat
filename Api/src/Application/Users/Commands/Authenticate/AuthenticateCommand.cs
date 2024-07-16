@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.Authenticate
 {
-    public sealed class AuthenticateCommand(string login, string password) : ICommandWithResult<AuthenticationResult>
+    public class AuthenticateCommand(string login, string password) : ICommandWithResult<AuthenticationResult>
     {
         public string Login { get; } = login;
 

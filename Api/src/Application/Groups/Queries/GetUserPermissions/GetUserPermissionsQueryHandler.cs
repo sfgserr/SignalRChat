@@ -3,14 +3,18 @@ using Domain.Groups;
 
 namespace Application.Groups.Queries.GetUserPermissions
 {
-    public class GetUserPermissionsQueryHandler(IGroupRepository groupRepository) : 
-        IQueryHandler<GetUserPermissionsQuery, List<PermissionDto>>
+    internal class GetUserPermissionsQueryHandler : IQueryHandler<GetUserPermissionsQuery, List<PermissionDto>>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
+        private readonly IGroupRepository _groupRepository;
 
-        public async Task<List<PermissionDto>> Handle(GetUserPermissionsQuery query)
+        internal GetUserPermissionsQueryHandler(IGroupRepository groupRepository)
         {
-            return await _groupRepository.GetUserPermissions<PermissionDto>(new(query.UserId));
+            _groupRepository = groupRepository;
+        }
+
+        public Task<List<PermissionDto>> Handle(GetUserPermissionsQuery query)
+        {
+            return Task.FromResult(_groupRepository.GetUserPermissions<PermissionDto>(new(query.UserId)));
         }
     }
 }

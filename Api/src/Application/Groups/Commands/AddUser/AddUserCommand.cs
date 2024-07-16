@@ -2,7 +2,7 @@
 
 namespace Application.Groups.Commands.AddUser
 {
-    public sealed class AddUserCommand(Guid userId, Guid groupId) : ICommand
+    public class AddUserCommand(Guid userId, Guid groupId) : ICommand
     {
         public Guid UserId { get; } = userId;
 

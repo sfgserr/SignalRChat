@@ -10,7 +10,7 @@ namespace Infrastructure.Authorization
         {
             var permissions = context.User.GetPermissions();
 
-            if (Authorize(permissions, requirement.PermissionCode))
+            if (requirement.PermissionCode == "NoPermission" || Authorize(permissions, requirement.PermissionCode))
             {
                 context.Succeed(requirement);
             }

@@ -9,7 +9,7 @@ namespace Domain.Messages.Rules
         private readonly Group _group = group;
         private readonly UserId _userId = userId;
 
-        public bool IsBroken => _group.Users.SingleOrDefault(u => u.UserId == _userId) == null;
+        public bool IsBroken => !_group.Users.Any(u => u.UserId.Equals(_userId));
 
         public string Message => "User is not member of group";
     }

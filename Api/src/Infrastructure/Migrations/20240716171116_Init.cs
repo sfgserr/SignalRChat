@@ -52,11 +52,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InternalCommands",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Error = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InternalCommands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ToGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsEditted = table.Column<bool>(type: "bit", nullable: false),
                     IsRead = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -167,8 +186,11 @@ namespace Infrastructure.Migrations
                 {
                     { "AddUser", 1 },
                     { "ChangeName", 1 },
+                    { "CreateMessage", 1 },
                     { "CreateMessage", 2 },
+                    { "EditMessage", 1 },
                     { "EditMessage", 2 },
+                    { "ReadMessage", 1 },
                     { "ReadMessage", 2 },
                     { "RemoveUser", 1 }
                 });
@@ -192,6 +214,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "GroupUsers");
+
+            migrationBuilder.DropTable(
+                name: "InternalCommands");
 
             migrationBuilder.DropTable(
                 name: "Messages");

@@ -2,7 +2,7 @@
 
 namespace Application.Groups.Queries.GetUserGroups
 {
-    public sealed class GetUserGroupsQuery : IQuery<IList<GroupDto>>
+    public class GetUserGroupsQuery : IQuery<IList<GroupDto>>
     {
         public Guid UserId { get; }
     }

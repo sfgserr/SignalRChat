@@ -1,4 +1,5 @@
-﻿using Infrastructure.Processing.Outbox;
+﻿using Infrastructure.Processing.InternalCommands;
+using Infrastructure.Processing.Outbox;
 using Quartz;
 using Quartz.Impl;
 using System.Collections.Specialized;
@@ -20,14 +21,23 @@ namespace Infrastructure.Configuration.Quartz
 
             scheduler.Start().GetAwaiter().GetResult();
 
-            var job = JobBuilder.Create<ProcessOutboxJob>().Build();
+            var outboxJob = JobBuilder.Create<ProcessOutboxJob>().Build();
 
-            var trigger = TriggerBuilder.Create()
+            var outboxJobTrigger = TriggerBuilder.Create()
                 .StartNow()
                 .WithCronSchedule("0/2 * * ? * *")
                 .Build();
 
-            scheduler.ScheduleJob(job, trigger).GetAwaiter().GetResult();
+            scheduler.ScheduleJob(outboxJob, outboxJobTrigger).GetAwaiter().GetResult();
+
+            var internalCommandsJob = JobBuilder.Create<ProcessInternalCommandsJob>().Build();
+
+            var internalCommandsTrigger = TriggerBuilder.Create()
+                .StartNow()
+                .WithCronSchedule("0/2 * * ? * *")
+                .Build();
+
+            scheduler.ScheduleJob(internalCommandsJob, internalCommandsTrigger).GetAwaiter().GetResult();
         }
     }
 }

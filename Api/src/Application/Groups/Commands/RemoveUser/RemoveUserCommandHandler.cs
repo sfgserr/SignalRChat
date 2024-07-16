@@ -4,11 +4,16 @@ using Domain.Users;
 
 namespace Application.Groups.Commands.RemoveUser
 {
-    public sealed class RemoveUserCommandHandler(IGroupRepository groupRepository, IUserContext userContext) :
-        ICommandHandler<RemoveUserCommand>
+    internal class RemoveUserCommandHandler : ICommandHandler<RemoveUserCommand>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
-        private readonly IUserContext _userContext = userContext;
+        private readonly IGroupRepository _groupRepository;
+        private readonly IUserContext _userContext;
+
+        internal RemoveUserCommandHandler(IGroupRepository groupRepository, IUserContext userContext)
+        {
+            _groupRepository = groupRepository;
+            _userContext = userContext;
+        }
 
         public async Task Handle(RemoveUserCommand command)
         {

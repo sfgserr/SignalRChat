@@ -1,10 +1,16 @@
-﻿using Domain.Messages;
+﻿using Application.Cqrs.Commands;
+using Domain.Messages;
 
 namespace Application.Messages.Commands.ReadMessage
 {
-    public sealed class ReadMessageCommandHandler(IMessageRepository messageRepository) : IReadMessageCommandHandler
+    internal class ReadMessageCommandHandler : ICommandHandler<ReadMessageCommand>
     {
-        private readonly IMessageRepository _messageRepository = messageRepository;
+        private readonly IMessageRepository _messageRepository;
+
+        internal ReadMessageCommandHandler(IMessageRepository messageRepository)
+        {
+            _messageRepository = messageRepository;
+        }
 
         public async Task Handle(ReadMessageCommand command)
         {

@@ -14,13 +14,8 @@ namespace Infrastructure.Processing
 
             var handler = scope.Resolve(handlerType) as ICommandHandler<TCommand>;
 
-            if (handler is not null)
-            {
-                await handler.Handle(command);
-                return;
-            }
-
-            throw new ArgumentException($"Can't resolve handler for {command.GetType().Name}");
+            await handler!.Handle(command);
+            return;
         }
 
         internal async static Task<TResult> ExecuteCommandAsync<TCommand, TResult>(TCommand command) 
@@ -32,10 +27,7 @@ namespace Infrastructure.Processing
 
             var handler = scope.Resolve(handlerType) as ICommandHandlerWithResult<TCommand, TResult>;
 
-            if (handler is not null)
-                return await handler.Handle(command);
-
-            throw new ArgumentException($"Can't resolve handler for {command.GetType().Name}");
+            return await handler!.Handle(command);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.Register
 {
-    public sealed class RegisterCommand(string login, string password, string iconUri) : ICommand
+    public class RegisterCommand(string login, string password, string iconUri) : ICommand
     {
         public string Login { get; } = login;
 

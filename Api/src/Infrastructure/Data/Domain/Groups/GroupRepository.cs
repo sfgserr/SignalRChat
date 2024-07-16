@@ -30,7 +30,7 @@ namespace Infrastructure.Data.Domain.Groups
             return await _applicationContext.Groups.ToListAsync();
         }
 
-        public async Task<List<TDto>> GetUserPermissions<TDto>(UserId userId)
+        public List<TDto> GetUserPermissions<TDto>(UserId userId)
         {
             const string sql = $"""
                                 SELECT gurp.Code

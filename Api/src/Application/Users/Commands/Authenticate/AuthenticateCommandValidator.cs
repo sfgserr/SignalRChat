@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.Authenticate
 {
-    public class AuthenticateCommandValidator : AbstractValidator<AuthenticateCommand>
+    internal class AuthenticateCommandValidator : AbstractValidator<AuthenticateCommand>
     {
         public AuthenticateCommandValidator() 
         {

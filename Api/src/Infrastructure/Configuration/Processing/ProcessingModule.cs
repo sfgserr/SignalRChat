@@ -2,14 +2,32 @@
 using Application.Cqrs.Commands;
 using Application.Cqrs.Queries;
 using Autofac;
+using Infrastructure.DomainEventsDispatching.MediatR.Handlers.Abstractions;
+using Infrastructure.InternalCommands;
 using Infrastructure.Processing;
 
 namespace Infrastructure.Configuration.Processing
 {
     internal class ProcessingModule : Module
     {
+        private readonly ISender _sender;
+
+        internal ProcessingModule(ISender sender)
+        {
+            _sender = sender;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
+            builder.Register((c) => _sender)
+                .As<ISender>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CommandsScheduler>()
+                .As<ICommandsScheduler>()
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new AllConstructorFinder());
+
             builder.RegisterAssemblyTypes(Assemblies.Application, ThisAssembly)
                 .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .InstancePerDependency()

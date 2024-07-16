@@ -3,9 +3,14 @@ using Domain.Users;
 
 namespace Application.Users
 {
-    public class UserContext(IUserService userService) : IUserContext
+    public class UserContext : IUserContext
     {
-        private readonly IUserService _userService = userService;
+        private readonly IUserService _userService;
+
+        public UserContext(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         public UserId Id => new(_userService.GetUserId());
     }

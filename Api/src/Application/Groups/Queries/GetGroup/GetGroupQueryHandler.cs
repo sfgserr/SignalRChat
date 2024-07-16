@@ -3,9 +3,14 @@ using Domain.Groups;
 
 namespace Application.Groups.Queries.GetGroup
 {
-    public sealed class GetGroupQueryHandler(IGroupRepository groupRepository) : IQueryHandler<GetGroupQuery, GroupDto>
+    internal class GetGroupQueryHandler : IQueryHandler<GetGroupQuery, GroupDto>
     {
-        private readonly IGroupRepository _groupRepository = groupRepository;
+        private readonly IGroupRepository _groupRepository;
+
+        internal GetGroupQueryHandler(IGroupRepository groupRepository)
+        {
+            _groupRepository = groupRepository;
+        }
 
         public async Task<GroupDto> Handle(GetGroupQuery query)
         {

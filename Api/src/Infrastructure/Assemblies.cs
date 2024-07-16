@@ -1,7 +1,7 @@
 ﻿using Application.Cqrs.Commands;
 using System.Reflection;
 
-namespace Infrastructure.Configuration
+namespace Infrastructure
 {
     internal static class Assemblies
     {
