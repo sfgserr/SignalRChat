@@ -2,8 +2,8 @@
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers.Abstractions
 {
-    internal interface ICommandsScheduler
+    public interface ICommandsScheduler
     {
-        Task EnqueueAsync(ICommand command);
+        Task EnqueueAsync(InternalCommandBase command);
     }
 }

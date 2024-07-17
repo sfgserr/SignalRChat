@@ -31,10 +31,5 @@ namespace Infrastructure.Data.Domain.Users
         {
             return await _applicationContext.Users.ToListAsync();
         }
-
-        public void Update(User entity)
-        {
-            _applicationContext.Users.Update(entity);
-        }
     }
 }

@@ -101,6 +101,22 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Code = "ChangeName"
+                        },
+                        new
+                        {
+                            Code = "GetGroup"
+                        },
+                        new
+                        {
+                            Code = "GetUserGroups"
+                        },
+                        new
+                        {
+                            Code = "ChangeIconUri"
+                        },
+                        new
+                        {
+                            Code = "GetMessages"
                         });
                 });
 
@@ -181,6 +197,26 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
+                            Code = "GetGroup",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "GetUserGroups",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "ChangeIconUri",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
+                            Code = "GetMessages",
+                            GroupUserRoleId = 1
+                        },
+                        new
+                        {
                             Code = "CreateMessage",
                             GroupUserRoleId = 2
                         },
@@ -192,6 +228,21 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Code = "ReadMessage",
+                            GroupUserRoleId = 2
+                        },
+                        new
+                        {
+                            Code = "GetMessages",
+                            GroupUserRoleId = 2
+                        },
+                        new
+                        {
+                            Code = "GetGroup",
+                            GroupUserRoleId = 2
+                        },
+                        new
+                        {
+                            Code = "GetUserGroups",
                             GroupUserRoleId = 2
                         });
                 });

@@ -1,8 +1,7 @@
-﻿using Infrastructure.InternalCommands;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Domain.InternalCommands
+namespace Infrastructure.InternalCommands
 {
     internal class InternalCommandEntityTypeConfiguration : IEntityTypeConfiguration<InternalCommand>
     {

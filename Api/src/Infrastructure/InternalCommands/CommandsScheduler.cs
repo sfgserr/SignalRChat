@@ -15,16 +15,16 @@ namespace Infrastructure.InternalCommands
             _applicationContext = applicationContext;
         }
 
-        public async Task EnqueueAsync(ICommand command)
+        public async Task EnqueueAsync(InternalCommandBase command)
         {
-            string type = command.GetType().Name;
+            string type = command.GetType().FullName!;
 
             string json = JsonConvert.SerializeObject(command, new JsonSerializerSettings()
             {
                 ContractResolver = new AllPropertiesContractResolver()
             });
 
-            var internalCommand = new InternalCommand(Guid.NewGuid(), type, json);
+            var internalCommand = new InternalCommand(command.Id, type, json);
 
             await _applicationContext.InternalCommands.AddAsync(internalCommand);
         }

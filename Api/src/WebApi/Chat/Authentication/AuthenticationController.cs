@@ -28,7 +28,7 @@ namespace WebApi.Chat.Authentication
             return Unauthorized(result.Error);
         }
 
-        [HttpPost("Register")]
+        [HttpPost("")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             await _appModule.ExecuteCommand(new RegisterCommand(

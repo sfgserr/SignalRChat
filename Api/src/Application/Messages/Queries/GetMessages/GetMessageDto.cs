@@ -4,7 +4,7 @@ using Domain.Users;
 
 namespace Application.Messages.Queries.GetMessages
 {
-    public class MessageDto(Message message)
+    public class GetMessageDto(Message message)
     {
         public MessageId Id { get; } = message.Id;
 

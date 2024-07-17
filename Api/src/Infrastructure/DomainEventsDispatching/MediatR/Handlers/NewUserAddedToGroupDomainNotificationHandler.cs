@@ -1,6 +1,5 @@
-﻿using Application.Contracts;
-using Domain.Groups.Events;
-using Domain.Users;
+﻿using Application.Groups.Commands.SendEmailToAddedUser;
+using Infrastructure.DomainEventsDispatching.MediatR.Handlers.Abstractions;
 using Infrastructure.DomainEventsDispatching.MediatR.Notifications;
 
 namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
@@ -8,22 +7,19 @@ namespace Infrastructure.DomainEventsDispatching.MediatR.Handlers
     internal class NewUserAddedToGroupDomainNotificationHandler : 
         IDomainNotificationHandler<NewUserAddedToGroupDomainNotification>
     {
-        private readonly IEmailService _emailService;
-        private readonly IUserRepository _userRepository;
+        private readonly ICommandsScheduler _commandsScheduler;
 
-        internal NewUserAddedToGroupDomainNotificationHandler(IEmailService emailService, IUserRepository userRepository)
+        internal NewUserAddedToGroupDomainNotificationHandler(ICommandsScheduler commandsScheduler)
         {
-            _emailService = emailService;
-            _userRepository = userRepository;
+            _commandsScheduler = commandsScheduler;
         }
 
         public async Task Handle(NewUserAddedToGroupDomainNotification notification, CancellationToken token)
         {
-            NewUserAddedToGroupDomainEvent @event = notification.DomainEvent;
-
-            User user = await _userRepository.Get(@event.UserId);
-
-            await _emailService.Send(user.Login, $"You was added to Group:{@event.GroupId}");
+            await _commandsScheduler.EnqueueAsync(new SendEmailToAddedUserCommand(
+                Guid.NewGuid(),
+                notification.DomainEvent.UserId,
+                notification.DomainEvent.GroupId));
         }
     }
 }

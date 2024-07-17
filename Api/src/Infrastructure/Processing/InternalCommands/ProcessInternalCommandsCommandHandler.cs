@@ -47,7 +47,7 @@ namespace Infrastructure.Processing.InternalCommands
         {
             Type commandType = Assemblies.Application.GetType(internalCommand.Type)!;
 
-            dynamic command = JsonConvert.DeserializeObject(internalCommand.Data, commandType);
+            dynamic command = JsonConvert.DeserializeObject(internalCommand.Data, commandType)!;
 
             await CommandsExecutor.ExecuteCommandAsync(command!);
         }

@@ -4,7 +4,7 @@ using Domain.Messages;
 
 namespace Application.Messages.Queries.GetMessages
 {
-    internal class GetMessagesQueryHandler : IQueryHandler<GetMessagesQuery, IList<MessageDto>>
+    internal class GetMessagesQueryHandler : IQueryHandler<GetMessagesQuery, IList<GetMessageDto>>
     {
         private readonly IMessageRepository _messageRepository;
 
@@ -13,11 +13,11 @@ namespace Application.Messages.Queries.GetMessages
             _messageRepository = messageRepository;
         }
 
-        public async Task<IList<MessageDto>> Handle(GetMessagesQuery query)
+        public async Task<IList<GetMessageDto>> Handle(GetMessagesQuery query)
         {
             IList<Message> messages = await _messageRepository.Get(new GroupId(query.GroupId));
 
-            return messages.Select(m => new MessageDto(m)).ToList();
+            return messages.Select(m => new GetMessageDto(m)).ToList();
         }
     }
 }

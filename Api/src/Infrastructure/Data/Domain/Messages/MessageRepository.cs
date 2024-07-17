@@ -32,10 +32,5 @@ namespace Infrastructure.Data.Domain.Messages
         {
             return await _applicationContext.Messages.ToListAsync();
         }
-
-        public void Update(Message entity)
-        {
-            _applicationContext.Messages.Update(entity);
-        }
     }
 }

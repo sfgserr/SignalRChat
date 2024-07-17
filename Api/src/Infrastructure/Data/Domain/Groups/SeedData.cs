@@ -10,6 +10,10 @@ namespace Infrastructure.Data.Domain.Groups
             new("EditMessage"),
             new("AddUser"),
             new("RemoveUser"),
-            new("ChangeName")];
+            new("ChangeName"),
+            new("GetGroup"),
+            new("GetUserGroups"),
+            new("ChangeIconUri"),
+            new("GetMessages")];
     }
 }

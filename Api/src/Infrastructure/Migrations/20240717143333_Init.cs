@@ -163,9 +163,13 @@ namespace Infrastructure.Migrations
                 values: new object[]
                 {
                     "AddUser",
+                    "ChangeIconUri",
                     "ChangeName",
                     "CreateMessage",
                     "EditMessage",
+                    "GetGroup",
+                    "GetMessages",
+                    "GetUserGroups",
                     "ReadMessage",
                     "RemoveUser"
                 });
@@ -185,11 +189,18 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { "AddUser", 1 },
+                    { "ChangeIconUri", 1 },
                     { "ChangeName", 1 },
                     { "CreateMessage", 1 },
                     { "CreateMessage", 2 },
                     { "EditMessage", 1 },
                     { "EditMessage", 2 },
+                    { "GetGroup", 1 },
+                    { "GetGroup", 2 },
+                    { "GetMessages", 1 },
+                    { "GetMessages", 2 },
+                    { "GetUserGroups", 1 },
+                    { "GetUserGroups", 2 },
                     { "ReadMessage", 1 },
                     { "ReadMessage", 2 },
                     { "RemoveUser", 1 }

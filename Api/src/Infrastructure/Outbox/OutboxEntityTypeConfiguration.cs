@@ -1,8 +1,7 @@
-﻿using Infrastructure.Outbox;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Domain.Outbox
+namespace Infrastructure.Outbox
 {
     internal class OutboxEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
     {

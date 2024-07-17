@@ -36,8 +36,6 @@ namespace Infrastructure.Processing.Outbox
                 await _mediator.Publish(notification!);
 
                 message.Proccessed = DateTime.Now;
-
-                _applicationContext.OutboxMessages.Update(message);
             }
         }
     }

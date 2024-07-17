@@ -44,10 +44,5 @@ namespace Infrastructure.Data.Domain.Groups
 
             return permissions.Any() ? [..permissions] : [];
         }
-
-        public void Update(Group entity)
-        {
-            _applicationContext.Groups.Update(entity);
-        }
     }
 }

@@ -6,7 +6,5 @@ namespace Domain.SeedWork
         Task Add(T entity);
 
         Task<List<T>> GetAll();
-
-        void Update(T entity);
     }
 }
