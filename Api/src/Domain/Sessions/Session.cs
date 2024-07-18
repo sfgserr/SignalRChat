@@ -1,4 +1,5 @@
 ﻿using Domain.SeedWork;
+using Domain.Sessions.Events;
 using Domain.Sessions.Rules;
 using Domain.Users;
 
@@ -29,7 +30,7 @@ namespace Domain.Sessions
 
         public UserId NoughtUserId { get; }
 
-        public UserId? WonUserId { get; private set; }
+        public UserId? WinnerUserId { get; private set; }
 
         public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
 
@@ -37,57 +38,57 @@ namespace Domain.Sessions
         {
             UserId userId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
 
+            CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(WinnerUserId));
             CheckRule(new OnlyCertainUserCanPlaceCertainMarkRule(userId, placingUser));
             CheckRule(new CanPlaceMarkOnlyInUntakenCellRule(_marks, index));
 
             _marks[index] = mark;
 
-            CheckWin(index, mark, placingUser);
+            if (CheckWin(index, mark, placingUser))
+                AddDomainEvent(new SessionIsEndedDomainEvent(placingUser));
         }
 
-        private void CheckWin(int index, Mark mark, UserId placingUserId) 
+        private bool CheckWin(int index, Mark mark, UserId placingUserId)
         {
-            int rowIndex = ((index+4)/3)-1;
-            int columnIndex = index-(rowIndex)*3;
+            int rowIndex = index / 3;
+            int columnIndex = index % 3;
 
-            int rowBeginningColumnIndex = (rowIndex - 1) * 3;
+            bool rowWin = CheckLine(rowIndex * 3, 1, mark, placingUserId);
+            bool columnWin = CheckLine(columnIndex, 3, mark, placingUserId);
 
+            bool diagonalWin = false;
+
+            if (rowIndex == columnIndex)
+            {
+                diagonalWin = CheckLine(0, 4, mark, placingUserId);
+            }
+
+            if (rowIndex + columnIndex == 2)
+            {
+                diagonalWin |= CheckLine(2, 2, mark, placingUserId);
+            }
+
+            return rowWin || columnWin || diagonalWin;
+        }
+
+        private bool CheckLine(int startIndex, int step, Mark mark, UserId placingUserId)
+        {
             int count = 0;
 
-            for (int i = rowBeginningColumnIndex; i < rowBeginningColumnIndex+3; i++)
+            for (int i = startIndex; i < 9; i += step)
             {
-                bool isWon = CountMarks(i, mark, placingUserId, ref count);
+                if (!_marks[i].Equals(mark))
+                {
+                    return false;
+                }
 
-                if (isWon)
-                    return;
-            }
-
-            for (int i = columnIndex; i < columnIndex+6; i += 3)
-            {
-                bool isWon = CountMarks(i, mark, placingUserId, ref count);
-
-                if (isWon)
-                    return;
-            }
-        }
-
-        private bool CountMarks(int index, Mark mark, UserId placingUserId, ref int count)
-        {
-            if (_marks[index].Equals(mark))
-            {
                 count++;
-            }
-            else
-            {
-                count = 0;
-                return false;
-            }
 
-            if (count == 3)
-            {
-                WonUserId = placingUserId;
-
-                return true;
+                if (count == 3)
+                {
+                    WinnerUserId = placingUserId;
+                    return true;
+                }
             }
 
             return false;
