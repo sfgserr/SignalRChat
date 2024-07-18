@@ -8,7 +8,7 @@ namespace Domain.Groups
 {
     public class Group : Entity, IAggregateRoot
     {
-        private readonly List<GroupUser> _users;
+        private readonly List<GroupUser> _users = [];
 
         //for EF
         private Group()

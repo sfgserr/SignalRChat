@@ -27,7 +27,7 @@ namespace Infrastructure.Data.Domain.Groups
 
         public async Task<List<Group>> GetAll()
         {
-            return await _applicationContext.Groups.ToListAsync();
+            return await _applicationContext.Groups.Include(u => u.Users).ToListAsync();
         }
 
         public List<TDto> GetUserPermissions<TDto>(UserId userId)

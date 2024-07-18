@@ -1,24 +1,47 @@
-﻿using Application.Groups.Commands.CreateGroup;
+﻿using Application.Contracts;
+using Application.Groups.Commands.CreateGroup;
 using Application.Groups.Queries;
 using Application.Groups.Queries.GetUserGroups;
 using IntegrationTests.SeedWork;
+using IntegrationTests.SeedWork.Testing;
 
 namespace IntegrationTests.CreateGroupCommandTests
 {
-    public class CreateGroupCommandTests : TestBase
+    public class CreateGroupCommandTests : Sut
     {
         [Fact]
         public async Task CreateGroupCommand_Executed_Successfully()
         {
-            BeforeTest();
+            var result = await Test(async () =>
+            {
+                await AppModule.ExecuteCommand(new CreateGroupCommand("Group", "Default"));
 
-            await AppModule.ExecuteCommand(new CreateGroupCommand("Group", "Default"));
+                await AssertEventually(10000, new GetCreatedGroupsTest(AppModule));
+            });
 
-            var groups = await AppModule.Query<GetUserGroupsQuery, IList<GroupDto>>(new GetUserGroupsQuery());
+            Assert.True(result.IsSuccessfully);
+        }
+    }
 
-            AfterTest();
+    public class GetCreatedGroupsTest(IAppModule appModule) : IProbe
+    {
+        private readonly IAppModule _appModule = appModule;
 
-            Assert.True(groups.Count > 0);
+        private IList<GroupDto>? _groups;    
+
+        public bool IsSatisfied()
+        {
+            return _groups is not null && _groups.Count > 0;
+        }
+
+        public async Task SampleAsync()
+        {
+            _groups = await _appModule.Query<GetUserGroupsQuery, IList<GroupDto>>(new GetUserGroupsQuery());
+        }
+
+        public string DescribeFailureTo()
+        {
+            return "Group wasn't created";
         }
     }
 }
