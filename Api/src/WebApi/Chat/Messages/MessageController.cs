@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Chat.Messages
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/messages")]
     public class MessageController(IAppModule appModule) : Controller
     {
         private readonly IAppModule _appModule = appModule;

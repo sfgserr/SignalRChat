@@ -4,6 +4,6 @@ namespace Domain.SessionProposals
 {
     public interface ISessionsCounter
     {
-        int CountUserSessions(UserId proposingUserId, UserId proposedUserId);
+        int CountUserSessions(UserId userID);
     }
 }

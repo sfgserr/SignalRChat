@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Chat.Groups
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/groups")]
     public class GroupController(IAppModule appModule) : Controller
     {
         private readonly IAppModule _appModule = appModule;

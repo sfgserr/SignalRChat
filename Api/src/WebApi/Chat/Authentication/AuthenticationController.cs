@@ -1,10 +1,7 @@
 ﻿using Application.Contracts;
-using Application.Cqrs.Commands;
 using Application.Users.Commands.Authenticate;
 using Application.Users.Commands.Register;
-using Autofac;
 using Infrastructure.Authorization;
-using Infrastructure.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Chat.Authentication
@@ -16,7 +13,7 @@ namespace WebApi.Chat.Authentication
         private readonly JwtProvider _jwtProvider = jwtProvider;
         private readonly IAppModule _appModule = appModule;
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(string login, string password)
         {
             AuthenticationResult result = await _appModule.ExecuteCommand<AuthenticateCommand, AuthenticationResult>(
@@ -28,7 +25,7 @@ namespace WebApi.Chat.Authentication
             return Unauthorized(result.Error);
         }
 
-        [HttpPost("")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             await _appModule.ExecuteCommand(new RegisterCommand(

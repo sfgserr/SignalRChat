@@ -2,8 +2,8 @@
 
 namespace Application.SessionProposals.Commands.AcceptProposal
 {
-    public class AcceptProposalCommand : ICommand
+    public class AcceptProposalCommand(Guid sessionProposalId) : ICommand
     {
-        public Guid SessionProposalId { get; }
+        public Guid SessionProposalId { get; } = sessionProposalId;
     }
 }

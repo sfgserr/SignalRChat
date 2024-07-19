@@ -10,7 +10,8 @@ namespace Domain.SessionProposals.Rules
         private readonly UserId _proposingUserId = proposingUserId;
         private readonly UserId _proposedUserId = proposedUserId;
 
-        public bool IsBroken => _counter.CountUserSessions(_proposingUserId, _proposedUserId) > 0;
+        public bool IsBroken => 
+            _counter.CountUserSessions(_proposingUserId) > 0 || _counter.CountUserSessions(_proposedUserId) > 0;
 
         public string Message => "Users can't have current sessions";
     }

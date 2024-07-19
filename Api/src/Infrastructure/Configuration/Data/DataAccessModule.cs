@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Domain.SessionProposals;
 using Domain.Users;
 using Infrastructure.Data;
+using Infrastructure.Data.Domain.SessionProposals;
 using Infrastructure.Data.Domain.Users;
 using Infrastructure.Data.ValueConversion;
 using Infrastructure.DomainEventsDispatching;
@@ -39,6 +41,11 @@ namespace Infrastructure.Configuration.Data
 
             builder.RegisterType<UsersCounter>()
                 .As<IUsersCounter>()
+                .FindConstructorsWith(new AllConstructorFinder())
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<SessionsCounter>()
+                .As<ISessionsCounter>()
                 .FindConstructorsWith(new AllConstructorFinder())
                 .InstancePerLifetimeScope();
 

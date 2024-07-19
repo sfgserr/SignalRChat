@@ -16,7 +16,7 @@ namespace Domain.Sessions
 
         private Session(SessionId sessionId, UserId crossUserId, UserId noughtUserId)
         {
-            SessionId = sessionId;
+            Id = sessionId;
             CrossUserId = crossUserId;
             NoughtUserId = noughtUserId;
 
@@ -26,7 +26,7 @@ namespace Domain.Sessions
         public static Session CreateSession(UserId crossUserId, UserId noughUserId) =>
             new(new(Guid.NewGuid()), crossUserId, noughUserId);
 
-        public SessionId SessionId { get; }
+        public SessionId Id { get; }
 
         public UserId CrossUserId { get; }
 
@@ -57,7 +57,7 @@ namespace Domain.Sessions
             IsCrossTurn = !IsCrossTurn;
 
             AddDomainEvent(new MarkPlacedDomainEvent(
-                SessionId, 
+                Id, 
                 placingUser != CrossUserId ? CrossUserId : NoughtUserId,
                 mark));
         }

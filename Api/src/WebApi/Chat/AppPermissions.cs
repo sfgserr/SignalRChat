@@ -21,5 +21,15 @@
         public const string GetUserGroups = "GetUserGroups";
 
         public const string GetMessages = "GetMessages";
+
+        public const string AcceptProposal = "AcceptProposal";
+
+        public const string Propose = "Propose";
+
+        public const string GetProposals = "GetProposals";
+
+        public const string PlaceMark = "PlaceMark";
+
+        public const string GetSession = "GetSession";
     }
 }

@@ -4,7 +4,7 @@ namespace Application.Sessions.Queries.GetSession
 {
     public class SessionDto(Session session)
     {
-        public Guid SessionId { get; } = session.SessionId.Value;
+        public Guid SessionId { get; } = session.Id.Value;
 
         public Guid CrossUserId { get; } = session.CrossUserId.Value;
 
