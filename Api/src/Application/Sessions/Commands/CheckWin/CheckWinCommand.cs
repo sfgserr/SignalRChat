@@ -1,13 +1,10 @@
 ﻿using Application.Cqrs.Commands;
+using Domain.Sessions;
 
 namespace Application.Sessions.Commands.CheckWin
 {
-    public class CheckWinCommand : InternalCommandBase
+    public class CheckWinCommand(Guid id, SessionId sessionId) : InternalCommandBase(id)
     {
-        public CheckWinCommand(Guid id) : base(id)
-        {
-        }
-
-        public int Index { get; }
+        internal SessionId SessionId { get; } = sessionId;
     }
 }

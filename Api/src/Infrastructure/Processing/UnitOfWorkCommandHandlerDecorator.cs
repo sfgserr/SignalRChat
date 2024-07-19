@@ -1,6 +1,5 @@
 ﻿using Application.Cqrs.Commands;
 using Infrastructure.Data;
-using Infrastructure.InternalCommands;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

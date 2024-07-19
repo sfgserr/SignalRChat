@@ -1,6 +1,6 @@
 ﻿using Domain.SessionProposals;
 
-namespace Application.SessionProposals.Queries.GetUserSessionProposals
+namespace Application.SessionProposals
 {
     public class SessionProposalDto(SessionProposal proposal)
     {

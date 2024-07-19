@@ -3,12 +3,12 @@ using Domain.Users;
 
 namespace Domain.Sessions.Events
 {
-    public class MarkPlacedDomainEvent(int index, Mark mark, UserId placedUserId) : DomainEventBase
+    public class MarkPlacedDomainEvent(SessionId sessionId, UserId receivingUserId, Mark mark) : DomainEventBase
     {
-        public int Index { get; } = index;
+        public SessionId SessionId { get; } = sessionId;
+
+        public UserId ReceivingUserId { get; } = receivingUserId;
 
         public Mark Mark { get; } = mark;
-
-        public UserId PlacedUserId { get; } = placedUserId;
     }
 }

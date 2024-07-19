@@ -5,8 +5,8 @@ namespace Application.Sessions.Commands.CreateSession
 {
     public class CreateSessionCommand(Guid id, UserId proposingUserId, UserId proposedUserId) : InternalCommandBase(id)
     {
-        public UserId ProposingUserId { get; } = proposingUserId;
+        internal UserId ProposingUserId { get; } = proposingUserId;
 
-        public UserId ProposedUserId { get; } = proposedUserId;
+        internal UserId ProposedUserId { get; } = proposedUserId;
     }
 }

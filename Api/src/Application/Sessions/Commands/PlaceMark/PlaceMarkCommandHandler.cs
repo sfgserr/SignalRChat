@@ -19,7 +19,7 @@ namespace Application.Sessions.Commands.PlaceMark
         {
             Session session = await _sessionRepository.Get(new(command.SessionId));
 
-            session.PlaceMark(command.Mark, command.Index, _userContext.Id);
+            session.PlaceMark(Mark.Parse(command.Mark)!, command.Index, _userContext.Id);
         }
     }
 }

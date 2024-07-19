@@ -1,14 +1,13 @@
 ﻿using Application.Cqrs.Commands;
-using Domain.Sessions;
 
 namespace Application.Sessions.Commands.PlaceMark
 {
-    public class PlaceMarkCommand(Guid sessionId, int index, Mark mark) : ICommand
+    public class PlaceMarkCommand(Guid sessionId, int index, char mark) : ICommand
     {
         public Guid SessionId { get; } = sessionId;
 
         public int Index { get; } = index;
 
-        public Mark Mark { get; } = mark;
+        public char Mark { get; } = mark;
     }
 }

@@ -19,6 +19,8 @@ namespace Domain.Sessions
             SessionId = sessionId;
             CrossUserId = crossUserId;
             NoughtUserId = noughtUserId;
+
+            AddDomainEvent(new SessionCreatedDomainEvent(sessionId, crossUserId, noughtUserId));
         }
 
         public static Session CreateSession(UserId crossUserId, UserId noughUserId) =>
@@ -32,9 +34,11 @@ namespace Domain.Sessions
 
         public UserId? WinnerUserId { get; private set; }
 
-        public bool IsDraw { get; private set; } = false;
+        public bool IsEnded { get; private set; } = false;
 
         public bool IsCrossTurn { get; private set; } = true;
+
+        public int LastPlacedMarkIndex { get; private set; }
 
         public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
 
@@ -42,49 +46,55 @@ namespace Domain.Sessions
         {
             UserId userId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
 
-            CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(WinnerUserId, IsDraw));
+            CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(IsEnded));
             CheckRule(new OnlyCertainUserCanPlaceCertainMarkRule(userId, placingUser));
             CheckRule(new CanPlaceMarkOnlyInUntakenCellRule(_marks, index));
             CheckRule(new CannotPlaceMarkWhenItIsNotTurnRule(IsCrossTurn, mark));
 
             _marks[index] = mark;
 
+            LastPlacedMarkIndex = index;
             IsCrossTurn = !IsCrossTurn;
 
-            AddDomainEvent(new MarkPlacedDomainEvent(index, mark, placingUser));
+            AddDomainEvent(new MarkPlacedDomainEvent(
+                SessionId, 
+                placingUser != CrossUserId ? CrossUserId : NoughtUserId,
+                mark));
         }
 
-        public void CheckWin(int index, Mark mark, UserId placingUserId)
+        public void CheckWin()
         {
+            int index = LastPlacedMarkIndex;
+            Mark mark = _marks[index];
+            UserId placedUserId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
+
             int rowIndex = index / 3;
             int columnIndex = index % 3;
 
-            bool rowWin = CheckLine(rowIndex * 3, 1, mark, placingUserId);
-            bool columnWin = CheckLine(columnIndex, 3, mark, placingUserId);
+            bool rowWin = CheckLine(rowIndex * 3, 1, mark, placedUserId);
+            bool columnWin = CheckLine(columnIndex, 3, mark, placedUserId);
 
             bool diagonalWin = false;
 
             if (rowIndex == columnIndex)
             {
-                diagonalWin = CheckLine(0, 4, mark, placingUserId);
+                diagonalWin = CheckLine(0, 4, mark, placedUserId);
             }
 
             if (rowIndex + columnIndex == 2)
             {
-                diagonalWin |= CheckLine(2, 2, mark, placingUserId);
+                diagonalWin |= CheckLine(2, 2, mark, placedUserId);
             }
 
             bool isWin = rowWin || columnWin || diagonalWin;
 
-            if (isWin)
+            if (isWin || _marks.All(m => m != null))
             {
-                AddDomainEvent(new SessionIsEndedDomainEvent(placingUserId));
-            }
-            else if (_marks.All(m => m != null))
-            {
-                IsDraw = true;
+                IsEnded = true;
 
-                AddDomainEvent(new SessionIsEndedDomainEvent());
+                AddDomainEvent(WinnerUserId is null ? 
+                    new SessionEndedDomainEvent(CrossUserId, NoughtUserId) : 
+                    new SessionEndedDomainEvent(CrossUserId, NoughtUserId, WinnerUserId));
             }
         }
 

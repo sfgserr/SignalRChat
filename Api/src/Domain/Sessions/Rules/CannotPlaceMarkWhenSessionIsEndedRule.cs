@@ -1,14 +1,12 @@
 ﻿using Domain.SeedWork;
-using Domain.Users;
 
 namespace Domain.Sessions.Rules
 {
-    public class CannotPlaceMarkWhenSessionIsEndedRule(UserId? winnerUserId, bool isDraw) : IBusinessRule
+    public class CannotPlaceMarkWhenSessionIsEndedRule(bool isEnded) : IBusinessRule
     {
-        private readonly UserId? _winnerUserId = winnerUserId;
-        private readonly bool _isDraw = isDraw;
+        private readonly bool _isEnded = isEnded;
 
-        public bool IsBroken => _isDraw || _winnerUserId is not null;
+        public bool IsBroken => !_isEnded;
 
         public string Message => "Session is ended";
     }

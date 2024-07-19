@@ -8,7 +8,6 @@ namespace Infrastructure.DomainEventsDispatching.MediatR.Notifications
         [JsonConstructor]
         public NewUserAddedToGroupDomainNotification(NewUserAddedToGroupDomainEvent domainEvent) : base(domainEvent)
         {
-
         }
     }
 }

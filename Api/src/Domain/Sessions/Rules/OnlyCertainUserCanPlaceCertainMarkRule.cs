@@ -10,6 +10,6 @@ namespace Domain.Sessions.Rules
 
         public bool IsBroken => !_userId.Equals(_placingUserId);
 
-        public string Message => "You are not able to place crosses";
+        public string Message => "You are not able to place such marks";
     }
 }

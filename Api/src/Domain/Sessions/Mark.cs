@@ -15,6 +15,9 @@ namespace Domain.Sessions
 
         public char Value { get; }
 
+        public static Mark? Parse(char value) =>
+            Cross.Value == value ? Cross : Nought.Value == value ? Nought : null;
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
