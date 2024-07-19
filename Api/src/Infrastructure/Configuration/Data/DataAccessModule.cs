@@ -37,8 +37,8 @@ namespace Infrastructure.Configuration.Data
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<UserCounter>()
-                .As<IUserCounter>()
+            builder.RegisterType<UsersCounter>()
+                .As<IUsersCounter>()
                 .FindConstructorsWith(new AllConstructorFinder())
                 .InstancePerLifetimeScope();
 

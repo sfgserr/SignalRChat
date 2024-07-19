@@ -3,8 +3,18 @@ using Domain.Users;
 
 namespace Domain.Sessions.Events
 {
-    public class SessionIsEndedDomainEvent(UserId winnerUserId) : DomainEventBase
+    public class SessionIsEndedDomainEvent : DomainEventBase
     {
-        public UserId WinnerUserId { get; } = winnerUserId;
+        public SessionIsEndedDomainEvent(UserId? winnerUserId)
+        {
+            WinnerUserId = winnerUserId;
+        }
+
+        public SessionIsEndedDomainEvent()
+        {
+
+        }
+
+        public UserId? WinnerUserId { get; }
     }
 }

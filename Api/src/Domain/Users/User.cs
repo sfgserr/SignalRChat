@@ -6,7 +6,7 @@ namespace Domain.Users
 {
     public class User : Entity, IAggregateRoot
     {
-        private User(UserId userId, string login, string password, string iconUri, IUserCounter _usersCounter)
+        private User(UserId userId, string login, string password, string iconUri, IUsersCounter _usersCounter)
         {
             CheckRule(new UserLoginMustBeUniqueRule(_usersCounter, login));
 
@@ -23,7 +23,7 @@ namespace Domain.Users
                    
         }
 
-        public static User Create(string login, string password, string iconUri, IUserCounter userCounter)
+        public static User Create(string login, string password, string iconUri, IUsersCounter userCounter)
         {
             return new User(new UserId(Guid.NewGuid()), login, password, iconUri, userCounter);
         }

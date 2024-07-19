@@ -2,9 +2,9 @@
 
 namespace Domain.Users.Rules
 {
-    public class UserLoginMustBeUniqueRule(IUserCounter userCounter, string login) : IBusinessRule
+    public class UserLoginMustBeUniqueRule(IUsersCounter userCounter, string login) : IBusinessRule
     {
-        private readonly IUserCounter _userCounter = userCounter;
+        private readonly IUsersCounter _userCounter = userCounter;
         private readonly string _login = login;
 
         public bool IsBroken => _userCounter.GetUsersCountWithSameLogin(_login) > 0;

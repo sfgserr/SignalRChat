@@ -6,9 +6,9 @@ namespace Application.Users.Commands.Register
     internal class RegisterCommandHandler : ICommandHandler<RegisterCommand>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUserCounter _userCounter;
+        private readonly IUsersCounter _userCounter;
 
-        internal RegisterCommandHandler(IUserRepository userRepository, IUserCounter userCounter)
+        internal RegisterCommandHandler(IUserRepository userRepository, IUsersCounter userCounter)
         {
             _userRepository = userRepository;
             _userCounter = userCounter;

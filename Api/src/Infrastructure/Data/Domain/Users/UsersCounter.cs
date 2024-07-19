@@ -2,11 +2,11 @@
 
 namespace Infrastructure.Data.Domain.Users
 {
-    internal class UserCounter : IUserCounter
+    internal class UsersCounter : IUsersCounter
     {
         private readonly ApplicationContext _appContext;
 
-        internal UserCounter(ApplicationContext appContext)
+        internal UsersCounter(ApplicationContext appContext)
         {
             _appContext = appContext;
         }

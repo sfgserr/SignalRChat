@@ -2,6 +2,7 @@
 using Domain.Groups.Rules;
 using Domain.Messages;
 using Domain.SeedWork;
+using Domain.SessionProposals;
 using Domain.Users;
 
 namespace Domain.Groups
@@ -42,6 +43,9 @@ namespace Domain.Groups
         {
             return new Group(new GroupId(Guid.NewGuid()), adminId, name, iconUri);
         }
+
+        public SessionProposal Propose(UserId proposingUserId, UserId proposedUserId, ISessionsCounter counter) =>
+            SessionProposal.Create(proposingUserId, proposedUserId, _users, counter);
 
         public void AddUser(UserId userId, UserId addingUserId)
         {

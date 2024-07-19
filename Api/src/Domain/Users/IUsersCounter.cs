@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Users
 {
-    public interface IUserCounter
+    public interface IUsersCounter
     {
         int GetUsersCountWithSameLogin(string login);
     }

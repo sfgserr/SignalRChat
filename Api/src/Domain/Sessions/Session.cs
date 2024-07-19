@@ -21,7 +21,7 @@ namespace Domain.Sessions
             NoughtUserId = noughtUserId;
         }
 
-        internal static Session CreateSession(UserId crossUserId, UserId noughUserId) =>
+        public static Session CreateSession(UserId crossUserId, UserId noughUserId) =>
             new(new(Guid.NewGuid()), crossUserId, noughUserId);
 
         public SessionId SessionId { get; }
@@ -32,23 +32,29 @@ namespace Domain.Sessions
 
         public UserId? WinnerUserId { get; private set; }
 
+        public bool IsDraw { get; private set; } = false;
+
+        public bool IsCrossTurn { get; private set; } = true;
+
         public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
 
         public void PlaceMark(Mark mark, int index, UserId placingUser)
         {
             UserId userId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
 
-            CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(WinnerUserId));
+            CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(WinnerUserId, IsDraw));
             CheckRule(new OnlyCertainUserCanPlaceCertainMarkRule(userId, placingUser));
             CheckRule(new CanPlaceMarkOnlyInUntakenCellRule(_marks, index));
+            CheckRule(new CannotPlaceMarkWhenItIsNotTurnRule(IsCrossTurn, mark));
 
             _marks[index] = mark;
 
-            if (CheckWin(index, mark, placingUser))
-                AddDomainEvent(new SessionIsEndedDomainEvent(placingUser));
+            IsCrossTurn = !IsCrossTurn;
+
+            AddDomainEvent(new MarkPlacedDomainEvent(index, mark, placingUser));
         }
 
-        private bool CheckWin(int index, Mark mark, UserId placingUserId)
+        public void CheckWin(int index, Mark mark, UserId placingUserId)
         {
             int rowIndex = index / 3;
             int columnIndex = index % 3;
@@ -68,7 +74,18 @@ namespace Domain.Sessions
                 diagonalWin |= CheckLine(2, 2, mark, placingUserId);
             }
 
-            return rowWin || columnWin || diagonalWin;
+            bool isWin = rowWin || columnWin || diagonalWin;
+
+            if (isWin)
+            {
+                AddDomainEvent(new SessionIsEndedDomainEvent(placingUserId));
+            }
+            else if (_marks.All(m => m != null))
+            {
+                IsDraw = true;
+
+                AddDomainEvent(new SessionIsEndedDomainEvent());
+            }
         }
 
         private bool CheckLine(int startIndex, int step, Mark mark, UserId placingUserId)
