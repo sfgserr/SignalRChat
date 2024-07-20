@@ -8,7 +8,7 @@ namespace Application.Sessions.Commands.PlaceMark
         public PlaceMarkValidator() 
         {
             RuleFor(p => Mark.Parse(p.Mark))
-                .NotNull()
+                .NotEqual(Mark.DefaultValue)
                 .WithMessage("Only available marks are X and O");
         }
     }

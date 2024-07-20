@@ -405,7 +405,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("_marks")
                         .IsRequired()
-                        .HasColumnType("varchar(9)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Marks");
 
                     b.HasKey("Id");

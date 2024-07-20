@@ -18,10 +18,12 @@ namespace Domain.Sessions
 
         public static Mark Nought { get; } = new('O');
 
+        public static Mark DefaultValue { get; } = new('*');
+
         public char Value { get; }
 
-        public static Mark? Parse(char value) =>
-            Cross.Value == value ? Cross : Nought.Value == value ? Nought : null;
+        public static Mark Parse(char value) =>
+            Cross.Value == value ? Cross : Nought.Value == value ? Nought : DefaultValue;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

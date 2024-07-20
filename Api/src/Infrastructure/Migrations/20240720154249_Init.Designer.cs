@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240720115119_Init")]
+    [Migration("20240720154249_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -408,7 +408,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("_marks")
                         .IsRequired()
-                        .HasColumnType("varchar(9)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Marks");
 
                     b.HasKey("Id");

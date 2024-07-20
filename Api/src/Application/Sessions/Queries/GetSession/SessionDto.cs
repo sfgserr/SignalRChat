@@ -12,6 +12,6 @@ namespace Application.Sessions.Queries.GetSession
 
         public bool IsCrossTurn { get; } = session.IsCrossTurn;
 
-        public IReadOnlyCollection<Mark?> Marks { get; } = session.GetMarks();
+        public IReadOnlyCollection<Mark> Marks { get; } = session.GetMarks();
     }
 }

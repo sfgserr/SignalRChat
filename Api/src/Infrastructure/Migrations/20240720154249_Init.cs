@@ -125,7 +125,7 @@ namespace Infrastructure.Migrations
                     IsEnded = table.Column<bool>(type: "bit", nullable: false),
                     IsCrossTurn = table.Column<bool>(type: "bit", nullable: false),
                     LastPlacedMarkIndex = table.Column<int>(type: "int", nullable: false),
-                    Marks = table.Column<string>(type: "varchar(9)", nullable: false)
+                    Marks = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
