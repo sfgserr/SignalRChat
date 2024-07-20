@@ -8,5 +8,7 @@ namespace Domain.Sessions
         Task<Session> Get(UserId userID);
 
         Task<Session> Get(SessionId sessionId);
+
+        void Update(Session session);
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240720154249_Init")]
+    [Migration("20240720204400_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -399,17 +399,17 @@ namespace Infrastructure.Migrations
                     b.Property<int>("LastPlacedMarkIndex")
                         .HasColumnType("int");
 
+                    b.Property<string>("Marks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Marks");
+
                     b.Property<Guid>("NoughtUserId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("NoughtUserId");
 
                     b.Property<Guid?>("WinnerUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("_marks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Marks");
 
                     b.HasKey("Id");
 

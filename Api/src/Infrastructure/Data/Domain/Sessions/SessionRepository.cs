@@ -33,5 +33,10 @@ namespace Infrastructure.Data.Domain.Sessions
         {
             return await _applicationContext.Sessions.ToListAsync();
         }
+
+        public void Update(Session session)
+        {
+            _applicationContext.Sessions.Update(session);
+        }
     }
 }

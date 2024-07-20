@@ -12,12 +12,6 @@ namespace Domain.Sessions.Events
             NoughtUserId = noughtUserId;
         }
 
-        public SessionEndedDomainEvent(UserId crossUserId, UserId noughtUserId)
-        {
-            CrossUserId = crossUserId;
-            NoughtUserId = noughtUserId;
-        }
-
         public UserId CrossUserId { get; }
 
         public UserId NoughtUserId { get; }

@@ -40,7 +40,7 @@ namespace Domain.Sessions
 
         public int LastPlacedMarkIndex { get; private set; } = 0;
 
-        public IReadOnlyCollection<Mark> GetMarks() => _marks.AsReadOnly();
+        public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
 
         public void PlaceMark(Mark mark, int index, UserId placingUser)
         {
@@ -65,7 +65,7 @@ namespace Domain.Sessions
         public void CheckWin()
         {
             int index = LastPlacedMarkIndex;
-            Mark mark = _marks[index]!;
+            Mark mark = _marks[index];
             UserId placedUserId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
 
             int rowIndex = index / 3;
@@ -88,13 +88,11 @@ namespace Domain.Sessions
 
             bool isWin = rowWin || columnWin || diagonalWin;
 
-            if (isWin || _marks.All(m => m != Mark.DefaultValue))
+            if (isWin || _marks.All(m => !m.Equals(Mark.DefaultValue)))
             {
                 IsEnded = true;
 
-                AddDomainEvent(WinnerUserId is null ? 
-                    new SessionEndedDomainEvent(CrossUserId, NoughtUserId) : 
-                    new SessionEndedDomainEvent(CrossUserId, NoughtUserId, WinnerUserId));
+                AddDomainEvent(new SessionEndedDomainEvent(CrossUserId, NoughtUserId, WinnerUserId));
             }
         }
 

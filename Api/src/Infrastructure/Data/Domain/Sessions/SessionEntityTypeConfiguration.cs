@@ -15,7 +15,8 @@ namespace Infrastructure.Data.Domain.Sessions
 
             builder.Property(s => s.CrossUserId).HasColumnName("CrossUserId");
             builder.Property(s => s.NoughtUserId).HasColumnName("NoughtUserId");
-            builder.Property<List<Mark>>("_marks")
+            builder.Property(s => s.Marks)
+                .HasField("_marks")
                 .HasConversion(new MarksToStringValueConverter())
                 .HasColumnName("Marks");
         }
