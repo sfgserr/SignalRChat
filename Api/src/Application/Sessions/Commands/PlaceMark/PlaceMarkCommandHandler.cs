@@ -17,7 +17,7 @@ namespace Application.Sessions.Commands.PlaceMark
 
         public async Task Handle(PlaceMarkCommand command)
         {
-            Session session = await _sessionRepository.Get(new(command.SessionId));
+            Session session = await _sessionRepository.Get(_userContext.Id);
 
             session.PlaceMark(Mark.Parse(command.Mark)!, command.Index, _userContext.Id);
         }

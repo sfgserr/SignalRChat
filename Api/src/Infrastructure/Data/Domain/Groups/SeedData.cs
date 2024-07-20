@@ -14,6 +14,11 @@ namespace Infrastructure.Data.Domain.Groups
             new("GetGroup"),
             new("GetUserGroups"),
             new("ChangeIconUri"),
-            new("GetMessages")];
+            new("GetMessages"),
+            new("AcceptProposal"),
+            new("Propose"),
+            new("PlaceMark"),
+            new("GetSession"),
+            new("GetProposals")];
     }
 }

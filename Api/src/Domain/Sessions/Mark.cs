@@ -9,6 +9,11 @@ namespace Domain.Sessions
             Value = value;
         }
 
+        private Mark()
+        {
+
+        }
+
         public static Mark Cross { get; } = new('X');
 
         public static Mark Nought { get; } = new('O');

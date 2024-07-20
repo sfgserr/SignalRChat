@@ -42,8 +42,11 @@ namespace WebApi.Configuration.Messaging
         {
             var connections = ConnectionMapper.GetConnections(identityId);
 
-            foreach (string connection in connections)
-                await _chatHub.Clients.Client(connection).SendAsync(method, data);
+            if (connections is not null)
+            {
+                foreach (string connection in connections)
+                    await _chatHub.Clients.Client(connection).SendAsync(method, data);
+            }
         }
     }
 }

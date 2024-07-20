@@ -45,7 +45,12 @@ namespace Infrastructure.Configuration
                 { "GroupCreatedDomainNotification", typeof(GroupCreatedDomainNotification) },
                 { "MessageCreatedDomainNotification", typeof(MessageCreatedDomainNotification) },
                 { "NewUserAddedToGroupDomainNotification", typeof(NewUserAddedToGroupDomainNotification) },
-                { "UserCreatedDomainNotification", typeof(UserCreatedDomainNotification) }
+                { "UserCreatedDomainNotification", typeof(UserCreatedDomainNotification) },
+                { "SessionProposalAcceptedDomainNotification", typeof(SessionProposalAcceptedDomainNotification) },
+                { "SessionProposalCreatedDomainNotification", typeof(SessionProposalCreatedDomainNotification) },
+                { "MarkPlacedDomainNotification", typeof(MarkPlacedDomainNotification) },
+                { "SessionCreatedDomainNotification", typeof(SessionCreatedDomainNotification) },
+                { "SessionEndedDomainNotification", typeof(SessionEndedDomainNotification) }
             };
             containerBuilder.RegisterModule(new DomainEventsDispatchingModule(mappings));
 

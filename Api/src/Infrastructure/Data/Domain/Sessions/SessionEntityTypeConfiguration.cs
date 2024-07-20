@@ -1,4 +1,5 @@
 ﻿using Domain.Sessions;
+using Infrastructure.Data.ValueConversion;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,8 +15,9 @@ namespace Infrastructure.Data.Domain.Sessions
 
             builder.Property(s => s.CrossUserId).HasColumnName("CrossUserId");
             builder.Property(s => s.NoughtUserId).HasColumnName("NoughtUserId");
-            builder.Property(s => s.Marks)
-                .HasConversion(m => m.Select(m => m.Value), m => m.Select(c => Mark.Parse(c)).ToList().AsReadOnly()!)
+            builder.Property<Mark?[]>("_marks")
+                .HasConversion(new MarkToStringValueConverter())
+                .HasColumnType("varchar(9)")
                 .HasColumnName("Marks");
         }
     }

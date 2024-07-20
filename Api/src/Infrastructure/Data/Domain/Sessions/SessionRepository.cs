@@ -21,13 +21,12 @@ namespace Infrastructure.Data.Domain.Sessions
         public async Task<Session> Get(UserId userId)
         {
             return await _applicationContext.Sessions
-                .FirstOrDefaultAsync(s => 
-                (s.CrossUserId.Equals(userId) || s.NoughtUserId.Equals(userId)) && !s.IsEnded);
+                .FirstOrDefaultAsync(s => (s.CrossUserId.Equals(userId) || s.NoughtUserId.Equals(userId)) && !s.IsEnded);
         }
 
         public async Task<Session> Get(SessionId sessionId)
         {
-            return await _applicationContext.Sessions.FirstOrDefaultAsync(s => s.Equals(sessionId));
+            return await _applicationContext.Sessions.FirstOrDefaultAsync(s => s.Id.Equals(sessionId));
         }
 
         public async Task<List<Session>> GetAll()

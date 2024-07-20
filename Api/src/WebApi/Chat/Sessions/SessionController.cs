@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Chat.Sessions
 {
     [ApiController]
-    [Route("api/sessions")]
+    [Route("api/session")]
     public class SessionController(IAppModule appModule) : Controller
     {
         [HasPermission(AppPermissions.PlaceMark)]
-        [HttpPut("{sessionId:guid}/{index:int}/{mark}")]
-        public async Task<IActionResult> PlaceMark(Guid sessionId, int index, char mark)
+        [HttpPut("{index:int}/{mark}")]
+        public async Task<IActionResult> PlaceMark(int index, char mark)
         {
-            await appModule.ExecuteCommand(new PlaceMarkCommand(sessionId, index, mark));
+            await appModule.ExecuteCommand(new PlaceMarkCommand(index, mark));
 
             return Ok();
         }

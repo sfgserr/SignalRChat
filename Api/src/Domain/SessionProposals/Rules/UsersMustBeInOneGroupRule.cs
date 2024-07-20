@@ -11,7 +11,7 @@ namespace Domain.SessionProposals.Rules
         private readonly UserId _proposedUserId = proposedUserId;
 
         public bool IsBroken => 
-            !(_groupUsers.Any(u => u.UserId.Equals(_proposingUserId)) && _groupUsers.Any(u => u.Equals(_proposedUserId)));
+            !(_groupUsers.Any(u => u.UserId.Equals(_proposingUserId)) && _groupUsers.Any(u => u.UserId.Equals(_proposedUserId)));
 
         public string Message => "Proposing user and Proposed user are not in the same group";
     }

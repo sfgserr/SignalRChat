@@ -8,6 +8,11 @@ namespace Domain.SessionProposals
 {
     public class SessionProposal : Entity, IAggregateRoot
     {
+        private SessionProposal()
+        {
+
+        }
+
         private SessionProposal(
             SessionProposalId id, 
             UserId proposingUserId, 
@@ -23,6 +28,8 @@ namespace Domain.SessionProposals
             ProposingUserId = proposingUserId;
             ProposedUserId = proposedUserId;
             ProposedDate = DateTime.Now;
+
+            AddDomainEvent(new SessionProposalCreatedDomainEvent(id));
         }
 
         internal static SessionProposal Create(
@@ -47,6 +54,7 @@ namespace Domain.SessionProposals
         public void AcceptProposal(UserId acceptingUserId)
         {
             CheckRule(new AcceptingUserMustBeProposedRule(acceptingUserId, ProposedUserId));
+            CheckRule(new CannotAcceptMoreThanOnceRule(AcceptedDate));
 
             AcceptedDate = DateTime.Now;
 

@@ -30,7 +30,7 @@ namespace WebApi.Chat.SessionProposals
             return Ok();
         }
 
-        [HasPermission(AppPermissions.AcceptProposal)]
+        [HasPermission(AppPermissions.GetProposals)]
         [HttpGet("")]
         public async Task<IActionResult> GetUserSessionProposals()
         {

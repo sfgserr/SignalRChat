@@ -6,13 +6,17 @@ namespace WebApi.Configuration.Messaging
     {
         private static readonly ConcurrentDictionary<Guid, List<string>> _ids = [];
 
-        public static List<string> GetConnections(Guid id)
+        public static List<string>? GetConnections(Guid id)
         {
-            return _ids[id];
+            _ids.TryGetValue(id, out var connections);
+
+            return connections;
         }
 
         public static void AddConnection(Guid identityId, string connectionId)
         {
+            _ids[identityId] = _ids[identityId] ?? [];
+
             _ids[identityId].Add(connectionId);
         }
 

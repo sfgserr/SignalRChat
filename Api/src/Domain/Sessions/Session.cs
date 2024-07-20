@@ -7,7 +7,7 @@ namespace Domain.Sessions
 {
     public class Session : Entity, IAggregateRoot
     {
-        private readonly Mark[] _marks = new Mark[9];
+        private readonly Mark?[] _marks = new Mark?[9];
         
         private Session()
         {
@@ -38,9 +38,9 @@ namespace Domain.Sessions
 
         public bool IsCrossTurn { get; private set; } = true;
 
-        public int LastPlacedMarkIndex { get; private set; }
+        public int LastPlacedMarkIndex { get; private set; } = 0;
 
-        public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
+        public IReadOnlyCollection<Mark?> GetMarks() => _marks.AsReadOnly();
 
         public void PlaceMark(Mark mark, int index, UserId placingUser)
         {

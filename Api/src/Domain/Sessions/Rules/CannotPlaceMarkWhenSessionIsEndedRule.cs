@@ -6,7 +6,7 @@ namespace Domain.Sessions.Rules
     {
         private readonly bool _isEnded = isEnded;
 
-        public bool IsBroken => !_isEnded;
+        public bool IsBroken => _isEnded;
 
         public string Message => "Session is ended";
     }
