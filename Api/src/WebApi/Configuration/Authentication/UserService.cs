@@ -2,18 +2,11 @@
 
 namespace WebApi.Configuration.Authentication
 {
-    public class UserService : IUserService
+    public class UserService(IHttpContextAccessor httpContextAccessor) : IUserService
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public UserService(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
-
         public Guid GetUserId()
         {
-            string? id = _httpContextAccessor.HttpContext?.User?.FindFirst("id")?.Value;
+            string? id = httpContextAccessor.HttpContext?.User?.FindFirst("id")?.Value;
 
             if (id is not null)
             {

@@ -8,11 +8,9 @@ namespace WebApi.Configuration.Messaging
 {
     public class Sender(IHubContext<ChatHub> chatHub) : ISender
     {
-        private readonly IHubContext<ChatHub> _chatHub = chatHub;
-
         public async Task Send(SendMessageDto message)
         {
-            await _chatHub.Clients.Group(message.ToGroupId.Value.ToString()).SendAsync("OnReceive", message);
+            await chatHub.Clients.Group(message.ToGroupId.Value.ToString()).SendAsync("OnReceive", message);
         }
 
         public async Task Send(SessionProposalDto proposal)
@@ -45,7 +43,7 @@ namespace WebApi.Configuration.Messaging
             if (connections is not null)
             {
                 foreach (string connection in connections)
-                    await _chatHub.Clients.Client(connection).SendAsync(method, data);
+                    await chatHub.Clients.Client(connection).SendAsync(method, data);
             }
         }
     }

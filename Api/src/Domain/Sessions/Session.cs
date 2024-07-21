@@ -42,14 +42,14 @@ namespace Domain.Sessions
 
         public IReadOnlyCollection<Mark> Marks => _marks.AsReadOnly();
 
-        public void PlaceMark(Mark mark, int index, UserId placingUser)
+        public void PlaceMark(int index, UserId placingUserId)
         {
-            UserId userId = mark.Value == 'X' ? CrossUserId : NoughtUserId;
-
+            CheckRule(new UserShouldBeInSessionToPlaceMark(placingUserId, CrossUserId, NoughtUserId));
             CheckRule(new CannotPlaceMarkWhenSessionIsEndedRule(IsEnded));
-            CheckRule(new OnlyCertainUserCanPlaceCertainMarkRule(userId, placingUser));
+            CheckRule(new CannotPlaceMarkWhenItIsNotTurnRule(IsCrossTurn, placingUserId, CrossUserId));
             CheckRule(new CanPlaceMarkOnlyInUntakenCellRule(_marks, index));
-            CheckRule(new CannotPlaceMarkWhenItIsNotTurnRule(IsCrossTurn, mark));
+
+            Mark mark = placingUserId.Equals(CrossUserId) ? Mark.Cross : Mark.Nought;
 
             _marks[index] = mark;
 
@@ -58,7 +58,7 @@ namespace Domain.Sessions
 
             AddDomainEvent(new MarkPlacedDomainEvent(
                 Id, 
-                placingUser != CrossUserId ? CrossUserId : NoughtUserId,
+                placingUserId != CrossUserId ? CrossUserId : NoughtUserId,
                 mark));
         }
 

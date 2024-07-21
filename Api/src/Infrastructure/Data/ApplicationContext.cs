@@ -14,13 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext(DbContextOptions options) : DbContext(options)
     {
-        public ApplicationContext(DbContextOptions options) : 
-            base(options)
-        {
-        }
-
         public DbSet<User> Users { get; set; }
 
         public DbSet<Group> Groups { get; set; }

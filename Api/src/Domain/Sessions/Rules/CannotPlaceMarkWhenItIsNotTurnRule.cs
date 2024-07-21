@@ -1,13 +1,12 @@
 ﻿using Domain.SeedWork;
+using Domain.Users;
 
 namespace Domain.Sessions.Rules
 {
-    public class CannotPlaceMarkWhenItIsNotTurnRule(bool isCrossTurn, Mark mark) : IBusinessRule
+    public class CannotPlaceMarkWhenItIsNotTurnRule(bool isCrossTurn, UserId placingUserId, UserId crossUserId) : 
+        IBusinessRule
     {
-        private readonly bool _isCrossTurn = isCrossTurn;
-        private readonly Mark _mark = mark;
-
-        public bool IsBroken => _isCrossTurn ? !_mark.Equals(Mark.Cross) : !_mark.Equals(Mark.Nought);
+        public bool IsBroken => isCrossTurn ? !placingUserId.Equals(crossUserId) : placingUserId.Equals(crossUserId);
 
         public string Message => "It's not your turn to place mark";
     }

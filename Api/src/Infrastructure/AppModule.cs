@@ -27,10 +27,7 @@ namespace Infrastructure
 
             var handler = scope.Resolve(handlerType) as IQueryHandler<TQuery, TResult>;
 
-            if (handler is not null)
-                return await handler.Handle(query);
-
-            throw new ArgumentException($"Can't resolve handler {query.GetType().Name}");
+            return await handler!.Handle(query);
         }
     }
 }

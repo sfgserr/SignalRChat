@@ -16,13 +16,11 @@ namespace WebApi.Chat.Groups
     [Route("api/groups")]
     public class GroupController(IAppModule appModule) : Controller
     {
-        private readonly IAppModule _appModule = appModule;
-
         [HasPermission()]
         [HttpPost("")]
         public async Task<IActionResult> Create(CreateGroupRequest request)
         {
-            await _appModule.ExecuteCommand(new CreateGroupCommand(
+            await appModule.ExecuteCommand(new CreateGroupCommand(
                 request.Name,
                 request.IconUri));
 
@@ -33,7 +31,7 @@ namespace WebApi.Chat.Groups
         [HttpPost("{groupId:guid}/{userId:guid}")]
         public async Task<IActionResult> AddUser(Guid groupId, Guid userId)
         {
-            await _appModule.ExecuteCommand(new AddUserCommand(userId, groupId));
+            await appModule.ExecuteCommand(new AddUserCommand(userId, groupId));
 
             return Ok();
         }
@@ -42,7 +40,7 @@ namespace WebApi.Chat.Groups
         [HttpPut("{groupId:guid}/{groupName}")]
         public async Task<IActionResult> ChangeGroupName(Guid groupId, string groupName)
         {
-            await _appModule.ExecuteCommand(new ChangeGroupNameCommand(groupId, groupName));
+            await appModule.ExecuteCommand(new ChangeGroupNameCommand(groupId, groupName));
 
             return Ok();
         }
@@ -51,7 +49,7 @@ namespace WebApi.Chat.Groups
         [HttpPut("{groupId:guid}")]
         public async Task<IActionResult> ChangeIconUri(Guid groupId, [FromQuery] string iconUri)
         {
-            await _appModule.ExecuteCommand(new ChangeIconUriCommand(groupId, iconUri));
+            await appModule.ExecuteCommand(new ChangeIconUriCommand(groupId, iconUri));
 
             return Ok();
         }
@@ -60,7 +58,7 @@ namespace WebApi.Chat.Groups
         [HttpDelete("{groupId:guid}/{userId}")]
         public async Task<IActionResult> RemoveUser(Guid userId, Guid groupId)
         {
-            await _appModule.ExecuteCommand(new RemoveUserCommand(userId, groupId));
+            await appModule.ExecuteCommand(new RemoveUserCommand(userId, groupId));
 
             return Ok();
         }
@@ -69,7 +67,7 @@ namespace WebApi.Chat.Groups
         [HttpGet("{groupId:guid}")]
         public async Task<IActionResult> GetGroup(Guid groupId)
         {
-            var group = await _appModule.Query<GetGroupQuery, GroupDto>(new GetGroupQuery(groupId));
+            var group = await appModule.Query<GetGroupQuery, GroupDto>(new GetGroupQuery(groupId));
 
             return Ok(group);
         }
@@ -78,7 +76,7 @@ namespace WebApi.Chat.Groups
         [HttpGet("")]
         public async Task<IActionResult> GetUserGroups()
         {
-            var groups = await _appModule.Query<GetUserGroupsQuery, IList<GroupDto>>(new GetUserGroupsQuery());
+            var groups = await appModule.Query<GetUserGroupsQuery, IList<GroupDto>>(new GetUserGroupsQuery());
 
             return Ok(groups);
         }

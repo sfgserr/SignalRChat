@@ -12,13 +12,11 @@ namespace WebApi.Chat.Messages
     [Route("api/messages")]
     public class MessageController(IAppModule appModule) : Controller
     {
-        private readonly IAppModule _appModule = appModule;
-
         [HasPermission(AppPermissions.CreateMessage)]
         [HttpPost("")]
         public async Task<IActionResult> CreateMessage(CreateMessageRequest request)
         {
-            await _appModule.ExecuteCommand(new CreateMessageCommand(
+            await appModule.ExecuteCommand(new CreateMessageCommand(
                 request.ToGroupId,
                 request.Body,
                 request.Type));
@@ -30,7 +28,7 @@ namespace WebApi.Chat.Messages
         [HttpPut("{messageId:guid}")]
         public async Task<IActionResult> ReadMessage(Guid messageId)
         {
-            await _appModule.ExecuteCommand(new ReadMessageCommand(messageId));
+            await appModule.ExecuteCommand(new ReadMessageCommand(messageId));
 
             return Ok();
         }
@@ -39,7 +37,7 @@ namespace WebApi.Chat.Messages
         [HttpPut("{messageId:guid}/{body}")]
         public async Task<IActionResult> EditMessage(Guid messageId, string body)
         {
-            await _appModule.ExecuteCommand(new EditMessageCommand(messageId, body));
+            await appModule.ExecuteCommand(new EditMessageCommand(messageId, body));
 
             return Ok();
         }
@@ -48,7 +46,7 @@ namespace WebApi.Chat.Messages
         [HttpGet("{groupId:guid}")]
         public async Task<IActionResult> GetMessages(Guid groupId)
         {
-            var messages = await _appModule.Query<GetMessagesQuery, IList<GetMessageDto>>(new GetMessagesQuery(groupId));
+            var messages = await appModule.Query<GetMessagesQuery, IList<GetMessageDto>>(new GetMessagesQuery(groupId));
 
             return Ok(messages);
         }

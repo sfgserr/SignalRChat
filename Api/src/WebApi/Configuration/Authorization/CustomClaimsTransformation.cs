@@ -8,15 +8,13 @@ namespace WebApi.Configuration.Authorization
 {
     public sealed class CustomClaimsTransformation(IAppModule appModule) : IClaimsTransformation
     {
-        private readonly IAppModule _appModule = appModule;
-
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
             string? id = principal.FindFirst("id")?.Value;
 
             if (id is not null)
             {
-                var permissions = await _appModule.Query<GetUserPermissionsQuery, List<PermissionDto>>(
+                var permissions = await appModule.Query<GetUserPermissionsQuery, List<PermissionDto>>(
                     new GetUserPermissionsQuery(Guid.Parse(id)));
 
                 var claimsIdentity = new ClaimsIdentity();

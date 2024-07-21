@@ -4,15 +4,11 @@ using System.Collections.Concurrent;
 
 namespace Infrastructure.Data.ValueConversion
 {
-    public class StronglyTypedIdValueConverterSelector : ValueConverterSelector
+    public class StronglyTypedIdValueConverterSelector(ValueConverterSelectorDependencies dependencies) : 
+        ValueConverterSelector(dependencies)
     {
         private readonly ConcurrentDictionary<(Type modelClrType, Type providerClrType), ValueConverterInfo> Cache =
             new();
-
-        public StronglyTypedIdValueConverterSelector(ValueConverterSelectorDependencies dependencies) : base(dependencies)
-        {
-
-        }
 
         public override IEnumerable<ValueConverterInfo> Select(Type modelClrType, Type? providerClrType = null)
         {

@@ -11,10 +11,10 @@ namespace WebApi.Chat.Sessions
     public class SessionController(IAppModule appModule) : Controller
     {
         [HasPermission(AppPermissions.PlaceMark)]
-        [HttpPut("{index:int}/{mark}")]
-        public async Task<IActionResult> PlaceMark(int index, char mark)
+        [HttpPut("{index:int}")]
+        public async Task<IActionResult> PlaceMark(int index)
         {
-            await appModule.ExecuteCommand(new PlaceMarkCommand(index, mark));
+            await appModule.ExecuteCommand(new PlaceMarkCommand(index));
 
             return Ok();
         }

@@ -2,10 +2,8 @@
 
 namespace Application.Sessions.Commands.PlaceMark
 {
-    public class PlaceMarkCommand(int index, char mark) : ICommand
+    public class PlaceMarkCommand(int index) : ICommand
     {
         public int Index { get; } = index;
-
-        public char Mark { get; } = mark;
     }
 }

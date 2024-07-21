@@ -10,7 +10,7 @@ namespace Infrastructure.Data
 
         private IDbContextTransaction? _currentTransaction;
 
-        public UnitOfWork(DomainEventsDispatcher domainEventsDispatcher, ApplicationContext applicationContext)
+        internal UnitOfWork(DomainEventsDispatcher domainEventsDispatcher, ApplicationContext applicationContext)
         {
             _domainEventsDispatcher = domainEventsDispatcher;
             _applicationContext = applicationContext;
